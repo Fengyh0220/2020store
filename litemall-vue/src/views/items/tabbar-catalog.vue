@@ -1,10 +1,5 @@
 <template>
   <div class="tab_class">
-    <div class="tal_class_searchBox">
-      <van-search placeholder="点击前往搜索"/>
-      <div class="tal_class_searchMask" @click="$router.push({ name: 'search' })"></div>
-    </div>
-
     <div class="class_tree clearfix">
     <ul class="class_tree_nav">
       <li
@@ -107,8 +102,6 @@ export default {
   height: 100%;
   z-index: 9;
 }
-
-
 .box {
   width: 250px;
   height: 20px;
@@ -116,7 +109,7 @@ export default {
   font-family: PingFangSC-Light, helvetica, 'Heiti SC';
   font-size: 13px;
   position: absolute;
-  top: 95px;
+  top: 105px;
 }
 .box span {
   line-height: 20px;
@@ -155,6 +148,7 @@ export default {
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding-top: 10px;
   .class_tree_all {
     text-align: right;
     padding-right: 10px;

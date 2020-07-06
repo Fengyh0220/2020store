@@ -1,10 +1,5 @@
 <template>
   <div class="tab_home">
-    <div class="tal_class_searchBox">
-      <van-search placeholder="点击前往搜索"
-                  @click="$router.push({ name: 'search' })" />
-      <div class="tal_class_searchMask"></div>
-    </div>
     <van-swipe :autoplay="3000"
                indicator-color="white">
       <van-swipe-item v-for="(banner, index) in shopInfos.banner"
@@ -15,14 +10,30 @@
     </van-swipe>
 
     <div class="goods-channel">
-      <div class="item"
-           @click="changeTabbar(channel)"
-           v-for="(channel, index) in shopInfos.channel"
-           :key="index">
-        <img :src="channel.iconUrl"
-             background-size="cover" />
-        <span>{{channel.name}}</span>
-      </div>
+      <router-link class="item" to="/items">
+        <van-icon name="class-full"/>
+        <span>全部分类</span>
+      </router-link>
+      <router-link class="item" to="/shop">
+        <van-icon name="bag"/>
+        <span>二手市场</span>
+      </router-link>
+      <a class="item" href="https://uapi.pop800.com/web800/c.do?l=cn&type=0&n=832081&w=0&c=00dde6f8f9880c86" target="_blank">
+        <van-icon name="kefu"/>
+        <span>联系我们</span>
+      </a>
+      <router-link class="item" to="/items/new">
+        <van-icon name="service-o"/>
+        <span>商品预售</span>
+      </router-link>
+      <router-link class="item" to="/items/groupon">
+        <van-icon name="clock"/>
+        <span>限时抢购</span>
+      </router-link>
+      <router-link class="item" to="/user">
+        <van-icon name="wode"/>
+        <span>个人中心</span>
+      </router-link>
     </div>
     <!-- 限时抢购 团购 -->
     <van-panel>
@@ -255,14 +266,15 @@ export default {
   padding-top: 10px;
 }
 .goods-channel .item {
-  width: 50px;
+  width: 30%;
   height: 50px;
   margin-left: 10px;
+  text-align: center
 }
 .goods-channel img {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin: 0 auto;
 }
 .goods-channel span {

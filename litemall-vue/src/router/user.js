@@ -15,6 +15,10 @@ const UserOrderList = () => import('@/views/user/order-list');
 const UserCouponList = () => import('@/views/user/coupon-list');
 const UserRefundList = () => import('@/views/user/refund-list');
 
+const Userused = () => import('@/views/user/used/index');
+const Userprice = () => import('@/views/user/used/price');
+const Userproduct = () => import('@/views/user/used/product');
+
 const Tabbar = () => import('@/components/Tabbar/');
 
 export default [
@@ -53,6 +57,21 @@ export default [
       login: true
     },
     component: UserAddressEdit
+  },
+  {
+    path: '/user/used',
+    name: 'user-used',
+    component: Userused
+  },
+  {
+    path: '/user/price',
+    name: 'user-price',
+    component: Userprice
+  },
+  {
+    path: '/user/product',
+    name: 'user-product',
+    component: Userproduct
   },
   {
     path: '/user/server',
