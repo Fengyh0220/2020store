@@ -7,7 +7,7 @@
   thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
 >
   <template #bottom>
-    <van-button size="mini">一键转卖</van-button>
+    <van-button size="mini" to="/user/price"> 一键转卖</van-button>
   </template>
 </van-card>
 </template>
