@@ -60,6 +60,14 @@ export default {
   width: 320px;
   margin: 20px auto;
 }
+.van-cell{
+  padding: 0;
+  height: 30px;
+  line-height: 30px;
+}
+.van-cell__value{
+  text-align: right;
+}
 .van-field{
   background: #f2f2f2;
 }
