@@ -12,7 +12,8 @@
                     style="height:250px">
             </van-swipe-item>
     </van-swipe>
-   <van-notice-bar left-icon="chat" :scrollable="false">
+   <van-notice-bar  :scrollable="false" >
+     <!-- left-icon="chat" -->
   <van-swipe
     vertical
     class="notice-swipe"
@@ -34,19 +35,19 @@
         <li v-for="(item,i) in typeList[0].sortList" :key="i" :class="{'active':typeList[0].index == i,'sort':item.sort != undefined,'bottom':item.sort == 1&&typeList[0].index == i}" @click="toggleIndex(i)">{{item.info}}</li>
       </ul>
     </div>
-      <van-pull-refresh  v-model="refreshing" @refresh="onRefresh">
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"
         >
-        <ul class="commodity-box-list">
-<li  class="commodity-box" v-for="item in list" :key="item">
-                <div  class="main-pic">
-                  <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-                 </div>
-                  <div  class="info-box">
+        <van-row  type="flex" justify="space-between">
+           <van-col span="12"  v-for="item in list" :key="item">
+              <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" 
+               style="width:180px;height:180px;
+    margin: 0 auto;display:block"/>
+              <div  class="info-box">
                       <p  class="name">手机壳1</p>
                       <div  class="other-box">
                           <p  class="sale-price">
@@ -59,99 +60,34 @@
                               </div>
                      </div>
                 </div>
-</li>
-</ul>
+           </van-col>
+        </van-row>
         <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
         </van-list>
     </van-pull-refresh>
-     
-      <!-- <div class="product">
-          <ul>
-               <li  class="commodity-box">
-                <div  class="main-pic">
-                  <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-                 </div>
-                  <div  class="info-box">
-                      <p  class="name">手机壳1</p>
-                      <div  class="other-box">
-                          <p  class="sale-price">
-                              ¥2
-                              <s >￥3</s>
-                            </p>
-                          <div class="sale-nums">销量:0</div>
-                     </div>
-                </div>
-            </li>
-             <li  class="commodity-box">
-                <div  class="main-pic">
-                  <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-                 </div>
-                  <div  class="info-box">
-                      <p  class="name">手机壳1</p>
-                      <div  class="other-box">
-                          <p  class="sale-price">
-                              ¥2
-                              <s >￥3</s>
-                            </p>
-                          <div class="sale-nums">销量:0</div>
-                     </div>
-                </div>
-            </li>
-             <li  class="commodity-box">
-                <div  class="main-pic">
-                  <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-                 </div>
-                  <div  class="info-box">
-                      <p  class="name">手机壳1</p>
-                      <div  class="other-box">
-                          <p  class="sale-price">
-                              ¥2
-                              <s >￥3</s>
-                            </p>
-                          <div class="sale-nums">销量:0</div>
-                     </div>
-                </div>
-            </li>
-             <li  class="commodity-box">
-                <div  class="main-pic">
-                  <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-                 </div>
-                  <div  class="info-box">
-                      <p  class="name">手机壳1</p>
-                      <div  class="other-box">
-                          <p  class="sale-price">
-                              ¥2
-                              <s >￥3</s>
-                            </p>
-                          <div class="sale-nums">销量:0</div>
-                     </div>
-                </div>
-            </li>
-             <li  class="commodity-box">
-                <div  class="main-pic">
-                  <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-                 </div>
-                  <div  class="info-box">
-                      <p  class="name">手机壳1</p>
-                      <div  class="other-box">
-                          <p  class="sale-price">
-                              ¥2
-                              <s >￥3</s>
-                            </p>
-                          <div class="sale-nums">销量:0</div>
-                     </div>
-                </div>
-            </li>
-           
-          </ul>
-      </div> -->
+    <!-- 弹窗 -->
+<van-overlay :show="show" @click="show = false">
+  <div class="wrapper" @click.stop>
+    <van-form>
+<van-cell-group>
+  <van-field v-model="message" label="发布公告" placeholder="请输入您要发布的公告消息" />
+</van-cell-group>
+  <div style="margin: 16px;">
+    <van-button round block type="info" native-type="submit">
+      发布
+    </van-button>
+  </div>
+</van-form>
+  </div>
+</van-overlay>
+<div class="addmessage" @click="show = true">
+  发布<br/>公告
+</div>
  </div>
 </template>
 
 <script>
-// import { getHome, goodsCategory, couponReceive } from '@/api/api';
 import scrollFixed from '@/mixin/scroll-fixed';
-// import _ from 'lodash';
 
 import {
   List,
@@ -160,7 +96,10 @@ import {
   DropdownMenu,
   DropdownItem,
    NoticeBar ,
-   Toast
+   Toast,
+   Overlay,
+   Form,
+  Field,
 //   Tabbar,
 //   TabbarItem,
 //   Search,
@@ -171,8 +110,8 @@ import {
 //   Card,
 //   Grid,
 //   GridItem,
-//   Row,
-//   Col,
+  Row,
+  Col,
 //   Tag
 } from 'vant';
 
@@ -187,6 +126,8 @@ export default {
       loading: false,
       finished: false,
       refreshing: false,
+      show: false,
+      message:'',
       typeList: [{
         index: 0,
         sortList: [{
@@ -202,11 +143,10 @@ export default {
   },
 
   created() {
-    this.initViews();
+    // this.initViews();
   },
 
   methods: {
-      
    toggleIndex(val) {
       let item = this.typeList[0];
       let cb = ()=>{
@@ -252,9 +192,9 @@ export default {
   },
 
   components: {
-    // [Row.name]: Row,
-    // [Col.name]: Col,
-    // [Card.name]: Card,
+    [Row.name]: Row,
+    [Col.name]: Col,
+    [Overlay.name]: Overlay,
     [Toast.name]: Toast,
     // [CouponCell.name]: CouponCell,
     // [CouponList.name]: CouponList,
@@ -266,8 +206,8 @@ export default {
     [DropdownMenu.name]: DropdownMenu, 
     [DropdownItem.name]: DropdownItem,
     [NoticeBar.name]:  NoticeBar,
-    // [Grid.name]: Grid,
-    // [GridItem.name]: GridItem
+    [Form.name]: Form,
+    [Field.name]: Field,
   }
 };
 </script>
@@ -294,14 +234,14 @@ export default {
   }
 .top-div{
     width: 100%;
-    height: 345px;
+    height: 320px;
     background: #fff;
     position: fixed;
     z-index: 9;
 }
 
 .van-list{
-    padding-top: 355px;
+    padding-top: 330px;
 }
 .pro-nav {
     background-color: #fff;
@@ -309,15 +249,15 @@ export default {
     top: 290px;
     width: 100%;
     left: 0;
-    height: 55px;
+    height: 30px;
 }
 .pro-nav li {
         width: 50%;
         float: left;
-        font-size:20px;
+        font-size:14px;
         color: #252525;
         text-align: center;
-        line-height:55px;
+        line-height:30px;
     }
 .pro-nav li.active {
 color: red;
@@ -326,10 +266,10 @@ color: red;
 position: relative;
 }
 .pro-nav li.sort.active::after {
-    border-top: 8px solid rgb(63,63,63);
+    border-top: 5px solid rgb(63,63,63);
 }
 .pro-nav li.sort.active::before {
-border-bottom: 8px solid red;
+border-bottom: 5px solid red;
 }
 .pro-nav li.sort::after,
 .pro-nav li.sort::before {
@@ -341,33 +281,32 @@ border-bottom: 8px solid red;
     top: 50%;
     left: 50%;
     transform: translate(26px,-50%);
-    margin-top: -6px;
-    border-top: 4px solid transparent;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 8px solid rgb(63,63,63);
+    margin-top: -7px;
+    border-top: 5px solid transparent;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-bottom: 5px solid rgb(63,63,63);
 }
 .pro-nav li.sort::after {
-    margin-top: 8px;
-    border-bottom: 5px solid transparent;
-    border-top: 8px solid rgb(63,63,63);
+    margin-top: 5px;
+    border-bottom: 4px solid transparent;
+    border-top: 5px solid rgb(63,63,63);
 }
  .pro-nav li.sort.bottom::after {
-    border-top:8px solid red;
+    border-top:5px solid red;
 }
 .pro-nav li.sort.bottom::before {
-    border-bottom: 8px solid rgb(63,63,63);
+    border-bottom: 5px solid rgb(63,63,63);
 }
 //商品列表
 .product{
     width: 100%;
     margin-top: 55px;
 }
-.commodity-box-list{
-    width: 100%;
-    padding: 10px 7px 0;
-    display: flex;
-    flex-wrap: wrap
+.van-row{ 
+  width: 100%;
+  display: block;
+  margin: 0 auto;
 }
 .commodity-box{
     width: 190px;
@@ -391,12 +330,14 @@ img{
     height: 100%;
 }
 .info-box{
+    width: 180px;
     height: auto;
     position: relative;
     padding: 0 10px;
+    margin: 0 auto
 }
 .name{
-    font-size: 20px;
+    font-size: 14px;
     padding-top: 5px;
     color: #252525;
     overflow: hidden;
@@ -415,7 +356,7 @@ img{
     left: 0;
 }
 .sale-price{
-    font-size: 18px;
+    font-size: 14px;
     color: #E61E3C;
     word-break: break-all;
     overflow: hidden;
@@ -431,7 +372,7 @@ img{
     display: inline;
 }
 .sale-nums{
-    font-size: 18px;
+    font-size: 14px;
     height: 30px;
     line-height: 30px;
     color: #666;
@@ -443,5 +384,72 @@ img{
     border-radius: 20px;
     float: left;
     margin: 5px 5px 5px 0;
+}
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // height: 100%;
+    margin-top: 50%;
+  }
+.van-overlay{
+  z-index: 999999 !important;
+}
+.van-form{
+  width: 90%;
+  height: 200px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 40px 10px;
+}
+  .van-cell{
+  // border-bottom:1px solid #333333;
+  width: 100%;
+  height: 55px;
+  line-height: 55px;
+  padding: 0 10px;
+  background: #ebebeb;
+  border-radius: 30px;
+  font-size: 16px;
+  text-align: center;
+
+}
+.van-field__label{
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold !important; 
+}
+
+.van-field__control{
+  text-align: right;
+  display: inline-block
+}
+
+// .van-cell-group{
+//   width: 320px;
+//   margin: 20px auto;
+// }
+.van-field{
+  background: #f2f2f2;
+}
+.addmessage{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: red;
+  color: #fff;
+  padding: 15px;
+  line-height: 15px;
+  text-align: center;
+  position: fixed;
+  right: 5px;
+  bottom: 60px;
+}
+.van-button{
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 auto;
+  font-size: 16px;
 }
 </style>
