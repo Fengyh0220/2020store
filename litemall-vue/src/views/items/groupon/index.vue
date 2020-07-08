@@ -2,6 +2,10 @@
   <div class="goods_groupon">
     <div class="banner">
       <div class="title">团购列表</div>
+      <div class="activity">
+        距离活动结束还剩
+        <span>00</span>:<span>00</span>:<span>00</span>
+      </div>
     </div>
 
     <van-list v-model="loading"
@@ -87,6 +91,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.activity{
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  span{
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 25px;
+    display: inline-block;
+    background: #ffffff;
+  }
+}
 .goods_groupon {
   padding: 20px;
   .banner {
@@ -96,7 +113,7 @@ export default {
     margin-bottom: 20px;
     .title {
       text-align: center;
-      line-height: 200px;
+      line-height: 160px;
       color: #ffffff;
       font-size: 40px;
     }

@@ -15,10 +15,16 @@
           {{ goods.info.name }}
         </div>
         <div class="item_intro">{{goods.info.brief}}</div>
+        <div class="used-div" v-if="activityId == 0">
+          <img src="" alt="">
+          <p>canny</p>
+        </div>
+        <div class="activity-time" v-else>
+          距离活动结束还剩<span>00:00:00</span>
+        </div>
       </van-cell>
     </van-cell-group>
-
-  <div class="item_cell_group" v-if="status == 1">
+  <div class="item_cell_group" v-if="activityId != 0">
     <van-cell-group>
       <van-cell
         title="规格"
@@ -57,7 +63,7 @@
       <!-- <van-goods-action-icon @click="toCart" icon="cart-o" :info="(cartInfo > 0) ? cartInfo : ''"/> -->
       <!-- <van-goods-action-icon @click="addCollect" icon="star-o" :style="(goods.userHasCollect !== 0) ? 'color: #f7b444;':''"/> -->
       <!-- <van-goods-action-button type="warning" @click="skuClick" text="加入购物车"/> -->
-      <van-goods-action-button v-if="status == 1" type="danger" @click="skuClick" text="立即购买"/>
+      <van-goods-action-button v-if="activityId == 0" type="danger" @click="buyGoods" text="立即购买"/>
       <van-goods-action-button  v-else type="danger" @click="skuClick" text="立即购买"/>
     </van-goods-action>
   </div>
@@ -75,7 +81,8 @@ import _ from 'lodash';
 
 export default {
   props: {
-    itemId: [String, Number]
+    itemId: [String, Number],
+    activityId: [String, Number]
   },
 
   data() {
@@ -248,9 +255,12 @@ export default {
           data.selectedSkuComb.s1,
           data.selectedSkuComb.s2
         );
-      } else {
+      }else {
         params.productId = this.getProductIdByOne(data.selectedSkuComb.s1);
       }
+      // if(this.activityId == 0){
+      //    params.productId = 0;
+      // }
       cartFastAdd(params).then(res => {
         let cartId = res.data.data;
         setLocalStorage({ CartId: cartId });
@@ -348,6 +358,29 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.activity-time{
+  width: 100%;
+  span{
+    color: red;
+    display: inline-block;
+    margin-left: 5px;
+  }
+}
+.used-div{
+  width: 100%;
+  img{
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    float: left;
+    background: #ebebeb;
+  }
+  p{
+    margin-left: 30px;
+    color: red;
+    line-height: 25px;
+  }
+}
 .item_detail {
   img {
     max-width: 100%;

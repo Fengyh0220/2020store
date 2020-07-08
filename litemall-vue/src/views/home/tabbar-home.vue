@@ -63,13 +63,13 @@
           <van-cell title="团购专区"
                     isLink>
             <router-link to="/items/groupon"
-                         class="text-desc">更多团购商品</router-link>
+                         class="text-desc">距离活动结束还剩<span>00:00:00</span></router-link>
           </van-cell>
         </van-cell-group>
       </div>
     </van-panel>
 
-    <van-panel>
+    <!-- <van-panel>
       <van-grid clickable
                 :column-num="2">
         <van-grid-item v-for="(brand ,index) in shopInfos.brandList"
@@ -90,14 +90,14 @@
           </van-cell>
         </van-cell-group>
       </div>
-    </van-panel>
+    </van-panel> -->
 
     <van-panel>
       <van-row gutter>
         <van-col span="12"
                  v-for="(newGood ,index) in shopInfos.newGoodsList"
                  :key="index">
-          <router-link :to="{ path: `/items/detail/${newGood.id}`}">
+          <router-link :to="{ path: `/items/detail/${newGood.id}`}/2">
             <img :src="newGood.picUrl"
                  style="width:180px;height:180px;">
           </router-link>
@@ -110,7 +110,7 @@
           <van-cell title="商品预售"
                     isLink>
             <router-link to="/items/new"
-                         class="text-desc">更多预售商品</router-link>
+                         class="text-desc">距离活动结束还剩<span>00:00:00</span></router-link>
           </van-cell>
         </van-cell-group>
       </div>
@@ -200,19 +200,19 @@ export default {
   },
   methods: {
     goDetail(id) {
-      return `#/items/detail/${id}`;
+      return `#/items/detail/${id}/1`;
     },
-    goBrand(id) {
-      return `#/items/brand/${id}`;
-    },
-    goTopic(id) {
-      return `#/items/topic/${id}`;
-    },    
-    getCoupon(id) {
-      couponReceive({ couponId: id }).then(res => {
-        Toast.success('领取成功');
-      });
-    },
+    // goBrand(id) {
+    //   return `#/items/brand/${id}`;
+    // },
+    // goTopic(id) {
+    //   return `#/items/topic/${id}`;
+    // },    
+    // getCoupon(id) {
+    //   couponReceive({ couponId: id }).then(res => {
+    //     Toast.success('领取成功');
+    //   });
+    // },
     changeTabbar(o) {
       goodsCategory({ id: o.id }).then(res => {
         let categoryId = res.data.data.currentCategory.id;

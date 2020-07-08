@@ -24,7 +24,7 @@ export default [
     component: () => import('@/views/items/search')
   },
   {
-    path: '/items/detail/:itemId',
+    path: '/items/detail/:itemId/:activityId',//1限时购  0是二手市场  2预售商品
     name: 'detail',
     props: true,
     component: () => import('@/views/items/detail')
