@@ -1,11 +1,5 @@
 <template>
   <div class="order_list">
-    <van-tabs v-model="activeIndex"
-              :swipe-threshold="5"
-              @click="handleTabClick">
-      <van-tab v-for="(tabTitle, index) in tabTitles"
-               :title="tabTitle"
-               :key="index">
         <van-list v-model="loading"
                   :finished="finished"
                   :immediate-check="false"
@@ -37,34 +31,16 @@
             <div slot="footer"
                  class="footer_btn">
               <van-button size="small"
-                          v-if="el.handleOption.cancel"
-                          @click.stop="cancelOrder(el.id)">取消订单</van-button>
-              <van-button size="small"
                           v-if="el.handleOption.pay"
                           type="danger"
                           @click.stop="toPay(el.id)">去支付</van-button>
               <van-button size="small"
-                          v-if="el.handleOption.refund"
-                          type="danger"
-                          @click.stop="refundOrder(el.id)">退款</van-button>
-              <van-button size="small"
                           v-if="el.handleOption.confirm"
                           type="danger"
                           @click.stop="confirmOrder(el.id)">确认收货</van-button>
-              <van-button size="small"
-                          v-if="el.handleOption.delete"
-                          @click.stop="delOrder(el.id)">删除订单</van-button>
-              <van-button size="small"
-                          v-if="el.handleOption.comment"
-                          @click.stop="commentOrder(el.id)">去评价</van-button>
             </div>
-
           </van-panel>
-
         </van-list>
-
-      </van-tab>
-    </van-tabs>
   </div>
 </template>
 
@@ -88,7 +64,7 @@ export default {
   data() {
     return {
       activeIndex: Number(this.active),
-      tabTitles: ['全部', '待付款', '待发货', '待收货', '待评价'],
+      // tabTitles: ['全部', '待付款', '待发货', '待收货', '待评价'],
       orderList: [],
       page: 0,
       limit: 10,

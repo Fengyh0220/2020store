@@ -43,8 +43,9 @@
         @load="onLoad"
         >
         <van-row  type="flex" justify="space-between">
-           <van-col span="12"  v-for="item in list" :key="item">
-              <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" 
+           <van-col span="12"  v-for="item in list" :key="item" >
+              <router-link :to="{ path: `/items/detail/1110016?status=1`}">
+                <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" 
                style="width:180px;height:180px;
     margin: 0 auto;display:block"/>
               <div  class="info-box">
@@ -60,6 +61,7 @@
                               </div>
                      </div>
                 </div>
+              </router-link>
            </van-col>
         </van-row>
         <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->

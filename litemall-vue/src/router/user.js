@@ -19,6 +19,8 @@ const Userused = () => import('@/views/user/used/index');
 const Userprice = () => import('@/views/user/used/price');
 const Userproduct = () => import('@/views/user/used/product');
 
+const Userbank = () => import('@/views/user/bank/index');
+
 const Tabbar = () => import('@/components/Tabbar/');
 
 export default [
@@ -28,8 +30,7 @@ export default [
     meta: {
       keepAlive: true,
       login: true,
-      showHeader:false,
-      title:"购物车"
+      showHeader:false
     },
     components: { default: tab_user, tabbar: Tabbar }
   },
@@ -59,7 +60,16 @@ export default [
     component: UserAddressEdit
   },
   {
+    path: '/user/bank',
+    name: 'user-bank',
+    component: Userbank
+  },
+  {
     path: '/user/used',
+    meta: {
+      title:"我的二手",
+      showHeader:true,
+    },
     name: 'user-used',
     component: Userused
   },
@@ -112,8 +122,11 @@ export default [
     component: UserInfo_SetPassword
   },
   {
-    path: '/user/order/list/:active',
+    path: '/user/order/list',
     name: 'user-order-list',
+    meta: {
+      title:"我的订单",
+    },
     props: true,
     component: UserOrderList
   },

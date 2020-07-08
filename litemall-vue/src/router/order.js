@@ -7,7 +7,6 @@ export default [
     meta: {
       login: true,
       showHeader:false,
-      title:"购物车"
     },
     components: { 
       default: () => import('@/views/order/tabbar-cart'), 

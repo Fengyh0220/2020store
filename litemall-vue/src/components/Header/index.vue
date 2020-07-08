@@ -32,3 +32,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+// .van-nav-bar{
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+// }
+</style>

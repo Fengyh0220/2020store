@@ -41,33 +41,33 @@
       </van-cell>
       <!-- 订单动作 -->
       <van-cell>
-        <van-button size="small"
+        <!-- <van-button size="small"
                     v-if="handleOption.cancel"
                     @click="cancelOrder(orderInfo.id)"
                     style=" float:right"
                     round
-                    type="danger">取消订单</van-button>
+                    type="danger">取消订单</van-button> -->
         <van-button size="small"
                     v-if="handleOption.pay"
                     @click="payOrder(orderInfo.id)"
                     style=" float:right"
                     round
                     type="danger">去支付</van-button>
-        <van-button size="small"
+        <!-- <van-button size="small"
                     v-if="handleOption.delete"
                     @click="deleteOrder(orderInfo.id)"
                     style=" float:right"
-                    type="danger">删除订单</van-button>
+                    type="danger">删除订单</van-button> -->
         <van-button size="small"
                     v-if="handleOption.confirm"
                     @click="confirmOrder(orderInfo.id)"
                     style=" float:right"
                     type="danger">确认收货</van-button>
-        <van-button size="small"
+        <!-- <van-button size="small"
                     v-if="handleOption.refund"
                     @click="refundOrder(orderInfo.id)"
                     style=" float:right"
-                    type="danger">退款</van-button>
+                    type="danger">退款</van-button> -->
       </van-cell>
     </van-cell-group>
 

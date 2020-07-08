@@ -3,8 +3,12 @@
     <van-icon name="set" class="user_set" @click="toSetting"/>
     <div class="user_avatar">
       <img :src="avatar" alt="头像" width="55" height="55">
+      <div>{{nickName}}</div>
     </div>
-    <div>{{nickName}}</div>
+    <div class="right">
+      <p>我的余额：￥0.00</p>
+       <router-link class="btn"  to="/user/bank">充值</router-link>
+    </div>
   </div>
 </template>
 
@@ -69,9 +73,25 @@ export default {
 }
 .user_avatar {
   margin-bottom: 10px;
+  width: 50%;
+  float: left;
   img {
     border: 0;
     border-radius: 50%;
+  }
+}
+.right{
+  width: 30%;
+  float: left;
+  .btn{
+    width: 50%;
+    height: 20px;
+    line-height: 20px;
+    background: #fff;
+    display: block;
+    border-radius: 20px;
+    color: red;
+    text-align: center;
   }
 }
 </style>

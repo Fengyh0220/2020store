@@ -107,16 +107,16 @@
       </van-row>
       <div slot='header'>
         <van-cell-group>
-          <van-cell title="新品首发"
+          <van-cell title="商品预售"
                     isLink>
             <router-link to="/items/new"
-                         class="text-desc">更多新品首发</router-link>
+                         class="text-desc">更多预售商品</router-link>
           </van-cell>
         </van-cell-group>
       </div>
     </van-panel>
 
-    <van-panel>
+    <!-- <van-panel>
       <van-card :thumb-link="goDetail(groupGood.id)"
                 v-for="(groupGood ,index) in shopInfos.hotGoodsList"
                 :key="index"
@@ -126,8 +126,8 @@
                 :price="groupGood.retailPrice +'.00'"
                 :thumb="groupGood.picUrl"
                 @native-click="goDetail(groupGood.id)">
-        <!-- <div slot="footer">添加日期 {{item.addTime}}</div> -->
-      </van-card>
+        <div slot="footer">添加日期 {{item.addTime}}</div> -->
+      <!-- </van-card>
       <div slot='header'>
         <van-cell-group>
           <van-cell title="人气推荐"
@@ -137,9 +137,9 @@
           </van-cell>
         </van-cell-group>
       </div>
-    </van-panel>
+    </van-panel> -->
 
-<van-panel>
+<!-- <van-panel>
       <van-grid clickable
                 :column-num="2">
         <van-grid-item v-for="(topic ,index) in shopInfos.topicList"
@@ -160,7 +160,7 @@
           </van-cell>
         </van-cell-group>
       </div>
-    </van-panel>
+    </van-panel> -->
 
   </div>
 </template>

@@ -18,7 +18,7 @@
       </van-cell>
     </van-cell-group>
 
-  <div class="item_cell_group">
+  <div class="item_cell_group" v-if="status == 1">
     <van-cell-group>
       <van-cell
         title="规格"
@@ -57,7 +57,8 @@
       <!-- <van-goods-action-icon @click="toCart" icon="cart-o" :info="(cartInfo > 0) ? cartInfo : ''"/> -->
       <!-- <van-goods-action-icon @click="addCollect" icon="star-o" :style="(goods.userHasCollect !== 0) ? 'color: #f7b444;':''"/> -->
       <!-- <van-goods-action-button type="warning" @click="skuClick" text="加入购物车"/> -->
-      <van-goods-action-button type="danger" @click="skuClick" text="立即购买"/>
+      <van-goods-action-button v-if="status == 1" type="danger" @click="skuClick" text="立即购买"/>
+      <van-goods-action-button  v-else type="danger" @click="skuClick" text="立即购买"/>
     </van-goods-action>
   </div>
   
