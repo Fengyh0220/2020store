@@ -1,9 +1,5 @@
 <template>
 <van-form>
-<!-- <div class="bankcard">
-    <span>银行卡号</span>
-    <p>3002***********33633</p>
-</div> -->
 <van-swipe class="my-swipe" indicator-color="white">
   <van-swipe-item>3002***********33633</van-swipe-item>
   <van-swipe-item>3002***********33633</van-swipe-item>
