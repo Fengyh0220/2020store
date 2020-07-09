@@ -18,7 +18,7 @@
 
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
-      <el-table-column align="center" label="团购规则ID" prop="id" />
+      <el-table-column align="center" label="抢购活动ID" prop="id" />
 
       <el-table-column align="center" label="商品ID" prop="goodsId" />
 
@@ -30,9 +30,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="团购优惠" prop="discount" />
+      <el-table-column align="center" label="扣减优惠" prop="discount" />
 
-      <el-table-column align="center" label="团购要求" prop="discountMember" />
+      <el-table-column align="center" label="活动库存" prop="activitiStock" />
 
       <el-table-column align="center" label="状态" prop="status">
         <template slot-scope="scope">
@@ -40,6 +40,7 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="开始时间" prop="startTime" />
       <el-table-column align="center" label="结束时间" prop="expireTime" />
 
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
@@ -64,13 +65,21 @@
         <el-form-item label="商品ID" prop="goodsId">
           <el-input v-model="dataForm.goodsId" />
         </el-form-item>
-        <el-form-item label="团购折扣" prop="discount">
+        <el-form-item label="限时折扣" prop="discount">
           <el-input v-model="dataForm.discount" />
         </el-form-item>
-        <el-form-item label="团购人数要求" prop="discountMember">
-          <el-input v-model="dataForm.discountMember" />
+        <el-form-item label="活动库存" prop="activitiStock">
+          <el-input v-model="dataForm.activitiStock" />
         </el-form-item>
-        <el-form-item label="过期时间" prop="expireTime">
+        <el-form-item label="开始时间" prop="startTime">
+          <el-date-picker
+            v-model="dataForm.startTime"
+            type="datetime"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd HH:mm:ss"
+          />
+        </el-form-item>
+        <el-form-item label="结束时间" prop="expireTime">
           <el-date-picker
             v-model="dataForm.expireTime"
             type="datetime"
@@ -120,8 +129,10 @@ export default {
         id: undefined,
         goodsId: '',
         discount: '',
-        discountMember: '',
-        expireTime: undefined
+        discountMember: '1',
+        expireTime: undefined,
+        startTime: undefined,
+        activitiStock: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -136,9 +147,10 @@ export default {
       ],
       rules: {
         goodsId: [{ required: true, message: '商品不能为空', trigger: 'blur' }],
-        discount: [{ required: true, message: '团购折扣不能为空', trigger: 'blur' }],
-        discountMember: [{ required: true, message: '团购人数不能为空', trigger: 'blur' }],
-        expireTime: [{ required: true, message: '过期时间不能为空', trigger: 'blur' }]
+        discount: [{ required: true, message: '限时折扣不能为空', trigger: 'blur' }],
+        activitiStock: [{ required: true, message: '活动库存不能为空', trigger: 'blur' }],
+        startTime: [{ required: true, message: '开始时间不能为空', trigger: 'blur' }],
+        expireTime: [{ required: true, message: '结束时间不能为空', trigger: 'blur' }]
       }
     }
   },
@@ -167,7 +179,8 @@ export default {
         id: undefined,
         goodsId: '',
         discount: '',
-        discountMember: '',
+        discountMember: '1',
+        activitiStock: '',
         expireTime: undefined
       }
     },
@@ -187,7 +200,7 @@ export default {
             this.dialogFormVisible = false
             this.$notify.success({
               title: '成功',
-              message: '创建团购规则成功'
+              message: '创建限时抢购成功'
             })
           }).catch(response => {
             this.$notify.error({
@@ -220,7 +233,7 @@ export default {
             this.dialogFormVisible = false
             this.$notify.success({
               title: '成功',
-              message: '更新团购规则成功'
+              message: '更新限时抢购成功'
             })
           }).catch(response => {
             this.$notify.error({
@@ -235,7 +248,7 @@ export default {
       deleteGroupon(row).then(response => {
         this.$notify.success({
           title: '成功',
-          message: '删除团购规则成功'
+          message: '删除限时抢购成功'
         })
         this.getList()
       }).catch(response => {
@@ -248,8 +261,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['商品ID', '名称', '首页主图', '折扣', '人数要求', '活动开始时间', '活动结束时间']
-          const filterVal = ['id', 'name', 'pic_url', 'discount', 'discountMember', 'addTime', 'expireTime']
+          const tHeader = ['商品ID', '名称', '首页主图', '限时折扣', '活动库存', '活动开始时间', '活动结束时间']
+          const filterVal = ['id', 'name', 'pic_url', 'discount', 'activitiStock', 'addTime', 'expireTime']
           excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
           this.downloadLoading = false
         })

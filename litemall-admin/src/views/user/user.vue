@@ -19,7 +19,7 @@
 
       <el-table-column align="center" label="性别" prop="gender">
         <template slot-scope="scope">
-          <el-tag >{{ genderDic[scope.row.gender] }}</el-tag>
+          <el-tag>{{ genderDic[scope.row.gender] }}</el-tag>
         </template>
       </el-table-column>
 
@@ -27,25 +27,42 @@
 
       <el-table-column align="center" label="用户等级" prop="userLevel">
         <template slot-scope="scope">
-          <el-tag >{{ levelDic[scope.row.userLevel] }}</el-tag>
+          <el-tag>{{ levelDic[scope.row.userLevel] }}</el-tag>
         </template>
       </el-table-column>
+
+      <el-table-column align="center" label="余额" prop="balance" />
 
       <el-table-column align="center" label="状态" prop="status">
         <template slot-scope="scope">
           <el-tag>{{ statusDic[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
-
+      <el-table-column align="center" label="操作" prop="status">
+        <template slot-scope="scope">
+          <el-button v-permission="['POST /admin/brand/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-
+    <!-- 添加或修改对话框 -->
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :rules="rules" :model="dataForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="余额" prop="balance">
+          <el-input v-model="dataForm.balance" placeholder="请输入修改的余额" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="updateData">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchList } from '@/api/user'
+import { fetchList, updateBalance } from '@/api/user'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -64,10 +81,24 @@ export default {
         sort: 'add_time',
         order: 'desc'
       },
+      dataForm: {
+        balance: '0'
+      },
+      textMap: {
+        update: '编辑',
+        create: '创建'
+      },
+      dialogFormVisible: false,
       downloadLoading: false,
+      dialogStatus: '',
       genderDic: ['未知', '男', '女'],
       levelDic: ['普通用户', 'VIP用户', '高级VIP用户'],
-      statusDic: ['可用', '禁用', '注销']
+      statusDic: ['可用', '禁用', '注销'],
+      rules: {
+        balance: [
+          { required: true, message: '余额不能为空', trigger: 'blur' }
+        ]
+      }
     }
   },
   created() {
@@ -97,6 +128,42 @@ export default {
         const filterVal = ['username', 'mobile', 'gender', 'birthday', 'status']
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '用户信息')
         this.downloadLoading = false
+      })
+    },
+    handleUpdate(row) {
+      console.log(row)
+      this.dataForm = Object.assign({}, row)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      // this.$nextTick(() => {
+      //   this.$refs['dataForm'].clearValidate()
+      // })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate(valid => {
+        if (valid) {
+          updateBalance(this.dataForm)
+            .then(() => {
+              for (const v of this.list) {
+                if (v.id === this.dataForm.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.dataForm)
+                  break
+                }
+              }
+              this.dialogFormVisible = false
+              this.$notify.success({
+                title: '成功',
+                message: '更新余额成功'
+              })
+            })
+            .catch(response => {
+              this.$notify.error({
+                title: '失败',
+                message: response.data.errmsg
+              })
+            })
+        }
       })
     }
   }

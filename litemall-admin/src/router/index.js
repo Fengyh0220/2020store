@@ -363,7 +363,7 @@ export const asyncRoutes = [
         name: 'grouponRule',
         meta: {
           perms: ['GET /admin/groupon/list', 'POST /admin/groupon/create', 'POST /admin/groupon/update', 'POST /admin/groupon/delete'],
-          title: '团购规则',
+          title: '限时抢购',
           noCache: true
         }
       },
@@ -373,7 +373,7 @@ export const asyncRoutes = [
         name: 'grouponActivity',
         meta: {
           perms: ['GET /admin/groupon/listRecord'],
-          title: '团购活动',
+          title: '限时活动',
           noCache: true
         }
       }

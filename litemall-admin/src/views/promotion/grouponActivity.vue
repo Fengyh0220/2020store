@@ -33,7 +33,7 @@
 
       <el-table-column align="center" label="参与人数" prop="subGroupons.length" />
 
-      <el-table-column align="center" label="团购折扣" prop="rules.discount" />
+      <el-table-column align="center" label="限时折扣" prop="rules.discount" />
 
       <el-table-column align="center" label="团购要求" prop="rules.discountMember" />
 

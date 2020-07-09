@@ -8,6 +8,14 @@ export function fetchList(query) {
   })
 }
 
+export function updateBalance(query) {
+  return request({
+    url: '/user/updateBalance',
+    method: 'get',
+    params: query
+  })
+}
+
 export function listAddress(query) {
   return request({
     url: '/address/list',
