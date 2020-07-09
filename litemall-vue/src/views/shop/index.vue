@@ -42,12 +42,10 @@
         finished-text="没有更多了"
         @load="onLoad"
         >
-        <van-row  type="flex" justify="space-between">
+        <van-row gutter="10"> 
            <van-col span="12"  v-for="item in list" :key="item" >
               <router-link :to="{ path: `/items/detail/1110016/0`}">
-                <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" 
-               style="width:180px;height:180px;
-    margin: 0 auto;display:block"/>
+                <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg"/>
               <div  class="info-box">
                       <p  class="name">手机壳1</p>
                       <div  class="other-box">
@@ -64,7 +62,6 @@
               </router-link>
            </van-col>
         </van-row>
-        <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
         </van-list>
     </van-pull-refresh>
     <!-- 弹窗 -->
@@ -305,11 +302,6 @@ border-bottom: 5px solid red;
     width: 100%;
     margin-top: 55px;
 }
-.van-row{ 
-  width: 100%;
-  display: block;
-  margin: 0 auto;
-}
 .commodity-box{
     width: 190px;
     float: left;
@@ -330,6 +322,9 @@ border-bottom: 5px solid red;
 img{
     width: 100%;
     height: 100%;
+}
+.van-row{
+  padding: 0 8px;
 }
 .info-box{
     width: 180px;

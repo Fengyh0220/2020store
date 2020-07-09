@@ -3,8 +3,7 @@
     <div class="banner">
       <div class="title">团购列表</div>
       <div class="activity">
-        距离活动结束还剩
-        <span>00</span>:<span>00</span>:<span>00</span>
+        距离活动结束还剩<span>00</span>:<span>00</span>:<span>00</span>
       </div>
     </div>
 
@@ -94,12 +93,15 @@ export default {
 .activity{
   text-align: center;
   font-size: 18px;
+  height: 20px;
+  line-height: 20px;
   font-weight: bold;
   span{
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    border-radius: 25px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 20px;
+    font-size: 16px;
     display: inline-block;
     background: #ffffff;
   }

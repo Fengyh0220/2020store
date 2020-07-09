@@ -1,9 +1,11 @@
 <template>
   <div class="goods_new">
     <div class="banner">
-      <div class="title">新品首发</div>
+      <div class="title">商品预售</div>
+    <div class="activity">
+        距离活动结束还剩<span>00</span>:<span>00</span>:<span>00</span>
     </div>
-
+    </div>
     <van-list v-model="loading"
               :finished="finished"
               :immediate-check="false"
@@ -77,6 +79,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.activity{
+  text-align: center;
+  font-size: 18px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: bold;
+  span{
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    display: inline-block;
+    background: #ffffff;
+  }
+}
 .goods_new {
   padding: 20px;
   .banner {
@@ -86,7 +104,7 @@ export default {
     margin-bottom: 20px;
     .title {
       text-align: center;
-      line-height: 200px;
+      line-height: 160px;
       color: #ffffff;
       font-size: 40px;
     }

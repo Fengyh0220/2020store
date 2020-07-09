@@ -69,31 +69,8 @@
       </div>
     </van-panel>
 
-    <!-- <van-panel>
-      <van-grid clickable
-                :column-num="2">
-        <van-grid-item v-for="(brand ,index) in shopInfos.brandList"
-                       :key="index"
-                       :text="brand.name"
-                       :url="goBrand(brand.id)">
-          <img :src="brand.picUrl"
-               style="width: 80%;" />
-          <div style="font-size:16px;"> {{ brand.name }}</div>
-        </van-grid-item>
-      </van-grid>
-      <div slot='header'>
-        <van-cell-group>
-          <van-cell title="品牌商直供"
-                    isLink>
-            <router-link to="/items/brand-list"
-                         class="text-desc">更多品牌商</router-link>
-          </van-cell>
-        </van-cell-group>
-      </div>
-    </van-panel> -->
-
-    <van-panel>
-      <van-row gutter>
+    <van-panel class="van-panel1">
+      <!-- <van-row gutter>
         <van-col span="12"
                  v-for="(newGood ,index) in shopInfos.newGoodsList"
                  :key="index">
@@ -104,7 +81,24 @@
           <span style="padding-left: 20px;position: relative;bottom: 10px; color: rgb(123, 116, 116);white-space: nowrap;">{{newGood.name}}</span>
           <span style="padding-left: 80px;position: relative;bottom: 10px; color:#ab956d">￥ {{newGood.retailPrice}}</span>
         </van-col>
-      </van-row>
+      </van-row> -->
+       <van-row> 
+           <van-col span="11"  v-for="(newGood ,index) in shopInfos.newGoodsList"
+                 :key="index">
+              <router-link :to="{path: `/items/detail/${newGood.id}`}/2">
+                <img :src="newGood.picUrl" style="height:180px"/>
+                 <div  class="info-box">
+                      <p  class="name">{{newGood.name}}</p>
+                      <div  class="other-box">
+                          <p  class="sale-price">
+                              ￥ {{newGood.retailPrice}}
+                              <s >￥{{newGood.counterPrice}}</s>
+                            </p>
+                     </div>
+                </div>
+              </router-link>
+           </van-col>
+        </van-row>
       <div slot='header'>
         <van-cell-group>
           <van-cell title="商品预售"
@@ -116,18 +110,17 @@
       </div>
     </van-panel>
 
-    <!-- <van-panel>
+    <van-panel>
       <van-card :thumb-link="goDetail(groupGood.id)"
                 v-for="(groupGood ,index) in shopInfos.hotGoodsList"
                 :key="index"
                 :title="groupGood.name"
                 :desc="groupGood.brief"
                 :origin-price="groupGood.counterPrice"
-                :price="groupGood.retailPrice +'.00'"
+                :price="groupGood.retailPrice +''"
                 :thumb="groupGood.picUrl"
                 @native-click="goDetail(groupGood.id)">
-        <div slot="footer">添加日期 {{item.addTime}}</div> -->
-      <!-- </van-card>
+      </van-card>
       <div slot='header'>
         <van-cell-group>
           <van-cell title="人气推荐"
@@ -137,7 +130,7 @@
           </van-cell>
         </van-cell-group>
       </div>
-    </van-panel> -->
+    </van-panel>
 
 <!-- <van-panel>
       <van-grid clickable
@@ -251,6 +244,63 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.info-box{
+    width: 180px;
+    height: auto;
+    position: relative;
+    padding: 0 10px;
+    margin: 0 auto
+}
+.name{
+    font-size: 14px;
+    padding-top: 5px;
+    color: #252525;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    word-break: break-all;
+    margin: 0
+}
+.other-box{
+    padding: 0;
+    position: initial;
+        width: 100%;
+    bottom: 0;
+    left: 0;
+}
+.sale-price{
+    font-size: 14px;
+    color: #E61E3C;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    margin: 0
+}
+.sale-price s{
+    font-size: 12px;
+    color: #686868;
+    display: inline;
+}
+.sale-nums{
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    color: #666;
+    margin-bottom: 10px;
+}
+.sale-nums img{
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    float: left;
+    margin: 5px 5px 5px 0;
+}
 .interval_bot {
   margin-bottom: 10px;
 }
@@ -409,5 +459,23 @@ export default {
 .van-coupon-item--disabled p,
 .van-coupon-item--disabled span {
   color: #969799;
+}
+.van-panel1{
+  background: #f2f2f2;
+  .van-col{
+    background: #fff;
+    border-radius: 5px;
+    margin: 10px 7px 0;
+    padding-bottom: 10px;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+.van-row{
+  padding: 0 8px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
 }
 </style>
