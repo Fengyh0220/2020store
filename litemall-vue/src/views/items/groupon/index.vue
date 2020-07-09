@@ -1,7 +1,7 @@
 <template>
   <div class="goods_groupon">
     <div class="banner">
-      <div class="title">团购列表</div>
+      <div class="title">限时抢购列表</div>
       <div class="activity">
         距离活动结束还剩<span>00</span>:<span>00</span>:<span>00</span>
       </div>

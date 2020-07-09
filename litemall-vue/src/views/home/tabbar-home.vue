@@ -46,7 +46,7 @@
                 :price="grouponGood.grouponPrice +'.00'"
                 :thumb="grouponGood.picUrl"
                 @native-click="goDetail(grouponGood.id)">
-        <div slot="tags"
+        <!-- <div slot="tags"
              class="card__tags">
           <van-tag plain
                    type="primary">
@@ -56,11 +56,11 @@
                    type="danger">
             {{grouponGood.grouponDiscount}}元再减
           </van-tag>
-        </div>
+        </div> -->
       </van-card>
       <div slot='header'>
         <van-cell-group>
-          <van-cell title="团购专区"
+          <van-cell title="限时抢购"
                     isLink>
             <router-link to="/items/groupon"
                          class="text-desc">距离活动结束还剩<span>00:00:00</span></router-link>

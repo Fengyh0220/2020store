@@ -5,11 +5,11 @@
       <van-swipe :autoplay="3000" indicator-color="white">
             <van-swipe-item>
                 <img src="http://122.51.199.160:8080/wx/storage/fetch/n7ntay81fg7c3bkiq8bj.jpg"
-                    style="height: 250px">
+                    style="height: 180px">
             </van-swipe-item>
             <van-swipe-item>
                 <img src="http://122.51.199.160:8080/wx/storage/fetch/bm29rsjaehjke99mnayf.jpgg"
-                    style="height:250px">
+                    style="height:180px">
             </van-swipe-item>
     </van-swipe>
    <van-notice-bar  :scrollable="false" >
