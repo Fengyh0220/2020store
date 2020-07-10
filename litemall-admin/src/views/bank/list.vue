@@ -3,8 +3,8 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 200px;" placeholder="请输入商品编号" />
-      <el-button v-permission="['GET /admin/groupon/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
+      <!-- <el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 200px;" placeholder="请输入商品编号" /> -->
+      <!-- <el-button v-permission="['GET /admin/groupon/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button> -->
       <el-button v-permission="['POST /admin/groupon/create']" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
       <el-button
         :loading="downloadLoading"
@@ -18,35 +18,21 @@
 
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
-      <el-table-column align="center" label="抢购活动ID" prop="id" />
 
-      <el-table-column align="center" label="商品ID" prop="goodsId" />
+      <el-table-column align="center" label="姓名" prop="goodsId" />
 
-      <el-table-column align="center" min-width="100" label="名称" prop="goodsName" />
+      <el-table-column align="center" label="金额" prop="discount" />
 
-      <el-table-column align="center" property="picUrl" label="图片">
-        <template slot-scope="scope">
-          <img :src="scope.row.picUrl" width="40">
-        </template>
-      </el-table-column>
+      <el-table-column align="center" label="银行卡号" prop="activitiStock" />
 
-      <el-table-column align="center" label="扣减优惠" prop="discount" />
-
-      <el-table-column align="center" label="活动库存" prop="activitiStock" />
-
-      <el-table-column align="center" label="状态" prop="status">
+      <el-table-column align="center" label="审核状态" prop="status">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status === 0 ? 'success' : 'error' ">{{ statusMap[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="开始时间" prop="startTime" />
-      <el-table-column align="center" label="结束时间" prop="expireTime" />
-
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button v-permission="['POST /admin/groupon/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['POST /admin/groupon/delete']" type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-permission="['POST /admin/groupon/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,30 +48,11 @@
         label-width="120px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item label="商品ID" prop="goodsId">
-          <el-input v-model="dataForm.goodsId" />
-        </el-form-item>
-        <el-form-item label="限时折扣" prop="discount">
-          <el-input v-model="dataForm.discount" />
-        </el-form-item>
-        <el-form-item label="活动库存" prop="activitiStock">
-          <el-input v-model="dataForm.activitiStock" />
-        </el-form-item>
-        <el-form-item label="开始时间" prop="startTime">
-          <el-date-picker
-            v-model="dataForm.startTime"
-            type="datetime"
-            placeholder="选择日期"
-            value-format="yyyy-MM-dd HH:mm:ss"
-          />
-        </el-form-item>
-        <el-form-item label="结束时间" prop="expireTime">
-          <el-date-picker
-            v-model="dataForm.expireTime"
-            type="datetime"
-            placeholder="选择日期"
-            value-format="yyyy-MM-dd HH:mm:ss"
-          />
+        <el-form-item label="是否审核成功" prop="isHot">
+          <el-select v-model="dataForm.isHot" placeholder="请选择">
+            <el-option :value="true" label="成功" />
+            <el-option :value="false" label="失败" />
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -132,7 +99,8 @@ export default {
         discountMember: '1',
         expireTime: undefined,
         startTime: undefined,
-        activitiStock: ''
+        activitiStock: '',
+        isHot: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -141,16 +109,11 @@ export default {
         create: '创建'
       },
       statusMap: [
-        '正常',
-        '到期下线',
-        '提前下线'
+        '审核成功',
+        '审核失败'
       ],
       rules: {
-        goodsId: [{ required: true, message: '商品不能为空', trigger: 'blur' }],
-        discount: [{ required: true, message: '限时折扣不能为空', trigger: 'blur' }],
-        activitiStock: [{ required: true, message: '活动库存不能为空', trigger: 'blur' }],
-        startTime: [{ required: true, message: '开始时间不能为空', trigger: 'blur' }],
-        expireTime: [{ required: true, message: '结束时间不能为空', trigger: 'blur' }]
+        isHot: [{ required: true, message: '请选择审核状态', trigger: 'blur' }]
       }
     }
   },

@@ -15,7 +15,13 @@ export function listGroupon(query) {
     params: query
   })
 }
-
+export function listBank(query) {
+  return request({
+    url: '/bank/selectBankList',
+    method: 'get',
+    params: query
+  })
+}
 export function deleteGroupon(data) {
   return request({
     url: '/groupon/delete',
