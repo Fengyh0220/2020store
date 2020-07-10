@@ -581,7 +581,40 @@ export const asyncRoutes = [
         meta: { title: '快递鸟', icon: 'link' }
       }
     ]
+  }, {
+    path: '/bank',
+    component: Layout,
+    redirect: 'noredirect',
+    alwaysShow: true,
+    name: 'userBank',
+    meta: {
+      title: '财务管理',
+      icon: 'chart'
+    },
+    children: [
+      {
+        path: 'bank',
+        component: () => import('@/views/bank'),
+        name: 'bank',
+        meta: {
+          perms: ['GET /admin/bank/index'],
+          title: '银行卡管理',
+          noCache: true
+        }
+      },
+      {
+        path: 'banklist',
+        component: () => import('@/views/bank/list'),
+        name: 'banklist',
+        meta: {
+          perms: ['GET /admin/bank/list'],
+          title: '转账记录列表',
+          noCache: true
+        }
+      }
+    ]
   },
+
   {
     path: '/profile',
     component: Layout,

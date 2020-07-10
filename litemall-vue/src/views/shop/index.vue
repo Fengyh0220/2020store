@@ -233,19 +233,19 @@ export default {
   }
 .top-div{
     width: 100%;
-    height: 320px;
+    height: 250px;
     background: #fff;
     position: fixed;
     z-index: 9;
 }
 
 .van-list{
-    padding-top: 330px;
+    padding-top: 260px;
 }
 .pro-nav {
     background-color: #fff;
     position: absolute;
-    top: 290px;
+    top: 220px;
     width: 100%;
     left: 0;
     height: 30px;

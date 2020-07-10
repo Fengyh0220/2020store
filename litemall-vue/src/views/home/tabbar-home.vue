@@ -46,17 +46,6 @@
                 :price="grouponGood.grouponPrice +'.00'"
                 :thumb="grouponGood.picUrl"
                 @native-click="goDetail(grouponGood.id)">
-        <!-- <div slot="tags"
-             class="card__tags">
-          <van-tag plain
-                   type="primary">
-            {{grouponGood.grouponMember}}人成团
-          </van-tag>
-          <van-tag plain
-                   type="danger">
-            {{grouponGood.grouponDiscount}}元再减
-          </van-tag>
-        </div> -->
       </van-card>
       <div slot='header'>
         <van-cell-group>
@@ -70,18 +59,6 @@
     </van-panel>
 
     <van-panel class="van-panel1">
-      <!-- <van-row gutter>
-        <van-col span="12"
-                 v-for="(newGood ,index) in shopInfos.newGoodsList"
-                 :key="index">
-          <router-link :to="{ path: `/items/detail/${newGood.id}`}/2">
-            <img :src="newGood.picUrl"
-                 style="width:180px;height:180px;">
-          </router-link>
-          <span style="padding-left: 20px;position: relative;bottom: 10px; color: rgb(123, 116, 116);white-space: nowrap;">{{newGood.name}}</span>
-          <span style="padding-left: 80px;position: relative;bottom: 10px; color:#ab956d">￥ {{newGood.retailPrice}}</span>
-        </van-col>
-      </van-row> -->
        <van-row> 
            <van-col span="11"  v-for="(newGood ,index) in shopInfos.newGoodsList"
                  :key="index">
@@ -131,30 +108,6 @@
         </van-cell-group>
       </div>
     </van-panel>
-
-<!-- <van-panel>
-      <van-grid clickable
-                :column-num="2">
-        <van-grid-item v-for="(topic ,index) in shopInfos.topicList"
-                       :key="index"
-                       :url="goTopic(topic.id)">
-          <img :src="topic.picUrl"
-               style="width: 90%; max-height: 150px;" />
-          <div style="font-size:14px;color:#ab956d;"> {{ topic.title }}</div>
-          <div style="font-size:10px;color:#ab956d;"> {{ topic.subtitle }}</div>
-        </van-grid-item>
-      </van-grid>
-      <div slot='header'>
-        <van-cell-group>
-          <van-cell title="专题精选"
-                    isLink>
-            <router-link to="/items/topic-list"
-                         class="text-desc">更多专题精选</router-link>
-          </van-cell>
-        </van-cell-group>
-      </div>
-    </van-panel> -->
-
   </div>
 </template>
 
