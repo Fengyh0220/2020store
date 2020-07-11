@@ -368,12 +368,12 @@ export const asyncRoutes = [
         }
       },
       {
-        path: 'groupon-activity',
-        component: () => import('@/views/promotion/grouponActivity'),
-        name: 'grouponActivity',
+        path: 'used',
+        component: () => import('@/views/used/index'),
+        name: 'used',
         meta: {
-          perms: ['GET /admin/groupon/listRecord'],
-          title: '限时活动',
+          // perms: ['GET /admin/groupon/listRecord'],
+          title: '限时活动订单',
           noCache: true
         }
       }

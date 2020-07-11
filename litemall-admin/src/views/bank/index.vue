@@ -26,15 +26,15 @@
 
       <el-table-column align="center" label="开户行" prop="bank_deposit" />
 
-      <el-table-column align="center" label="状态" prop="status">
+      <el-table-column align="center" label="状态" prop="state">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status === 0 ? 'success' : 'error' ">{{ statusMap[scope.row.status] }}</el-tag>
+          <el-tag :type="scope.row.state === 0 ? 'success' : 'error' ">{{ scope.row.state ==1 ? '是' : '否' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button v-permission="['POST /admin/bank/updateBank']" type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['POST /bank/deleteBank']" type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-permission="['POST /bank/deleteBank']" type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,8 +61,8 @@
         </el-form-item>
         <el-form-item label="是否启用" prop="state">
           <el-select v-model="dataForm.state" placeholder="请选择">
-            <el-option :value="true" label="是" />
-            <el-option :value="false" label="否" />
+            <el-option value="1" label="是" />
+            <el-option value="0" label="否" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -73,7 +73,7 @@
       </div>
     </el-dialog>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
 
     <el-tooltip placement="top" content="返回顶部">
       <back-to-top :visibility-height="100" />
@@ -83,17 +83,18 @@
 </template>
 
 <script>
-import { listBank, publishGroupon, deleteGroupon, editGroupon } from '@/api/groupon'
+// import {deleteGroupon, editGroupon } from '@/api/groupon'
+import { listBank, publishGroupon, editGroupon, deleteGroupon } from '@/api/bank'
 import BackToTop from '@/components/BackToTop'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+// import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
   name: 'GrouponRule',
-  components: { BackToTop, Pagination },
+  components: { BackToTop },
   data() {
     return {
       list: [],
-      total: 0,
+      // total: 0,
       listLoading: true,
       listQuery: {
         page: 1,
@@ -107,11 +108,8 @@ export default {
         id: undefined,
         bank_name: '',
         id_number: '',
-        id_numberMember: '1',
-        expireTime: undefined,
-        startTime: undefined,
         bank_deposit: '',
-        state: ''
+        state: undefined
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -137,13 +135,12 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      listBank().then(response => {
-        this.list = response.data.data.list
-        this.total = response.data.data.total
+      listBank('').then(response => {
+        this.list = response.data.data.bankList
         this.listLoading = false
       }).catch(() => {
         this.list = []
-        this.total = 0
+        // this.total = 0
         this.listLoading = false
       })
     },
@@ -156,9 +153,8 @@ export default {
         id: undefined,
         bank_name: '',
         id_number: '',
-        id_numberMember: '1',
         bank_deposit: '',
-        expireTime: undefined
+        state: undefined
       }
     },
     handleCreate() {
@@ -177,8 +173,9 @@ export default {
             this.dialogFormVisible = false
             this.$notify.success({
               title: '成功',
-              message: '创建限时抢购成功'
+              message: '成功添加银行卡'
             })
+            this.getList()
           }).catch(response => {
             this.$notify.error({
               title: '失败',
@@ -222,10 +219,14 @@ export default {
       })
     },
     handleDelete(row) {
-      deleteGroupon(row).then(response => {
+      console.log(row)
+      const idData = {
+        id: row
+      }
+      deleteGroupon(idData).then(response => {
         this.$notify.success({
           title: '成功',
-          message: '删除限时抢购成功'
+          message: '删除成功'
         })
         this.getList()
       }).catch(response => {
