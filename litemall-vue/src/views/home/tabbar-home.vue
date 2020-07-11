@@ -114,6 +114,7 @@
 <script>
 import { getHome, goodsCategory, couponReceive } from '@/api/api';
 import scrollFixed from '@/mixin/scroll-fixed';
+import { countdown } from '@/utils/local-storage';
 import _ from 'lodash';
 import {
   List,
@@ -138,7 +139,8 @@ export default {
   data() {
     return {
       shopInfos: [],
-      isLoading: false
+      isLoading: false,
+      
     };
   },
   created() {
@@ -171,6 +173,17 @@ export default {
     initViews() {
       getHome().then(res => {
         this.shopInfos = res.data.data;
+        countdown({
+              data: this,
+              type: 3,
+              name: 'time',
+              time: res.result.endTime,
+              callback: (data) => {
+                if(data.timestamp <= 0){
+                  this.activityStatus = 2;
+                }
+              }
+       });
       });
     }
   },
@@ -428,9 +441,11 @@ export default {
 .van-row{
   padding: 0 8px;
   margin-top: 10px;
-  padding-bottom: 20px;
   display: flex;
     flex-wrap: wrap;
 }
+}
+.tab_home{
+  padding-bottom: 60px
 }
 </style>

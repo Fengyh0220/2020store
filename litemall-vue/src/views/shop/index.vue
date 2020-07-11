@@ -2,14 +2,10 @@
   <div class="item_detail"> 
       <!-- <a href="https://uapi.pop800.com/web800/c.do?l=cn&type=0&n=832081&w=0&c=00dde6f8f9880c86" target="_blank"></a> -->
     <div class="top-div">
-      <van-swipe :autoplay="3000" indicator-color="white">
+      <van-swipe :autoplay="3000" indicator-color="white" v-for="(banner, index) in bannerlist"
+                      :key="index">
             <van-swipe-item>
-                <img src="http://122.51.199.160:8080/wx/storage/fetch/n7ntay81fg7c3bkiq8bj.jpg"
-                    style="height: 180px">
-            </van-swipe-item>
-            <van-swipe-item>
-                <img src="http://122.51.199.160:8080/wx/storage/fetch/bm29rsjaehjke99mnayf.jpgg"
-                    style="height:180px">
+                <img :src="banner.url" style="height: 180px">
             </van-swipe-item>
     </van-swipe>
    <van-notice-bar  :scrollable="false" >
@@ -20,20 +16,15 @@
     :autoplay="3000"
     :show-indicators="false"
   >
-    <van-swipe-item> 
-        <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-    canny:内容 1</van-swipe-item>
-    <van-swipe-item>
-        <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-        aa:内容 2</van-swipe-item>
-    <van-swipe-item>
-        <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" />
-        bb:内容 3</van-swipe-item>
+    <van-swipe-item v-for="(item, i) in NoticeList"
+                      :key="i">
+        <img :src="item.user_head_img" v-if="item.user_head_img"/>
+    canny:{{item.content}}</van-swipe-item>
   </van-swipe>
 </van-notice-bar>
-<ul class="pro-nav">
+<!-- <ul class="pro-nav">
         <li v-for="(item,i) in typeList[0].sortList" :key="i" :class="{'active':typeList[0].index == i,'sort':item.sort != undefined,'bottom':item.sort == 1&&typeList[0].index == i}" @click="toggleIndex(i)">{{item.info}}</li>
-      </ul>
+      </ul> -->
     </div>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
@@ -43,19 +34,19 @@
         @load="onLoad"
         >
         <van-row gutter="10"> 
-           <van-col span="12"  v-for="item in list" :key="item" >
+           <van-col span="12"  v-for="itemgoods in goodslist" :key="itemgoods" >
               <router-link :to="{ path: `/items/detail/1110016/0`}">
-                <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg"/>
+                <img :src="itemgoods.picUrl" style="height:180px"/>
               <div  class="info-box">
-                      <p  class="name">手机壳1</p>
+                      <p  class="name">{{itemgoods.goodsName}}</p>
                       <div  class="other-box">
                           <p  class="sale-price">
-                              ¥2
-                              <s >￥3</s>
+                              ¥{{itemgoods.secondHandPrice}}
+                              <s >￥{{itemgoods.price}}</s>
                             </p>
                           <div class="sale-nums">
-                              <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg">
-                              <span>canny</span>
+                              <img :src="itemgoods.userHeadImg">
+                              <span>{{itemgoods.userId}}</span>
                               </div>
                      </div>
                 </div>
@@ -69,10 +60,10 @@
   <div class="wrapper" @click.stop>
     <van-form>
 <van-cell-group>
-  <van-field v-model="message" label="发布公告" placeholder="请输入您要发布的公告消息" />
+  <van-field v-model="message" label="发布公告" placeholder="请输入您要发布的公告消息" maxlength="15"/>
 </van-cell-group>
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">
+    <van-button round block type="info" @click.native="onsubmit">
       发布
     </van-button>
   </div>
@@ -86,7 +77,9 @@
 </template>
 
 <script>
+import { selectByStateList, querySecondBanner, selectNoticeList,addNoticeUrl } from '@/api/used';
 import scrollFixed from '@/mixin/scroll-fixed';
+import avatar_default from '@/assets/images/avatar_default.png';
 
 import {
   List,
@@ -122,30 +115,80 @@ export default {
       shopInfos: [],
       isLoading: false,
       list: [],
+      bannerlist:[],
+      NoticeList:[],
+      goodslist:[],
       loading: false,
       finished: false,
       refreshing: false,
       show: false,
       message:'',
-      typeList: [{
-        index: 0,
-        sortList: [{
-          name: 'SYNTHETICAL',
-          info: '综合'
-        },{
-          name: 'PRICE',
-          sort: 0,
-          info: '价格'
-        }]
-      }],
+      nickName: '',
+      avatar: avatar_default,
+      adddata: {
+        user_id:'111',
+        content:'',
+      },
+      // typeList: [{
+      //   index: 0,
+      //   sortList: [{
+      //     name: 'SYNTHETICAL',
+      //     info: '综合'
+      //   },{
+      //     name: 'PRICE',
+      //     sort: 0,
+      //     info: '价格'
+      //   }]
+      // }],
     };
   },
 
   created() {
-    // this.initViews();
+    this.goodsData();
+    this.selectNoticedata();
   },
 
   methods: {
+    // getUserInfo() {
+    //   const infoData = getLocalStorage(
+    //     'nickName',
+    //     'avatar'
+    //   );
+    //   this.avatar = infoData.avatar || avatar_default;
+    //   this.nickName = infoData.nickName || '昵称';
+    // },
+    goodsData(){
+      selectByStateList({state:'1'}).then(res => {
+        this.goodslist = res.data.data;
+      })
+      querySecondBanner().then(data => {
+         this.bannerlist = data.data.data;
+      })
+    },
+    selectNoticedata(){
+       selectNoticeList().then(res => {
+         this.NoticeList = res.data.data;
+      })
+    },
+    onsubmit(){
+      let params = {
+        user_id:'111',
+        content:this.message,
+      };
+      // this.adddata = {
+      //   user_id:'111',
+      //   content:this.message,
+      // }
+      addNoticeUrl(params).then(res => {
+        if(res.errno == 0){
+          this.NoticeList = res.data.data;
+          this.show = false;
+        }
+        //  this.NoticeList = res.data.data;
+      }).catch (() => {});
+
+    },
+
    toggleIndex(val) {
       let item = this.typeList[0];
       let cb = ()=>{
@@ -233,19 +276,20 @@ export default {
   }
 .top-div{
     width: 100%;
-    height: 250px;
+    max-height: 250px;
     background: #fff;
-    position: fixed;
-    z-index: 9;
+    // position: fixed;
+    // z-index: 9;
 }
 
-.van-list{
-    padding-top: 260px;
-}
+// .van-list{
+//     // padding-top: 260px;
+// }
 .pro-nav {
     background-color: #fff;
     position: absolute;
-    top: 220px;
+    // top: 220px;
+    top: 0;
     width: 100%;
     left: 0;
     height: 30px;
@@ -389,9 +433,9 @@ img{
     // height: 100%;
     margin-top: 50%;
   }
-.van-overlay{
-  z-index: 999999 !important;
-}
+// .van-overlay{
+//   z-index:9!important;
+// }
 .van-form{
   width: 90%;
   height: 200px;
