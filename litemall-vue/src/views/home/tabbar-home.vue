@@ -429,6 +429,8 @@ export default {
   padding: 0 8px;
   margin-top: 10px;
   padding-bottom: 20px;
+  display: flex;
+    flex-wrap: wrap;
 }
 }
 </style>
