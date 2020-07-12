@@ -1,14 +1,14 @@
 <template>
 <van-form>
 <div>
-   <img src="http://testavatar.xingqiuxiuchang.cn/e208b75e-5228-4095-89a9-647e80aa708a.jpg" class="product-img"/>
+   <img :src="productImg" class="product-img"/>
    <b class="icon">确认宝贝价格发布</b>
 </div>
 <van-cell-group>
   <van-field v-model="price" label="价格" placeholder="请输入转卖价格" />
 </van-cell-group>
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">
+    <van-button round block type="info" @click="submit">
       确认发布
     </van-button>
   </div>
@@ -16,20 +16,48 @@
 </template>
 
 <script>
+import { updateOrderGoodsState } from '@/api/used';
 import {
   Form,
   Field,
 } from 'vant';
 export default {
+  props: {
+    itemId: [String, Number]
+  },
+
   data() {
     return {
-        price:''
+        price:'',
+        productImg:''
     };
   },
   created() {
+    this.productImg = localStorage.getItem('productImg')
   },
   methods: {
-   
+   submit(){
+     console.log(this.itemId);
+     let params = {
+        id:this.itemId,
+        state:'1',
+        secondHandPrice:this.price,
+      }
+      updateOrderGoodsState(params).then(res => {
+      if(res.data.errno === 0){
+         this.$toast({
+            message: '转卖商品上架成功',
+            duration: 1500
+          });
+          this.$router.go(-1);
+        }else{
+          this.$toast({
+            message: res.errmsg || '失败，请稍后再试',
+            duration: 1500
+          });
+        }
+     })
+    }
   },
   components: {
     [Form.name]: Form,

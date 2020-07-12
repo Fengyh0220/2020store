@@ -8,7 +8,7 @@
     <van-cell-group class="item_cell_group" v-if="goods">
       <van-cell class="item_info">
         <div>
-          <span class="item_price">{{ goods.info.retailPrice*100 | yuan }}</span>
+          <span class="item_price">{{activityId == 0 ?(goods.litemallOrderGoods.secondHandPrice) : (goods.info.retailPrice)}}</span>
           <span class="item_market_price">{{goods.info.counterPrice*100 | yuan}}</span>
         </div>
         <div class="item-title">
@@ -16,10 +16,10 @@
         </div>
         <div class="item_intro">{{goods.info.brief}}</div>
         <div class="used-div" v-if="activityId == 0">
-          <img src="" alt="">
-          <p>canny</p>
+          <img :src="goods.litemallOrderGoods.userHeadImg" alt="">
+          <p>{{goods.litemallOrderGoods.userId}}</p>
         </div>
-        <div class="activity-time" v-else>
+        <div class="activity-time" v-if="activityId != 0 && activityId != 3">
           距离活动结束还剩<span>00:00:00</span>
         </div>
       </van-cell>
@@ -43,7 +43,6 @@
       :goods="skuGoods"
       :goodsId="goods.info.id"
       @buy-clicked="buyGoods"
-      @add-cart="addCart"
       :show-add-cart-btn = "false"
     />
     <van-popup v-model="propsPopup" position="bottom">
@@ -63,7 +62,7 @@
       <!-- <van-goods-action-icon @click="toCart" icon="cart-o" :info="(cartInfo > 0) ? cartInfo : ''"/> -->
       <!-- <van-goods-action-icon @click="addCollect" icon="star-o" :style="(goods.userHasCollect !== 0) ? 'color: #f7b444;':''"/> -->
       <!-- <van-goods-action-button type="warning" @click="skuClick" text="加入购物车"/> -->
-      <van-goods-action-button v-if="activityId == 0" type="danger" @click="buyGoods" text="立即购买"/>
+      <van-goods-action-button v-if="activityId == 0" type="danger" @click="buyGoods(goods)" text="立即购买1"/>
       <van-goods-action-button  v-else type="danger" @click="skuClick" text="立即购买"/>
     </van-goods-action>
   </div>
@@ -71,9 +70,9 @@
 </template>
 
 <script>
-
-import { goodsDetail, cartGoodsCount, collectAddOrDelete, cartAdd, cartFastAdd } from '@/api/api';
-
+// cartAdd
+import { goodsDetail, cartGoodsCount, collectAddOrDelete, cartFastAdd } from '@/api/api';
+import { selectByIdOrderGoods } from '@/api/used';
 import { Sku, Swipe, SwipeItem, GoodsAction, GoodsActionButton, GoodsActionIcon, Popup } from 'vant';
 import { setLocalStorage } from '@/utils/local-storage';
 import popupProps from './popup-props';
@@ -107,7 +106,7 @@ export default {
         // 默认商品 sku 缩略图
         picture: ''
       },
-      cartInfo: 0,
+      // cartInfo: 0,
       selectSku: {
         selectedNum: 1,
         selectedSkuComb: {
@@ -138,14 +137,20 @@ export default {
       this.showSku = true;
     },
     initData() {
-      goodsDetail({ id: this.itemId }).then(res => {
+      if(this.activityId == 0){
+        selectByIdOrderGoods({ id: this.itemId }).then(res => {
+           this.goods = res.data.data;
+           this.skuAdapter();
+        })
+      }else{
+        goodsDetail({ id: this.itemId }).then(res => {
         this.goods = res.data.data;
         this.skuAdapter();
       });
-
-      cartGoodsCount().then(res => {
-        this.cartInfo = res.data.data;
-      });
+      }
+      // cartGoodsCount().then(res => {
+      //   this.cartInfo = res.data.data;
+      // });
     },
     toCart() {
       this.$router.push({
@@ -207,36 +212,6 @@ export default {
       });
       return productId;
     },
-    addCart(data) {
-      let that = this;
-      let params = {
-        goodsId: data.goodsId,
-        number: data.selectedNum,
-        productId: 0
-      };
-      if (_.has(data.selectedSkuComb, 's3')) {
-        this.$toast({
-          message: '目前仅支持两规格',
-          duration: 1500
-        });
-        return;
-      } else if (_.has(data.selectedSkuComb, 's2')) {
-        params.productId = this.getProductId(
-          data.selectedSkuComb.s1,
-          data.selectedSkuComb.s2
-        );
-      } else {
-        params.productId = this.getProductIdByOne(data.selectedSkuComb.s1);
-      }
-      cartAdd(params).then(() => {
-        this.cartInfo = this.cartInfo + data.selectedNum;
-        this.$toast({
-          message: '已添加至购物车',
-          duration: 1500
-        });
-        that.showSku = false;
-      });
-    },
     buyGoods(data) {
       let that = this;
       let params = {
@@ -244,28 +219,41 @@ export default {
         number: data.selectedNum,
         productId: 0
       };
-      if (_.has(data.selectedSkuComb, 's3')) {
-        this.$toast({
-          message: '目前仅支持两规格',
-          duration: 1500
-        });
-        return;
-      } else if (_.has(data.selectedSkuComb, 's2')) {
-        params.productId = this.getProductId(
-          data.selectedSkuComb.s1,
-          data.selectedSkuComb.s2
-        );
-      }else {
-        params.productId = this.getProductIdByOne(data.selectedSkuComb.s1);
+      if(this.activityId != 0){
+          if (_.has(data.selectedSkuComb, 's3')) {
+            this.$toast({
+              message: '目前仅支持两规格',
+              duration: 1500
+            });
+            return;
+          } else if (_.has(data.selectedSkuComb, 's2')) {
+            params.productId = this.getProductId(
+              data.selectedSkuComb.s1,
+              data.selectedSkuComb.s2
+            );
+          }else {
+            params.productId = this.getProductIdByOne(data.selectedSkuComb.s1);
+          }
+      }else{
+        // let params = {
+        params.goodsId=data.litemallOrderGoods.goodsId;
+        params.number=data.litemallOrderGoods.number;
+        params.productId=data.litemallOrderGoods.productId;
+        params.grouponLinkId= data.litemallOrderGoods.id;
+        params.grouponRulesId=0;
+        params.orderEsPrice = data.litemallOrderGoods.secondHandPrice;
+      // };
+//         params.goodsId = data.litemallOrderGoods.goodsId;
+//         params.number=data.litemallOrderGoods.number;
+//         params.productId = data.litemallOrderGoods.productId;
+//         grouponLinkId: 0
+// grouponRulesId: 0
       }
-      // if(this.activityId == 0){
-      //    params.productId = 0;
-      // }
       cartFastAdd(params).then(res => {
         let cartId = res.data.data;
         setLocalStorage({ CartId: cartId });
         that.showSku = false;
-        this.$router.push('/order/checkout');
+        this.$router.push(`/order/checkout/${this.activityId}`);
       });
     },
     skuAdapter() {

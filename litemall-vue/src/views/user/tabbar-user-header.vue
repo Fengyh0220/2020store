@@ -6,7 +6,7 @@
       <div>{{nickName}}</div>
     </div>
     <div class="right">
-      <p>我的余额：￥0.00</p>
+      <p>我的余额：￥{{userData.balance}}</p>
        <router-link class="btn"  to="/user/bank">充值</router-link>
     </div>
   </div>
@@ -16,6 +16,7 @@
 import avatar_default from '@/assets/images/avatar_default.png';
 import bg_default from '@/assets/images/user_head_bg.png';
 import { getLocalStorage } from '@/utils/local-storage';
+import { getUserInfo} from '@/api/bank';
 
 export default {
   name: 'user-header',
@@ -31,15 +32,24 @@ export default {
     return {
       nickName: '昵称',
       avatar: avatar_default,
-      background_image: bg_default
+      background_image: bg_default,
+      userData:{}
     };
   },
 
   activated() {
     this.getUserInfo();
+    this.getuserData();
   },
 
   methods: {
+    getuserData(){
+      getUserInfo().then(res => {
+      if(res.data.errno === 0){
+        this.userData=res.data.data.userInfo;
+      }
+      })
+    },
     getUserInfo() {
       const infoData = getLocalStorage(
         'nickName',

@@ -52,7 +52,7 @@
           <van-cell title="限时抢购"
                     isLink>
             <router-link to="/items/groupon"
-                         class="text-desc">距离活动结束还剩<span>00:00:00</span></router-link>
+                         class="text-desc">距离活动结束<span>{{listTimeLimittime.d}}:{{listTimeLimittime.h}}:{{listTimeLimittime.m}}</span></router-link>
           </van-cell>
         </van-cell-group>
       </div>
@@ -62,7 +62,7 @@
        <van-row> 
            <van-col span="11"  v-for="(newGood ,index) in shopInfos.newGoodsList"
                  :key="index">
-              <router-link :to="{path: `/items/detail/${newGood.id}`}/2">
+              <router-link :to="{path: `/items/detail/${newGood.id}/2`}">
                 <img :src="newGood.picUrl" style="height:180px"/>
                  <div  class="info-box">
                       <p  class="name">{{newGood.name}}</p>
@@ -81,14 +81,14 @@
           <van-cell title="商品预售"
                     isLink>
             <router-link to="/items/new"
-                         class="text-desc">距离活动结束还剩<span>00:00:00</span></router-link>
+                         class="text-desc">距离活动开始<span>{{listPreSaletime.d}}:{{listPreSaletime.h}}:{{listPreSaletime.m}}</span></router-link>
           </van-cell>
         </van-cell-group>
       </div>
     </van-panel>
 
     <van-panel>
-      <van-card :thumb-link="goDetail(groupGood.id)"
+      <van-card :thumb-link="goDetailurl(groupGood.id)"
                 v-for="(groupGood ,index) in shopInfos.hotGoodsList"
                 :key="index"
                 :title="groupGood.name"
@@ -96,7 +96,7 @@
                 :origin-price="groupGood.counterPrice"
                 :price="groupGood.retailPrice +''"
                 :thumb="groupGood.picUrl"
-                @native-click="goDetail(groupGood.id)">
+                @native-click="goDetailurl(groupGood.id)">
       </van-card>
       <div slot='header'>
         <van-cell-group>
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { getHome, goodsCategory, couponReceive } from '@/api/api';
+import { getHome, goodsCategory, couponReceive ,timeStampPre,listTimeLimit,listPreSale} from '@/api/api';
 import scrollFixed from '@/mixin/scroll-fixed';
 import { countdown } from '@/utils/local-storage';
 import _ from 'lodash';
@@ -140,15 +140,57 @@ export default {
     return {
       shopInfos: [],
       isLoading: false,
-      
+      listTimeLimittime:{
+        d:'00',
+        h:'00',
+        m:'00',
+      },
+      listPreSaletime:{
+        d:'00',
+        h:'00',
+        m:'00',
+      },
     };
   },
   created() {
-    this.initViews();
+    this.getData();
   },
   methods: {
     goDetail(id) {
       return `#/items/detail/${id}/1`;
+    },
+    goDetailurl(id) {
+      return `#/items/detail/${id}/3`;
+    },
+    getData(){
+      //限时
+      listTimeLimit().then(res => {
+       let expireTime = res.data.data.grouponRuleVoList[0].expireTime;
+      if(res.data.errno === 0){
+         countdown({
+              data: this,
+              type: 3,
+              name: 'listTimeLimittime',
+              now:res.data.currentTime,
+              time: expireTime,
+       });
+      }
+      })
+      //预售
+      listPreSale().then(res => {
+       let startTime = res.data.data.grouponRuleVoList[0].startTime;
+       
+      if(res.data.errno === 0){
+         countdown({
+              data: this,
+              type: 3,
+              name: 'listPreSaletime',
+              now:res.data.currentTime,
+              time: startTime,
+       });
+      }
+      })
+      this.initViews();
     },
     // goBrand(id) {
     //   return `#/items/brand/${id}`;
@@ -173,17 +215,6 @@ export default {
     initViews() {
       getHome().then(res => {
         this.shopInfos = res.data.data;
-        countdown({
-              data: this,
-              type: 3,
-              name: 'time',
-              time: res.result.endTime,
-              callback: (data) => {
-                if(data.timestamp <= 0){
-                  this.activityStatus = 2;
-                }
-              }
-       });
       });
     }
   },

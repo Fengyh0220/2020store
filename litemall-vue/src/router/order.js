@@ -14,9 +14,10 @@ export default [
     }
   },
   {
-    path: '/order/checkout',
+    path: '/order/checkout/:activityid',
     name: 'orderCheckout',
-    component: () => import('@/views/order/checkout')
+    component: () => import('@/views/order/checkout'),
+    props: true
   },
   {
     path: '/order/order-detail',

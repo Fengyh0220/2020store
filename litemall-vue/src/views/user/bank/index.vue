@@ -1,8 +1,11 @@
 <template>
 <van-form>
-<van-swipe class="my-swipe" indicator-color="white">
-  <van-swipe-item>3002***********33633</van-swipe-item>
-  <van-swipe-item>3002***********33633</van-swipe-item>
+<van-swipe class="my-swipe" indicator-color="white" @change="onChange">
+  <van-swipe-item v-for="(item, i) in cardlist" :key="i">
+    <p>{{item.bank_name}}</p>
+    <p>{{item.id_number}}</p>
+    <p>{{item.bank_deposit}}</p>
+  </van-swipe-item>
 </van-swipe>
 <van-cell-group>
   <van-field v-model="name" label="持卡人姓名" placeholder="请输入持卡人姓名" />
@@ -11,7 +14,7 @@
   <van-field v-model="price" label="转账金额" placeholder="请输入转账金额" />
 </van-cell-group>
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">
+    <van-button round block type="info" @click="submit">
       确认提交
     </van-button>
   </div>
@@ -19,6 +22,7 @@
 </template>
 
 <script>
+import { selectBankList , addTurnRecord } from '@/api/bank';
 import {
   Form,
   Field,
@@ -29,13 +33,46 @@ export default {
   data() {
     return {
         price:'',
-        name:''
+        name:'',
+        cardlist:[],
+        active:0
     };
   },
   created() {
+    this.getdData();
   },
   methods: {
-   
+    onChange(index) {
+      this.active = index;
+    },
+   getdData(){
+     selectBankList({state:'1'}).then(res => {
+        this.cardlist = res.data.data.bankList;
+     })
+   },
+   submit(){
+     let item =this.cardlist[this.active]
+     let params = {
+       turn_name:this.name,
+       turn_price:this.price,
+       turn_account:item.id_number,
+       turn_account_id:item.id,
+       turn_state:'0'
+     }
+     addTurnRecord(params).then(res => {
+      if(res.data.errno === 0){
+          this.$toast({
+            message: '提交成功',
+            duration: 1500
+          });
+        }else{
+          this.$toast({
+            message: res.errmsg || '提交失败，请稍后再试',
+            duration: 1500
+          });
+        }
+     })
+   }
   },
   components: {
     [Form.name]: Form,
@@ -52,14 +89,15 @@ export default {
     margin-top: 20px;
 }
 .my-swipe .van-swipe-item {
-    width: 40% !important;
+    width: 45% !important;
     color: #fff;
     font-size: 20px;
-    line-height: 150px;
+    height: 200px;
     text-align: center;
     background-color: #39a9ed;
     margin:0 auto;
     border-radius: 15px;
+    padding: 20px 20px;
   }
 .bankcard{
     width: 85%;

@@ -3,7 +3,7 @@
     <div class="banner">
       <div class="title">限时抢购列表</div>
       <div class="activity">
-        距离活动结束还剩<span>00</span>:<span>00</span>:<span>00</span>
+        距离活动结束还剩<span>{{listTimeLimittime.d}}</span>:<span>{{listTimeLimittime.h}}</span>:<span>{{listTimeLimittime.m}}</span>
       </div>
     </div>
 
@@ -38,9 +38,10 @@
 </template>
 
 <script>
-import { grouponList } from '@/api/api';
+import { grouponList , listTimeLimit} from '@/api/api';
 import { Card, Tag, List } from 'vant';
 import scrollFixed from '@/mixin/scroll-fixed';
+import { countdown } from '@/utils/local-storage';
 
 export default {
   mixins: [scrollFixed],
@@ -51,15 +52,36 @@ export default {
       page: 0,
       limit: 10,
       loading: false,
-      finished: false
+      finished: false,
+      listTimeLimittime:{
+        d:'00',
+        h:'00',
+        m:'00',
+      }
     };
   },
 
   created() {
-    this.init();
+    // this.init();
+    this.getData();
   },
 
   methods: {
+      getData(){
+      listTimeLimit().then(res => {
+      if(res.data.errno === 0){
+        this.list = res.data.data.grouponRuleVoList;
+        let expireTime = res.data.data.grouponRuleVoList[0].expireTime;
+         countdown({
+              data: this,
+              type: 3,
+              name: 'listTimeLimittime',
+              now:res.data.currentTime,
+              time: expireTime,
+          });
+      }
+      })
+    },
     init() {
       this.page = 0;
       this.list = [];
@@ -77,7 +99,7 @@ export default {
       });
     },
     itemClick(id) {
-      this.$router.push(`/items/detail/${id}`);
+      this.$router.push(`/items/detail/${id}/`);
     }
   },
 

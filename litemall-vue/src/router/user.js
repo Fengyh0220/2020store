@@ -74,8 +74,9 @@ export default [
     component: Userused
   },
   {
-    path: '/user/price',
+    path: '/user/price/:itemId',
     name: 'user-price',
+    props: true,
     component: Userprice
   },
   {

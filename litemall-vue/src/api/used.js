@@ -30,4 +30,28 @@ export function selectNoticeList() {
     method: 'post'
   })
 }
+// 二手商品列表
+export function selectByUserIdList(data) {
+    return request({
+      url: 'wx/second/selectByUserIdList',
+      method: 'post',
+      data
+    })
+  }
+  //二手商品下架
+  export function updateOrderGoodsState(data) {
+    return request({
+      url: 'wx/second/updateOrderGoodsState',
+      method: 'post',
+      data
+    })
+  }
+//二手商品详情
+export function selectByIdOrderGoods(data) {
+    return request({
+      url: 'wx/second/selectByIdOrderGoods',
+      method: 'post',
+      data
+    })
+  }
 export const REFUND_LIST = '';

@@ -3,7 +3,7 @@
     <div class="banner">
       <div class="title">商品预售</div>
     <div class="activity">
-        距离活动结束还剩<span>00</span>:<span>00</span>:<span>00</span>
+        距离活动结束还剩<span>{{listPreSaletime.d}}</span>:<span>{{listPreSaletime.h}}</span>:<span>{{listPreSaletime.m}}</span>
     </div>
     </div>
     <van-list v-model="loading"
@@ -26,9 +26,10 @@
 </template>
 
 <script>
-import { goodsList } from '@/api/api';
+import { goodsList , listPreSale} from '@/api/api';
 import { Card, List } from 'vant';
 import scrollFixed from '@/mixin/scroll-fixed';
+import { countdown } from '@/utils/local-storage';
 
 export default {
   mixins: [scrollFixed],
@@ -39,15 +40,35 @@ export default {
       page: 0,
       limit: 10,
       loading: false,
-      finished: false
+      finished: false,
+      listPreSaletime:{
+        d:'00',
+        h:'00',
+        m:'00',
+      },
     };
   },
 
   created() {
-    this.init();
+    this.getData();
   },
 
   methods: {
+    getData(){
+      listPreSale().then(res => {
+      if(res.data.errno === 0){
+        this.list = res.data.data.grouponRuleVoList;
+        let startTime = res.data.data.grouponRuleVoList[0].startTime;
+         countdown({
+              data: this,
+              type: 3,
+              name: 'listPreSaletime',
+              now:res.data.currentTime,
+              time: startTime,
+        });
+      }
+      })
+    },
     init() {
       this.page = 0;
       this.list = [];

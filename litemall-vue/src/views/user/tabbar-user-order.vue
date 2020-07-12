@@ -2,7 +2,7 @@
   <div>
     <van-cell-group>
       <van-cell title="全部订单" to="/user/order/list" isLink/>
-      <van-cell title="抢购订单" to="/user/order/list" isLink/>
+      <!-- <van-cell title="抢购订单" to="/user/order/list" isLink/> -->
     </van-cell-group>
     <!-- <van-row class="order_status">
       <van-col span="6">

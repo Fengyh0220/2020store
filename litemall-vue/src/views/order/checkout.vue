@@ -64,7 +64,7 @@
     <van-submit-bar
       :price="actualPrice*100"
       label="总计："
-      buttonText="提交订单"
+      buttonText="支付"
       :disabled="isDisabled"
       @submit="onSubmit"
     />
@@ -75,10 +75,14 @@
 import { Card, Tag, ard, Field, SubmitBar, Toast  } from 'vant';
 import { CouponCell, CouponList, Popup } from 'vant';
 import { cartCheckout, orderSubmit, couponSelectList} from '@/api/api';
+import { balancePay } from '@/api/bank';
 import { getLocalStorage, setLocalStorage } from '@/utils/local-storage';
 import dayjs from 'dayjs';
 
 export default {
+  props: {
+    activityid: [String, Number]
+  },
   data() {
     return {
       checkedGoodsList: [],
@@ -124,20 +128,40 @@ export default {
         grouponRulesId: 0,
         message: this.message
       }).then(res => {
-        
         // 下单成功，重置下单参数。
         setLocalStorage({AddressId: 0, CartId: 0, CouponId: 0});
-
-        let orderId = res.data.data.orderId;
-        this.$router.push({
-          name: 'payment',
-          params: { orderId: orderId }
-        });
+        let orderId = res.data.data;
+        this.payorder(orderId);
       }).catch(error => {
         this.isDisabled = false;
         this.$toast("下单失败");
       })
 
+    },
+    payorder(orderId){
+      let params = {
+        orderId:orderId.orderId,
+      }
+      if(this.activityid == 0){
+        params = {
+          orderId:orderId,
+          esGoodsId:data.checkedGoodsList.id
+        }
+      }
+     balancePay(params).then(res => {
+      if(res.data.errno === 0){
+         this.$toast({
+            message: '余额支付成功',
+            duration: 1500
+          });
+        this.$router.go(-1);
+        }else{
+          this.$toast({
+            message: res.errmsg || '余额支付失败，请重新支付',
+            duration: 1500
+          });
+        }
+     })
     },
     goAddressList() {
       this.$router.push({

@@ -146,17 +146,10 @@ export default {
   created() {
     this.goodsData();
     this.selectNoticedata();
+    this.getUserInfo();
   },
 
   methods: {
-    // getUserInfo() {
-    //   const infoData = getLocalStorage(
-    //     'nickName',
-    //     'avatar'
-    //   );
-    //   this.avatar = infoData.avatar || avatar_default;
-    //   this.nickName = infoData.nickName || '昵称';
-    // },
     goodsData(){
       selectByStateList({state:'1'}).then(res => {
         this.goodslist = res.data.data;

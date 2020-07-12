@@ -441,7 +441,20 @@ export function issueList() {
     method: 'get'
   })
 }
-
+// 倒计时限时抢购timeStampPre
+export function listTimeLimit() {
+  return request({ 
+    url: '/wx/groupon/listTimeLimit',
+    method: 'post'
+  })
+}
+// 倒计时预售timeStampPre
+export function listPreSale() {
+  return request({ 
+    url: '/wx/groupon/listPreSale',
+    method: 'post'
+  })
+}
 export function getList(api, query) {
   return request({
     url: api,
