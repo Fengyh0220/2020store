@@ -35,7 +35,7 @@
         >
         <van-row gutter="10"> 
            <van-col span="12"  v-for="itemgoods in goodslist" :key="itemgoods" >
-              <router-link :to="{ path: `/items/detail/1110016/0`}">
+              <router-link :to="{ path: `/items/detail/${itemgoods}/0`}">
                 <img :src="itemgoods.picUrl" style="height:180px"/>
               <div  class="info-box">
                       <p  class="name">{{itemgoods.goodsName}}</p>
