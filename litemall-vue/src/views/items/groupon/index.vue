@@ -14,13 +14,14 @@
               @load="getGrouponList">
       <van-card v-for="(item, i) in list"
                 :key="i"
+                :thumb-link="goDetail(item.id)"
                 :desc="item.brief"
                 :title="item.name"
                 :thumb="item.picUrl"
                 :price="item.retailPrice"
                 :origin-price="item.counterPrice"
                 @click="itemClick(item.id)">
-        <div slot="tags">
+        <!-- <div slot="tags">
           <van-tag plain
                    type="primary">
             {{item.grouponMember}}人成团
@@ -30,7 +31,7 @@
                    style="margin-left:5px;">
             {{item.grouponDiscount}}元再减
           </van-tag>
-        </div>
+        </div> -->
       </van-card>
     </van-list>
 
@@ -67,6 +68,9 @@ export default {
   },
 
   methods: {
+    goDetail(id) {
+      return `#/items/detail/${id}/1`;
+    },
       getData(){
       listTimeLimit().then(res => {
       if(res.data.errno === 0){

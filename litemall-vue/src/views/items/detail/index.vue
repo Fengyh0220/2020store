@@ -19,8 +19,11 @@
           <img :src="goods.litemallOrderGoods.userHeadImg" alt="">
           <p>{{goods.litemallOrderGoods.userId}}</p>
         </div>
-        <div class="activity-time" v-if="activityId != 0 && activityId != 3">
-          距离活动结束还剩<span>00:00:00</span>
+        <div class="activity-time" v-if="activityId == 1">
+          距离活动结束<span>{{listTimeLimittime.d}}:{{listTimeLimittime.h}}:{{listTimeLimittime.m}}:{{listTimeLimittime.s}}</span>
+        </div>
+        <div class="activity-time" v-if="activityId == 2">
+          距离活动开始<span>{{listPreSaletime.d}}:{{listPreSaletime.h}}:{{listPreSaletime.m}}:{{listPreSaletime.s}}</span>
         </div>
       </van-cell>
     </van-cell-group>
@@ -74,7 +77,7 @@
 import { goodsDetail, cartGoodsCount, collectAddOrDelete, cartFastAdd } from '@/api/api';
 import { selectByIdOrderGoods } from '@/api/used';
 import { Sku, Swipe, SwipeItem, GoodsAction, GoodsActionButton, GoodsActionIcon, Popup } from 'vant';
-import { setLocalStorage } from '@/utils/local-storage';
+import { setLocalStorage ,countdown} from '@/utils/local-storage';
 import popupProps from './popup-props';
 import _ from 'lodash';
 
@@ -99,6 +102,18 @@ export default {
         tree: [],
         list: [],
         price: '1.00' // 默认价格（单位元）
+      },
+      listTimeLimittime:{
+        d:'00',
+        h:'00',
+        m:'00',
+        s:'00',
+      },
+      listPreSaletime:{
+        d:'00',
+        h:'00',
+        m:'00',
+        s:'00',
       },
       skuGoods: {
         // 商品标题
@@ -146,7 +161,28 @@ export default {
         goodsDetail({ id: this.itemId }).then(res => {
         this.goods = res.data.data;
         this.skuAdapter();
-      });
+        //限时
+       
+      if(this.activityId == 1){
+        let expireTime = this.goods.groupon[0].expireTime;
+         countdown({
+              data: this,
+              type: 3,
+              name: 'listTimeLimittime',
+              now:this.goods.currentTime,
+              time: expireTime,
+        });
+      }else{ //预售
+       let startTime = this.goods.groupon[0].startTime;
+          countdown({
+              data: this,
+              type: 3,
+              name: 'listPreSaletime',
+              now:this.goods.currentTime,
+              time: startTime,
+         });
+      }
+        });
       }
       // cartGoodsCount().then(res => {
       //   this.cartInfo = res.data.data;
@@ -219,7 +255,8 @@ export default {
         number: data.selectedNum,
         productId: 0,
         isSecond:0,
-        es_goods_id:''
+        es_goods_id:'',
+        price:''
       };
       if(this.activityId != 0){
           if (_.has(data.selectedSkuComb, 's3')) {
@@ -238,12 +275,12 @@ export default {
           }
       }else{
         // let params = {
-        params.isSecond = 1;
+        params.isSecond ='1';
         params.es_goods_id=data.litemallOrderGoods.orderId,
         params.goodsId=data.litemallOrderGoods.goodsId;
         params.number=data.litemallOrderGoods.number;
         params.productId=data.litemallOrderGoods.productId;
-        // params.grouponLinkId= data.litemallOrderGoods.id;
+        params.price= data.litemallOrderGoods.secondHandPrice;
         // params.grouponRulesId=0;
         // params.orderEsPrice = data.litemallOrderGoods.secondHandPrice;
       // };
