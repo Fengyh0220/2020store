@@ -217,7 +217,9 @@ export default {
       let params = {
         goodsId: data.goodsId,
         number: data.selectedNum,
-        productId: 0
+        productId: 0,
+        isSecond:0,
+        es_goods_id:''
       };
       if(this.activityId != 0){
           if (_.has(data.selectedSkuComb, 's3')) {
@@ -236,12 +238,14 @@ export default {
           }
       }else{
         // let params = {
+        params.isSecond = 1;
+        params.es_goods_id=data.litemallOrderGoods.orderId,
         params.goodsId=data.litemallOrderGoods.goodsId;
         params.number=data.litemallOrderGoods.number;
         params.productId=data.litemallOrderGoods.productId;
-        params.grouponLinkId= data.litemallOrderGoods.id;
-        params.grouponRulesId=0;
-        params.orderEsPrice = data.litemallOrderGoods.secondHandPrice;
+        // params.grouponLinkId= data.litemallOrderGoods.id;
+        // params.grouponRulesId=0;
+        // params.orderEsPrice = data.litemallOrderGoods.secondHandPrice;
       // };
 //         params.goodsId = data.litemallOrderGoods.goodsId;
 //         params.number=data.litemallOrderGoods.number;

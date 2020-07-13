@@ -144,8 +144,8 @@ export default {
       }
       if(this.activityid == 0){
         params = {
-          orderId:orderId,
-          esGoodsId:data.checkedGoodsList.id
+          orderId:orderId.orderId,
+          esGoodsId:orderId.esGoodsId
         }
       }
      balancePay(params).then(res => {
