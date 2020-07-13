@@ -135,7 +135,9 @@ export default {
         state: row.turn_state
       }
       this.dataForm = Object.assign({}, data)
-      this.dataForm.state === 0 ? this.dataForm.state = undefined : this.dataForm.state
+      if (this.dataForm.state === '0') {
+        this.dataForm.state = undefined
+      }
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
