@@ -1,33 +1,30 @@
 import request from '@/utils/request'
 
-export function listRecord(query) {
+export function listRecord() {
   return request({
     url: '/groupon/listRecord',
-    method: 'get',
-    params: query
+    method: 'get'
   })
 }
 
-export function listGroupon(query) {
+export function listGroupon() {
   return request({
     url: '/turn/selectTurnRecordList',
-    method: 'get',
-    params: query
+    method: 'get'
   })
 }
 // 后台财务管理转账更新状态
-export function updateTurnRecord(query) {
+export function updateTurnRecord(data) {
   return request({
     url: '/turn/updateTurnRecord',
     method: 'post',
-    params: query
+    data
   })
 }
-export function listBank(query) {
+export function listBank() {
   return request({
     url: '/bank/selectBankList',
-    method: 'get',
-    params: query
+    method: 'get'
   })
 }
 export function deleteGroupon(data) {

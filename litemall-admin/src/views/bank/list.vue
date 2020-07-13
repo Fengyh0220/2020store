@@ -27,7 +27,7 @@
 
       <el-table-column align="center" label="审核状态" prop="turn_state">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.turn_state === 0 ? 'success' : 'error' ">{{ scope.row.turn_state==1 ? '审核成功': scope.row.turn_state==0 ? '待审核': '审核失败' }}</el-tag>
+          <el-tag :type="scope.row.turn_state === 0 ? 'success' : 'error' ">{{ scope.row.turn_state == 1 ? '审核成功': scope.row.turn_state==0 ? '待审核': '审核失败' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
@@ -50,8 +50,8 @@
       >
         <el-form-item label="更改审核结果" prop="state">
           <el-select v-model="dataForm.state" placeholder="请选择">
-            <el-option :value="1" label="成功" />
-            <el-option :value="0" label="失败" />
+            <el-option value="1" label="成功" />
+            <el-option value="2" label="失败" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -93,7 +93,7 @@ export default {
       downloadLoading: false,
       dataForm: {
         id: undefined,
-        state: ''
+        state: undefined
       },
       dialogFormVisible: false,
       dialogturn_state: '',
@@ -129,26 +129,13 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    // resetForm() {
-    //   this.dataForm = {
-    //     id: undefined,
-    //     turn_state: ''
-    //   }
-    // },
-    // handleCreate() {
-    //   this.resetForm()
-    //   this.dialogturn_state = 'create'
-    //   this.dialogFormVisible = true
-    //   this.$nextTick(() => {
-    //     this.$refs['dataForm'].clearValidate()
-    //   })
-    // },
     handleUpdate(row) {
       const data = {
-        id: row.turn_account_id,
+        id: row.id,
         state: row.turn_state
       }
       this.dataForm = Object.assign({}, data)
+      this.dataForm.state === 0 ? this.dataForm.state = undefined : this.dataForm.state
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -158,7 +145,6 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log(this.dataForm, 1)
           updateTurnRecord(this.dataForm).then(() => {
             for (const v of this.list) {
               if (v.id === this.dataForm.id) {
@@ -172,6 +158,7 @@ export default {
               title: '成功',
               message: '您已提交审核'
             })
+            this.getList()
           }).catch(response => {
             this.$notify.error({
               title: '失败',
