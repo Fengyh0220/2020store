@@ -38,7 +38,7 @@
     <!-- 限时抢购 团购 -->
     <van-panel>
       <van-card :thumb-link="goDetail(grouponGood.id)"
-                v-for="(grouponGood ,index) in shopInfos.grouponList"
+                v-for="(grouponGood ,index) in shopInfos.grouponTimeLimitList"
                 :key="index"
                 :title="grouponGood.name"
                 :desc="grouponGood.brief"
@@ -60,7 +60,7 @@
 
     <van-panel class="van-panel1">
        <van-row> 
-           <van-col span="11"  v-for="(newGood ,index) in shopInfos.newGoodsList"
+           <van-col span="11"  v-for="(newGood ,index) in shopInfos.grouponPreSaleList"
                  :key="index">
               <router-link :to="{path: `/items/detail/${newGood.id}/2`}">
                 <img :src="newGood.picUrl" style="height:180px"/>

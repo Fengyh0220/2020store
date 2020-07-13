@@ -55,7 +55,8 @@ export default [
     name: 'address-edit',
     props: true,
     meta: {
-      login: true
+      login: true,
+      showHeader:false
     },
     component: UserAddressEdit
   },
@@ -66,9 +67,9 @@ export default [
   },
   {
     path: '/user/used',
+    props: true,
     meta: {
-      title:"我的二手",
-      showHeader:true,
+      login: true,
     },
     name: 'user-used',
     component: Userused

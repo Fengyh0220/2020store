@@ -274,21 +274,12 @@ export default {
             params.productId = this.getProductIdByOne(data.selectedSkuComb.s1);
           }
       }else{
-        // let params = {
         params.isSecond ='1';
         params.es_goods_id=data.litemallOrderGoods.orderId,
         params.goodsId=data.litemallOrderGoods.goodsId;
         params.number=data.litemallOrderGoods.number;
         params.productId=data.litemallOrderGoods.productId;
         params.price= data.litemallOrderGoods.secondHandPrice;
-        // params.grouponRulesId=0;
-        // params.orderEsPrice = data.litemallOrderGoods.secondHandPrice;
-      // };
-//         params.goodsId = data.litemallOrderGoods.goodsId;
-//         params.number=data.litemallOrderGoods.number;
-//         params.productId = data.litemallOrderGoods.productId;
-//         grouponLinkId: 0
-// grouponRulesId: 0
       }
       cartFastAdd(params).then(res => {
         let cartId = res.data.data;

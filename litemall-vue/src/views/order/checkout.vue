@@ -110,16 +110,12 @@ export default {
   methods: {
     onSubmit() {     
       const {AddressId, CartId, CouponId, UserCouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId', 'UserCouponId');
-
-      if (AddressId === null) {
+      if (AddressId == 0) {
         Toast.fail('请设置收货地址');
         return;
       }
-
-
       this.isDisabled = true;
-
-      orderSubmit({
+      let params ={
         addressId: AddressId,
         cartId: CartId,
         couponId: CouponId,
@@ -127,40 +123,32 @@ export default {
         grouponLinkId: 0,
         grouponRulesId: 0,
         message: this.message
-      }).then(res => {
+      }
+      orderSubmit(params).then(res => {
         // 下单成功，重置下单参数。
-        setLocalStorage({AddressId: 0, CartId: 0, CouponId: 0});
-        let orderId = res.data.data;
-        this.payorder(orderId);
-      }).catch(error => {
-        this.isDisabled = false;
-        this.$toast("下单失败");
+        if(res.data.errno == 0){
+          setLocalStorage({AddressId: 0, CartId: 0, CouponId: 0});
+          let orderId = res.data.data;
+          this.payorder(orderId);
+        }
+      }).catch((e) => {
+         this.isDisabled = false;
+          this.$toast("下单失败");
       })
-
     },
     payorder(orderId){
       let params = {
         orderId:orderId.orderId,
+        esGoodsId:this.activityid == 0 && orderId.esGoodsId
       }
-      if(this.activityid == 0){
-        params = {
-          orderId:orderId.orderId,
-          esGoodsId:orderId.esGoodsId
-        }
-      }
+      console.log(params)
      balancePay(params).then(res => {
-      if(res.data.errno === 0){
-         this.$toast({
-            message: '余额支付成功',
-            duration: 1500
-          });
-        this.$router.go(-1);
-        }else{
-          this.$toast({
-            message: res.errmsg || '余额支付失败，请重新支付',
-            duration: 1500
-          });
+        if(res.data.errno == 0){
+           this.$toast('余额支付成功');
+           this.$router.go(-1);
         }
+     }).catch((e) => {
+       this.$toast(e.data.errmsg || '余额支付失败，请重新支付');
      })
     },
     goAddressList() {

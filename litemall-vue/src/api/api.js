@@ -66,6 +66,13 @@ export function authRegister(data) {
     data
   });
 }
+export function uploadImgUrl(data) {
+  return request({
+    url: 'wx/user/uploadImg',
+    method: 'post',
+    data
+  });
+}
 const AuthReset='wx/auth/reset'; //账号密码重置
 export function authReset(data) {
   return request({
@@ -463,4 +470,6 @@ export function getList(api, query) {
   })
 }
 
+const uploadPath = process.env.VUE_APP_BASE_API + '/storage/create'
+export { uploadPath }
 export const REFUND_LIST = '';

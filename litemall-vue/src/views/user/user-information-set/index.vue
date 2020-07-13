@@ -2,10 +2,10 @@
   <div class="user_information">
     <van-cell-group>
       <van-cell title="头像" class="cell_middle">
-        <van-uploader :afterRead="avatarAfterRead">
+        <van-uploader :after-read="asyncBeforeRead" accept="image/*">
           <div class="user_avatar_upload">
             <img
-              :src="avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'"
+              :src="avatar"
               alt="你的头像"
               v-if="avatar"
             >
@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import { Uploader, Picker, Popup, Button } from 'vant';
+import { Uploader, Picker, Popup, Button ,Toast} from 'vant';
 import { removeLocalStorage } from '@/utils/local-storage';
 import { getLocalStorage } from '@/utils/local-storage';
-import { authInfo, authLogout, authProfile } from '@/api/api';
+import { authInfo, authLogout, authProfile ,uploadImgUrl} from '@/api/api';
 
 export default {
   data() {
@@ -69,8 +69,15 @@ export default {
   },
 
   methods: {
-    avatarAfterRead(file) {
-      console.log(file);
+
+    asyncBeforeRead(file) {
+      let formData = new FormData();
+      formData.append('avatar',file.file);
+      uploadImgUrl(formData).then(res => {
+        this.$dialog.alert({ message: '保存成功' }).then(() => {
+          this.getUserInfo();
+        });
+      });
     },
     onSexConfirm(value, index) {
       this.showSex = false;
@@ -98,7 +105,8 @@ export default {
     [Button.name]: Button,
     [Uploader.name]: Uploader,
     [Picker.name]: Picker,
-    [Popup.name]: Popup
+    [Popup.name]: Popup,
+    [Toast.name]:Toast
   }
 };
 </script>
