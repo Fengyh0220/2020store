@@ -65,7 +65,8 @@
       <!-- <van-goods-action-icon @click="toCart" icon="cart-o" :info="(cartInfo > 0) ? cartInfo : ''"/> -->
       <!-- <van-goods-action-icon @click="addCollect" icon="star-o" :style="(goods.userHasCollect !== 0) ? 'color: #f7b444;':''"/> -->
       <!-- <van-goods-action-button type="warning" @click="skuClick" text="加入购物车"/> -->
-      <van-goods-action-button v-if="activityId == 0" type="danger" @click="buyGoods(goods)" text="立即购买1"/>
+      <van-goods-action-button v-if="!btnStatus && activityId == 2" class="gray" text="立即购买"/>
+      <van-goods-action-button v-else-if="activityId == 0" type="danger" @click="buyGoods(goods)" text="立即购买"/>
       <van-goods-action-button  v-else type="danger" @click="skuClick" text="立即购买"/>
     </van-goods-action>
   </div>
@@ -115,6 +116,7 @@ export default {
         m:'00',
         s:'00',
       },
+      btnStatus:false,
       skuGoods: {
         // 商品标题
         title: '',
@@ -180,6 +182,11 @@ export default {
               name: 'listPreSaletime',
               now:this.goods.currentTime,
               time: startTime,
+              callback: (data) => {
+                if(data.timestamp <= 0){
+                  this.btnStatus = true;
+                }
+              }
          });
       }
         });
@@ -378,6 +385,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.gray{
+  background: #cccc!important;
+}
 .activity-time{
   width: 100%;
   span{
