@@ -50,3 +50,20 @@ export function editGroupon(data) {
     data
   })
 }
+
+// 抢购失败
+export function orderGrabbingCancel(data) {
+  return request({
+    url: 'wx/order/orderGrabbingCancel',
+    method: 'post',
+    data
+  })
+}
+// 抢购成功
+export function orderGrabbingSuccess(data) {
+  return request({
+    url: 'wx/order/orderGrabbingSuccess',
+    method: 'post',
+    data
+  })
+}
