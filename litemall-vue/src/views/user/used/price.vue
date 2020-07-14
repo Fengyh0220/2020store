@@ -1,7 +1,7 @@
 <template>
 <van-form>
 <div>
-   <img :src="productImg" class="product-img"/>
+   <img v-lazy="productImg" class="product-img"/>
    <b class="icon">确认宝贝价格发布</b>
 </div>
 <van-cell-group>

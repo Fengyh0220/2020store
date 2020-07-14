@@ -11,7 +11,7 @@
            @click="itemClick(brand.id)">
         <div class="name">
           <img class="img"
-               :src="brand.picUrl"
+               v-lazy="brand.picUrl"
                background-size="cover" />
           <div class="info-box">
             <div class="txt">{{brand.name}}</div>

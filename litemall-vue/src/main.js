@@ -33,7 +33,13 @@ Vue.use(Lazyload, {
 
 
 Vue.config.productionTip = false;
-
+// import VueLazyLoad from 'vue-lazyload'
+//  Vue.use(VueLazyLoad,{
+//      preLoad: 1.3,
+//      error:'../../assets/images/imgnull.png',
+//      loading:'../../assets/images/imgnull.png',
+//      attempt: 1
+//  })
 new Vue({
   router,
   store,

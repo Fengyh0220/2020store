@@ -11,7 +11,7 @@
            @click="itemClick(topic.id)">
         <div class="name">
           <img class="img"
-               :src="topic.picUrl"
+               v-lazy="topic.picUrl"
                background-size="cover" />
           <div class="info-box">
             <div class="txt">{{topic.title}}</div>

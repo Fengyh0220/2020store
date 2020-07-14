@@ -2,8 +2,8 @@
   <div class="user_header" :style="{backgroundImage: `url(${background_image})`}">
     <van-icon name="set" class="user_set" @click="toSetting"/>
     <div class="user_avatar">
-      <img :src="avatar" alt="头像" width="55" height="55">
-      <div>{{nickName}}</div>
+      <img v-lazy="userData.avatar" alt="头像" width="55" height="55">
+      <div>{{userData.username}}</div>
     </div>
     <div class="right">
       <p>我的余额：￥{{userData.balance}}</p>
@@ -38,7 +38,7 @@ export default {
   },
 
   activated() {
-    this.getUserInfo();
+    // this.getUserInfo();
     this.getuserData();
   },
 
@@ -50,14 +50,14 @@ export default {
       }
       })
     },
-    getUserInfo() {
-      const infoData = getLocalStorage(
-        'nickName',
-        'avatar'
-      );
-      this.avatar = infoData.avatar || avatar_default;
-      this.nickName = infoData.nickName || '昵称';
-    },
+    // getUserInfo() {
+    //   const infoData = getLocalStorage(
+    //     'nickName',
+    //     'avatar'
+    //   );
+    //   this.avatar = infoData.avatar || avatar_default;
+    //   this.nickName = infoData.nickName || '昵称';
+    // },
     toSetting() {
       this.$router.push({ name: 'user-information' });
     }
@@ -91,7 +91,6 @@ export default {
   }
 }
 .right{
-  width: 30%;
   float: left;
   .btn{
     width: 50%;

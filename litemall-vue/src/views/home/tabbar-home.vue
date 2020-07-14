@@ -4,7 +4,7 @@
                indicator-color="white">
       <van-swipe-item v-for="(banner, index) in shopInfos.banner"
                       :key="index">
-        <img :src="banner.url"
+        <img v-lazy="banner.url"
              style="height:230px">
       </van-swipe-item>
     </van-swipe>
@@ -63,7 +63,7 @@
            <van-col span="11"  v-for="(newGood ,index) in shopInfos.grouponPreSaleList"
                  :key="index">
               <router-link :to="{path: `/items/detail/${newGood.id}/2`}">
-                <img :src="newGood.picUrl" style="height:180px"/>
+                <img v-lazy="newGood.picUrl" style="height:180px"/>
                  <div  class="info-box">
                       <p  class="name">{{newGood.name}}</p>
                       <div  class="other-box">
@@ -243,7 +243,7 @@ export default {
 <style lang="scss" scoped>
 
 .info-box{
-    width: 180px;
+    width: 100%;
     height: auto;
     position: relative;
     padding: 0 10px;
@@ -464,6 +464,18 @@ export default {
     border-radius: 5px;
     margin: 10px 7px 0;
     padding-bottom: 10px;
+    .name{
+    font-size: 14px;
+    padding-top: 5px;
+    color: #252525;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    word-break: break-all;
+    margin: 0
+}
   img{
     width: 100%;
     height: 100%;
@@ -473,7 +485,7 @@ export default {
   padding: 0 8px;
   margin-top: 10px;
   display: flex;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 }
 .tab_home{

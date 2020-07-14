@@ -19,7 +19,7 @@
       <div class="class_tree_items_wrap clearfix">
         <div @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList">
           <div class="class_tree_item_img">
-            <img :src="item.picUrl" :alt="item.name">
+            <img v-lazy="item.picUrl" :alt="item.name">
           </div>
           <div class="class_tree_item_name">{{item.name}}</div>
         </div>

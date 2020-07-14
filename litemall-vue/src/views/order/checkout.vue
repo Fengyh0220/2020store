@@ -114,6 +114,7 @@ export default {
         Toast.fail('请设置收货地址');
         return;
       }
+      let grouponRulesId = localStorage.getItem('grouponRulesId');
       this.isDisabled = true;
       let params ={
         addressId: AddressId,
@@ -121,7 +122,7 @@ export default {
         couponId: CouponId,
         userCouponId: UserCouponId,
         grouponLinkId: 0,
-        grouponRulesId: 0,
+        grouponRulesId: grouponRulesId,
         message: this.message
       }
       orderSubmit(params).then(res => {
@@ -141,7 +142,6 @@ export default {
         orderId:orderId.orderId,
         esGoodsId:this.activityid == 0 && orderId.esGoodsId
       }
-      console.log(params)
      balancePay(params).then(res => {
         if(res.data.errno == 0){
            this.$toast('余额支付成功');

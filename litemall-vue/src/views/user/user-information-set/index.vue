@@ -2,10 +2,10 @@
   <div class="user_information">
     <van-cell-group>
       <van-cell title="头像" class="cell_middle">
-        <van-uploader :after-read="asyncBeforeRead" accept="image/*">
+        <van-uploader :after-read="asyncBeforeRead">
           <div class="user_avatar_upload">
             <img
-              :src="avatar"
+              v-lazy="avatar"
               alt="你的头像"
               v-if="avatar"
             >
@@ -72,11 +72,15 @@ export default {
 
     asyncBeforeRead(file) {
       let formData = new FormData();
-      formData.append('avatar',file.file);
+      formData.append('file',file.file);
       uploadImgUrl(formData).then(res => {
-        this.$dialog.alert({ message: '保存成功' }).then(() => {
-          this.getUserInfo();
-        });
+        // this.$dialog.alert({ message: '保存成功' }).then(() => {
+          // this.getUserInfo();
+          authProfile({avatar:res.data.data.url}).then(res => {
+                res.data.errno == 0 && this.$toast('修改成功');
+                this.getUserInfo();
+          })
+        // });
       });
     },
     onSexConfirm(value, index) {

@@ -9,7 +9,7 @@
                v-for="(goods ,index) in topicGoods"
                :key="index">
         <router-link :to="{ path: `/items/detail/${goods.id}`}">
-          <img :src="goods.picUrl"
+          <img v-lazy="goods.picUrl"
                style="width:150px;height:150px;">
         </router-link>
         <div style="margin-left: 20px; rgb(123, 116, 116);">{{goods.name}}</div>

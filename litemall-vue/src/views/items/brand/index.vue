@@ -3,7 +3,7 @@
     <div class="brand-info">
       <div class="name">
         <img class="img"
-             :src="brand.picUrl"
+             v-lazy="brand.picUrl"
              background-size="cover" />
         <div class="info-box">
           <div class="txt">{{brand.name}}</div>
@@ -20,7 +20,7 @@
                v-for="(goods ,index) in brandGoods"
                :key="index">
         <router-link :to="{ path: `/items/detail/${goods.id}`}">
-          <img :src="goods.picUrl"
+          <img v-lazy="goods.picUrl"
                style="width:150px;height:150px;">
         </router-link>
         <div style="margin-left: 20px; rgb(123, 116, 116);">{{goods.name}}</div>

@@ -16,7 +16,7 @@
         </div>
         <div class="item_intro">{{goods.info.brief}}</div>
         <div class="used-div" v-if="activityId == 0">
-          <img :src="goods.litemallOrderGoods.userHeadImg" alt="">
+          <img v-lazy="goods.litemallOrderGoods.userHeadImg" alt="">
           <p>{{goods.litemallOrderGoods.userId}}</p>
         </div>
         <div class="activity-time" v-if="activityId == 1">
@@ -163,8 +163,8 @@ export default {
         goodsDetail({ id: this.itemId }).then(res => {
         this.goods = res.data.data;
         this.skuAdapter();
+         localStorage.setItem('grouponRulesId',this.goods.groupon[0].id);
         //限时
-       
       if(this.activityId == 1){
         let expireTime = this.goods.groupon[0].expireTime;
          countdown({

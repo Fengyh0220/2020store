@@ -5,7 +5,7 @@
       <van-swipe :autoplay="3000" indicator-color="white" v-for="(banner, index) in bannerlist"
                       :key="index">
             <van-swipe-item>
-                <img :src="banner.url" style="height: 180px">
+                <img v-lazy="banner.url" style="height:250px">
             </van-swipe-item>
     </van-swipe>
    <van-notice-bar  :scrollable="false" >
@@ -18,8 +18,8 @@
   >
     <van-swipe-item v-for="(item, i) in NoticeList"
                       :key="i">
-        <img :src="item.user_head_img" v-if="item.user_head_img"/>
-    canny:{{item.content}}</van-swipe-item>
+        <img v-lazy="item.user_head_img" v-if="item.user_head_img"/>
+    {{userData.nick_name}}:{{item.content}}</van-swipe-item>
   </van-swipe>
 </van-notice-bar>
 <!-- <ul class="pro-nav">
@@ -33,10 +33,10 @@
         finished-text="没有更多了"
         @load="onLoad"
         >
-        <van-row gutter="10"> 
-           <van-col span="12"  v-for="itemgoods in goodslist" :key="itemgoods" >
+        <van-row> 
+           <van-col span="11"  v-for="(itemgoods,i) in goodslist" :key="i" >
               <router-link :to="{ path: `/items/detail/${itemgoods.id}/0`}">
-                <img :src="itemgoods.picUrl" style="height:180px"/>
+                <img v-lazy="itemgoods.picUrl" style="height:180px"/>
               <div  class="info-box">
                       <p  class="name">{{itemgoods.goodsName}}</p>
                       <div  class="other-box">
@@ -45,7 +45,7 @@
                               <s >￥{{itemgoods.price}}</s>
                             </p>
                           <div class="sale-nums">
-                              <img :src="itemgoods.userHeadImg">
+                              <img v-lazy="itemgoods.userHeadImg">
                               <span>{{itemgoods.userId}}</span>
                               </div>
                      </div>
@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import { getUserInfo } from '@/api/bank';
 import { selectByStateList, querySecondBanner, selectNoticeList,addNoticeUrl } from '@/api/used';
 import scrollFixed from '@/mixin/scroll-fixed';
 import avatar_default from '@/assets/images/avatar_default.png';
@@ -87,24 +88,14 @@ import {
   SwipeItem,
   DropdownMenu,
   DropdownItem,
+  PullRefresh,
    NoticeBar ,
    Toast,
    Overlay,
    Form,
   Field,
-//   Tabbar,
-//   TabbarItem,
-//   Search,
-//   Panel,
-//   CouponCell,
-//   CouponList,
-//   Toast,
-//   Card,
-//   Grid,
-//   GridItem,
   Row,
   Col,
-//   Tag
 } from 'vant';
 
 export default {
@@ -126,9 +117,10 @@ export default {
       nickName: '',
       avatar: avatar_default,
       adddata: {
-        user_id:'111',
+        user_id:'',
         content:'',
       },
+      userData:{}
       // typeList: [{
       //   index: 0,
       //   sortList: [{
@@ -146,10 +138,17 @@ export default {
   created() {
     this.goodsData();
     this.selectNoticedata();
-    this.getUserInfo();
+    this.getuserData();
   },
 
   methods: {
+    getuserData(){
+      getUserInfo().then(res => {
+      if(res.data.errno === 0){
+        this.userData=res.data.data.userInfo;
+      }
+      })
+    },
     goodsData(){
       selectByStateList({state:'1'}).then(res => {
         this.goodslist = res.data.data;
@@ -165,21 +164,15 @@ export default {
     },
     onsubmit(){
       let params = {
-        user_id:'111',
+        user_id:this.userData.id,
         content:this.message,
       };
-      // this.adddata = {
-      //   user_id:'111',
-      //   content:this.message,
-      // }
       addNoticeUrl(params).then(res => {
-        if(res.errno == 0){
+        if(res.data.errno == 0){
           this.NoticeList = res.data.data;
           this.show = false;
         }
-        //  this.NoticeList = res.data.data;
       }).catch (() => {});
-
     },
 
    toggleIndex(val) {
@@ -231,10 +224,7 @@ export default {
     [Col.name]: Col,
     [Overlay.name]: Overlay,
     [Toast.name]: Toast,
-    // [CouponCell.name]: CouponCell,
-    // [CouponList.name]: CouponList,
-    // [Search.name]: Search,
-    // [Panel.name]: Panel,
+    [PullRefresh.name]: PullRefresh,
     [List.name]: List,
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem,
@@ -269,7 +259,6 @@ export default {
   }
 .top-div{
     width: 100%;
-    max-height: 250px;
     background: #fff;
     // position: fixed;
     // z-index: 9;
@@ -360,15 +349,28 @@ img{
     width: 100%;
     height: 100%;
 }
+
+.van-col{
+  background: #fff;
+  border-radius: 5px;
+  margin: 10px 7px 0;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
 .van-row{
   padding: 0 8px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .info-box{
-    width: 180px;
-    height: auto;
-    position: relative;
-    padding: 0 10px;
-    margin: 0 auto
+  width: 100%;
+  height: auto;
+  position: relative;
+  padding: 0 5px;
+  margin: 0 auto
 }
 .name{
     font-size: 14px;
