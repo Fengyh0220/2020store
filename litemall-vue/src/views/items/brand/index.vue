@@ -65,7 +65,7 @@ export default {
       });
     },
     itemClick(id) {
-      this.$router.push(`/items/detail/${id}`);
+      this.$router.push(`/items/detail/${id}/3`);
     }
   },
 
