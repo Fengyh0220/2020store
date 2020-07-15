@@ -41,12 +41,13 @@
     <van-sku
       v-model="showSku"
       :sku="sku"
-      :hide-stock="true"
+      :hide-stock="false"
       :close-on-click-overlay ="true"
       :goods="skuGoods"
       :goodsId="goods.info.id"
       @buy-clicked="buyGoods"
       :show-add-cart-btn = "false"
+      :quota ='1'
     />
     <van-popup v-model="propsPopup" position="bottom">
       <popup-props :propsStr="props_str"></popup-props>
@@ -170,7 +171,7 @@ export default {
         goodsDetail({ id: this.itemId }).then(res => {
         this.goods = res.data.data;
         this.skuAdapter();
-         localStorage.setItem('grouponRulesId',this.goods.groupon[0].id);
+        this.activityId == 2 && localStorage.setItem('grouponRulesId',this.goods.groupon[0].id);
         //限时
       if(this.activityId == 1){
         let expireTime = this.goods.groupon[0].expireTime;

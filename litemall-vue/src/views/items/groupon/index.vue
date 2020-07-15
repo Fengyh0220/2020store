@@ -14,7 +14,6 @@
               @load="getGrouponList">
       <van-card v-for="(item, i) in list"
                 :key="i"
-                :thumb-link="goDetail(item.id)"
                 :desc="item.brief"
                 :title="item.name"
                 :thumb="item.picUrl"
@@ -69,9 +68,6 @@ export default {
   },
 
   methods: {
-    goDetail(id) {
-      return `#/items/detail/${id}/1`;
-    },
       getData(){
       listTimeLimit().then(res => {
       if(res.data.errno === 0){
@@ -104,7 +100,7 @@ export default {
       });
     },
     itemClick(id) {
-      this.$router.push(`/items/detail/${id}/`);
+      this.$router.push(`/items/detail/${id}/1`);
     }
   },
 

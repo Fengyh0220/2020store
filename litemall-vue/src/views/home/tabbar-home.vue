@@ -36,7 +36,7 @@
       </router-link>
     </div>
     <!-- 限时抢购 团购 -->
-    <van-panel v-if="shopInfos.grouponTimeLimitList.length > 0">
+    <van-panel v-if="shopInfos.grouponTimeLimitList && shopInfos.grouponTimeLimitList.length > 0">
       <van-card :thumb-link="goDetail(grouponGood.id)"
                 v-for="(grouponGood ,index) in shopInfos.grouponTimeLimitList"
                 :key="index"
@@ -58,7 +58,7 @@
       </div>
     </van-panel>
 
-    <van-panel class="van-panel1" v-if="shopInfos.grouponPreSaleList.length > 0">
+    <van-panel class="van-panel1" v-if="shopInfos.grouponPreSaleList && shopInfos.grouponPreSaleList.length > 0">
        <van-row> 
            <van-col span="11"  v-for="(newGood ,index) in shopInfos.grouponPreSaleList"
                  :key="index">
@@ -165,21 +165,23 @@ export default {
     getData(){
       //限时
       listTimeLimit().then(res => {
-       let expireTime = res.data.data.grouponRuleVoList[0].expireTime;
-      if(res.data.errno === 0){
-         countdown({
-              data: this,
-              type: 2,
-              name: 'listTimeLimittime',
-              now:res.data.currentTime,
-              time: expireTime,
-       });
+      if( res.data.data.grouponRuleVoList.length > 0) {
+            let expireTime = res.data.data.grouponRuleVoList[0].expireTime;
+          if(res.data.errno === 0){
+            countdown({
+                  data: this,
+                  type: 2,
+                  name: 'listTimeLimittime',
+                  now:res.data.currentTime,
+                  time: expireTime,
+          });
+          }
       }
       })
       //预售
       listPreSale().then(res => {
-       let startTime = res.data.data.grouponRuleVoList[0].startTime;
-       
+      if(res.data.data.grouponRuleVoList.length > 0) {
+        let startTime = res.data.data.grouponRuleVoList[0].startTime;
       if(res.data.errno === 0){
          countdown({
               data: this,
@@ -188,6 +190,7 @@ export default {
               now:res.data.currentTime,
               time: startTime,
        });
+      }
       }
       })
       this.initViews();
