@@ -3,16 +3,16 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.grouponRuleId" clearable class="filter-item" style="width: 200px;" placeholder="请输入团购规则ID" />
+      <el-input v-model="listQuery.grouponRuleId" clearable class="filter-item" style="width: 200px;" placeholder="请输入限时活动订单ID" />
       <el-button v-permission="['GET /admin/groupon/listRecord']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button
+      <!-- <el-button
         :loading="downloadLoading"
         class="filter-item"
         type="primary"
         icon="el-icon-download"
         @click="handleDownload"
       >导出
-      </el-button>
+      </el-button> -->
     </div>
 
     <!-- 查询结果 -->
@@ -40,8 +40,16 @@
       <el-table-column align="center" label="结束时间" prop="rules.expireTime" />
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button v-permission="['POST /admin/bank/updateBank']" type="primary" size="mini" @click="handleUpdate(scope.row)">确认抢购</el-button>
-          <el-button v-permission="['POST /bank/deleteBank']" type="danger" size="mini" @click="handleDelete(scope.row.id)">抢购失败</el-button>
+          <template v-if="scope.row.orderInfo.orderStatus == 201">
+            <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">抢购成功</el-button>
+            <el-button type="danger" size="mini" @click="handleDelete(scope.row)">抢购失败</el-button>
+          </template>
+          <template v-if="scope.row.orderInfo.orderStatus == 301">
+            <el-button type="primary" size="mini" style="background-color:#999;border:1px solid #999">抢购成功</el-button>
+          </template>
+          <template v-if="scope.row.orderInfo.orderStatus == 203">
+            <el-button type="danger" size="mini" style="background-color:#999;border:1px solid #999">抢购失败</el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -78,6 +86,7 @@
 
 <script>
 import { listRecord } from '@/api/groupon'
+import { orderGrabbingCancel, orderGrabbingSuccess } from '@/api/bank'
 import BackToTop from '@/components/BackToTop'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -117,19 +126,39 @@ export default {
         this.listLoading = false
       })
     },
+    handleDelete(data) {
+      const orderId = data.groupon.orderId
+      const userId = data.groupon.userId
+      orderGrabbingCancel({ orderId: orderId, userId: userId }).then(res => {
+        this.$notify.success('订单状态更改成功')
+        this.getList()
+      }).catch((error) => {
+        this.$notify.error(error.data.errmsg)
+      })
+    },
+    handleUpdate(data) {
+      const orderId = data.groupon.orderId
+      const userId = data.groupon.userId
+      orderGrabbingSuccess({ orderId: orderId, userId: userId }).then(res => {
+        this.$notify.success('订单状态更改成功')
+        this.getList()
+      }).catch((error) => {
+        this.$notify.error(error.data.errmsg)
+      })
+    },
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    },
-    handleDownload() {
-      this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['商品ID', '名称', '首页主图', '折扣', '人数要求', '活动开始时间', '活动结束时间']
-          const filterVal = ['id', 'name', 'pic_url', 'discount', 'discountMember', 'addTime', 'expireTime']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
-          this.downloadLoading = false
-        })
     }
+    // handleDownload() {
+    //   this.downloadLoading = true
+    //     import('@/vendor/Export2Excel').then(excel => {
+    //       const tHeader = ['订单ID', '用户ID', '活动库存', '活动价格', '活动开始时间', '活动结束时间']
+    //       const filterVal = ['groupon.orderId', 'groupon.userId', 'subGroupons.length', 'rules.discount', 'rules.addTime', 'rules.expireTime']
+    //       excel.export_json_to_excel2(tHeader, this.list, filterVal, '限时活动订单')
+    //       this.downloadLoading = false
+    //     })
+    // }
   }
 }
 </script>

@@ -27,7 +27,7 @@
         </div>
       </van-cell>
     </van-cell-group>
-  <div class="item_cell_group" v-if="activityId != 0">
+  <div class="item_cell_group" v-if="activitystatus">
     <van-cell-group>
       <van-cell
         title="规格"
@@ -117,6 +117,7 @@ export default {
         s:'00',
       },
       btnStatus:false,
+      activitystatus:true,
       skuGoods: {
         // 商品标题
         title: '',
@@ -147,6 +148,12 @@ export default {
 
   created() {
     this.initData();
+    if(this.activityId == 0){
+      this.activitystatus= false;
+    }
+    if(!this.btnStatus && this.activityId == 2){
+      this.activitystatus = false;
+    }
   },
 
   methods: {

@@ -42,7 +42,7 @@
     </md-field-group>
 
 
-      <div class="text-desc text-center bottom_positon">技术支持: litemall</div>
+      <!-- <div class="text-desc text-center bottom_positon">技术支持: litemall</div> -->
 
 	</div>
 </template>

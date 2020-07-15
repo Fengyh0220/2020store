@@ -261,9 +261,9 @@ export default {
     handleDownload() {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['商品ID', '名称', '首页主图', '限时折扣', '活动库存', '活动开始时间', '活动结束时间']
-          const filterVal = ['id', 'name', 'pic_url', 'discount', 'activitiStock', 'addTime', 'expireTime']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
+          const tHeader = ['商品ID', '名称', '限时折扣', '活动库存', '活动开始时间', '活动结束时间']
+          const filterVal = ['goodsId', 'goodsName', 'discount', 'activitiStock', 'addTime', 'expireTime']
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '限时抢购商品信息')
           this.downloadLoading = false
         })
     }

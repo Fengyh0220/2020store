@@ -196,16 +196,16 @@ export const asyncRoutes = [
           noCache: true
         }
       },
-      {
-        path: 'aftersale',
-        component: () => import('@/views/mall/aftersale'),
-        name: 'aftersale',
-        meta: {
-          perms: ['GET /admin/aftersale/list', 'GET /admin/aftersale/detail', 'POST /admin/order/receive', 'POST /admin/aftersale/complete', 'POST /admin/aftersale/reject'],
-          title: '售后管理',
-          noCache: true
-        }
-      },
+      // {
+      //   path: 'aftersale',
+      //   component: () => import('@/views/mall/aftersale'),
+      //   name: 'aftersale',
+      //   meta: {
+      //     perms: ['GET /admin/aftersale/list', 'GET /admin/aftersale/detail', 'POST /admin/order/receive', 'POST /admin/aftersale/complete', 'POST /admin/aftersale/reject'],
+      //     title: '售后管理',
+      //     noCache: true
+      //   }
+      // },
       {
         path: 'issue',
         component: () => import('@/views/mall/issue'),
@@ -270,17 +270,17 @@ export const asyncRoutes = [
           noCache: true
         },
         hidden: true
-      },
-      {
-        path: 'comment',
-        component: () => import('@/views/goods/comment'),
-        name: 'goodsComment',
-        meta: {
-          perms: ['GET /admin/comment/list', 'POST /admin/comment/delete'],
-          title: '商品评论',
-          noCache: true
-        }
       }
+      // {
+      //   path: 'comment',
+      //   component: () => import('@/views/goods/comment'),
+      //   name: 'goodsComment',
+      //   meta: {
+      //     perms: ['GET /admin/comment/list', 'POST /admin/comment/delete'],
+      //     title: '商品评论',
+      //     noCache: true
+      //   }
+      // }
     ]
   },
   {
@@ -304,27 +304,27 @@ export const asyncRoutes = [
           noCache: true
         }
       },
-      {
-        path: 'coupon',
-        component: () => import('@/views/promotion/coupon'),
-        name: 'coupon',
-        meta: {
-          perms: ['GET /admin/coupon/list', 'POST /admin/coupon/create', 'POST /admin/coupon/update', 'POST /admin/coupon/delete'],
-          title: '优惠券管理',
-          noCache: true
-        }
-      },
-      {
-        path: 'couponDetail',
-        component: () => import('@/views/promotion/couponDetail'),
-        name: 'couponDetail',
-        meta: {
-          perms: ['GET /admin/coupon/list', 'GET /admin/coupon/listuser'],
-          title: '优惠券详情',
-          noCache: true
-        },
-        hidden: true
-      },
+      // {
+      //   path: 'coupon',
+      //   component: () => import('@/views/promotion/coupon'),
+      //   name: 'coupon',
+      //   meta: {
+      //     perms: ['GET /admin/coupon/list', 'POST /admin/coupon/create', 'POST /admin/coupon/update', 'POST /admin/coupon/delete'],
+      //     title: '优惠券管理',
+      //     noCache: true
+      //   }
+      // },
+      // {
+      //   path: 'couponDetail',
+      //   component: () => import('@/views/promotion/couponDetail'),
+      //   name: 'couponDetail',
+      //   meta: {
+      //     perms: ['GET /admin/coupon/list', 'GET /admin/coupon/listuser'],
+      //     title: '优惠券详情',
+      //     noCache: true
+      //   },
+      //   hidden: true
+      // },
       {
         path: 'topic',
         component: () => import('@/views/promotion/topic'),
@@ -465,16 +465,16 @@ export const asyncRoutes = [
           noCache: true
         }
       },
-      {
-        path: 'express',
-        component: () => import('@/views/config/express'),
-        name: 'configExpress',
-        meta: {
-          perms: ['GET /admin/config/express', 'POST /admin/config/express'],
-          title: '运费配置',
-          noCache: true
-        }
-      },
+      // {
+      //   path: 'express',
+      //   component: () => import('@/views/config/express'),
+      //   name: 'configExpress',
+      //   meta: {
+      //     perms: ['GET /admin/config/express', 'POST /admin/config/express'],
+      //     title: '运费配置',
+      //     noCache: true
+      //   }
+      // },
       {
         path: 'order',
         component: () => import('@/views/config/order'),
@@ -484,17 +484,17 @@ export const asyncRoutes = [
           title: '订单配置',
           noCache: true
         }
-      },
-      {
-        path: 'wx',
-        component: () => import('@/views/config/wx'),
-        name: 'configWx',
-        meta: {
-          perms: ['GET /admin/config/wx', 'POST /admin/config/wx'],
-          title: '小程序配置',
-          noCache: true
-        }
       }
+      // {
+      //   path: 'wx',
+      //   component: () => import('@/views/config/wx'),
+      //   name: 'configWx',
+      //   meta: {
+      //     perms: ['GET /admin/config/wx', 'POST /admin/config/wx'],
+      //     title: '小程序配置',
+      //     noCache: true
+      //   }
+      // }
     ]
   },
 
@@ -541,47 +541,48 @@ export const asyncRoutes = [
       }
     ]
   },
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   alwaysShow: true,
+  //   name: 'externalLink',
+  //   meta: {
+  //     title: '外链',
+  //     icon: 'link'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'https://cloud.tencent.com/product/cos',
+  //       meta: { title: '腾讯云存储', icon: 'link' }
+  //     },
+  //     {
+  //       path: 'https://cloud.tencent.com/product/sms',
+  //       meta: { title: '腾讯云短信', icon: 'link' }
+  //     },
+  //     {
+  //       path: 'https://pay.weixin.qq.com/index.php/core/home/login',
+  //       meta: { title: '微信支付', icon: 'link' }
+  //     },
+  //     {
+  //       path: 'https://mpkf.weixin.qq.com/',
+  //       meta: { title: '小程序客服', icon: 'link' }
+  //     },
+  //     {
+  //       path: 'https://www.alibabacloud.com/zh/product/oss',
+  //       meta: { title: '阿里云存储', icon: 'link' }
+  //     },
+  //     {
+  //       path: 'https://www.qiniu.com/products/kodo',
+  //       meta: { title: '七牛云存储', icon: 'link' }
+  //     },
+  //     {
+  //       path: 'http://www.kdniao.com/api-track',
+  //       meta: { title: '快递鸟', icon: 'link' }
+  //     }
+  //   ]
+  // },
   {
-    path: 'external-link',
-    component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
-    name: 'externalLink',
-    meta: {
-      title: '外链',
-      icon: 'link'
-    },
-    children: [
-      {
-        path: 'https://cloud.tencent.com/product/cos',
-        meta: { title: '腾讯云存储', icon: 'link' }
-      },
-      {
-        path: 'https://cloud.tencent.com/product/sms',
-        meta: { title: '腾讯云短信', icon: 'link' }
-      },
-      {
-        path: 'https://pay.weixin.qq.com/index.php/core/home/login',
-        meta: { title: '微信支付', icon: 'link' }
-      },
-      {
-        path: 'https://mpkf.weixin.qq.com/',
-        meta: { title: '小程序客服', icon: 'link' }
-      },
-      {
-        path: 'https://www.alibabacloud.com/zh/product/oss',
-        meta: { title: '阿里云存储', icon: 'link' }
-      },
-      {
-        path: 'https://www.qiniu.com/products/kodo',
-        meta: { title: '七牛云存储', icon: 'link' }
-      },
-      {
-        path: 'http://www.kdniao.com/api-track',
-        meta: { title: '快递鸟', icon: 'link' }
-      }
-    ]
-  }, {
     path: '/bank',
     component: Layout,
     redirect: 'noredirect',
@@ -613,29 +614,30 @@ export const asyncRoutes = [
         }
       }
     ]
-  }, {
-    path: '/used',
-    component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
-    name: 'userUsed',
-    meta: {
-      title: '二手市场',
-      icon: 'chart'
-    },
-    children: [
-      {
-        path: 'used',
-        component: () => import('@/views/used'),
-        name: 'used',
-        meta: {
-          perms: ['GET /admin/used/index'],
-          title: '商品列表',
-          noCache: true
-        }
-      }
-    ]
   },
+  // , {
+  //   path: '/used',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   alwaysShow: true,
+  //   name: 'userUsed',
+  //   meta: {
+  //     title: '二手市场',
+  //     icon: 'chart'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'used',
+  //       component: () => import('@/views/used'),
+  //       name: 'used',
+  //       meta: {
+  //         perms: ['GET /admin/used/index'],
+  //         title: '商品列表',
+  //         noCache: true
+  //       }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/profile',
