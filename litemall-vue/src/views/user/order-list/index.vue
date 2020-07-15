@@ -34,10 +34,10 @@
                           v-if="el.handleOption.pay"
                           type="danger"
                           @click.stop="toPay(el.id)">去支付</van-button>
-              <van-button size="small"
+              <!-- <van-button size="small"
                           v-if="el.handleOption.confirm"
                           type="danger"
-                          @click.stop="confirmOrder(el.id)">确认收货</van-button>
+                          @click.stop="confirmOrder(el.id)">确认收货</van-button> -->
             </div>
           </van-panel>
         </van-list>

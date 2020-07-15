@@ -36,7 +36,7 @@
       </router-link>
     </div>
     <!-- 限时抢购 团购 -->
-    <van-panel>
+    <van-panel v-if="shopInfos.grouponTimeLimitList.length > 0">
       <van-card :thumb-link="goDetail(grouponGood.id)"
                 v-for="(grouponGood ,index) in shopInfos.grouponTimeLimitList"
                 :key="index"
@@ -52,13 +52,13 @@
           <van-cell title="限时抢购"
                     isLink>
             <router-link to="/items/groupon"
-                         class="text-desc">距离活动结束<span>{{listTimeLimittime.d}}:{{listTimeLimittime.h}}:{{listTimeLimittime.m}}</span></router-link>
+                         class="text-desc">距离活动结束<span>{{listTimeLimittime.h}}:{{listTimeLimittime.m}}:{{listTimeLimittime.s}}</span></router-link>
           </van-cell>
         </van-cell-group>
       </div>
     </van-panel>
 
-    <van-panel class="van-panel1">
+    <van-panel class="van-panel1" v-if="shopInfos.grouponPreSaleList.length > 0">
        <van-row> 
            <van-col span="11"  v-for="(newGood ,index) in shopInfos.grouponPreSaleList"
                  :key="index">
@@ -81,7 +81,7 @@
           <van-cell title="商品预售"
                     isLink>
             <router-link to="/items/new"
-                         class="text-desc">距离活动开始<span>{{listPreSaletime.d}}:{{listPreSaletime.h}}:{{listPreSaletime.m}}</span></router-link>
+                         class="text-desc">距离活动开始<span>{{listPreSaletime.h}}:{{listPreSaletime.m}}:{{listPreSaletime.s}}</span></router-link>
           </van-cell>
         </van-cell-group>
       </div>
@@ -141,14 +141,14 @@ export default {
       shopInfos: [],
       isLoading: false,
       listTimeLimittime:{
-        d:'00',
         h:'00',
         m:'00',
+        s:'00',
       },
       listPreSaletime:{
-        d:'00',
         h:'00',
         m:'00',
+        s:'00',
       },
     };
   },
@@ -169,7 +169,7 @@ export default {
       if(res.data.errno === 0){
          countdown({
               data: this,
-              type: 3,
+              type: 2,
               name: 'listTimeLimittime',
               now:res.data.currentTime,
               time: expireTime,
@@ -183,7 +183,7 @@ export default {
       if(res.data.errno === 0){
          countdown({
               data: this,
-              type: 3,
+              type: 1,
               name: 'listPreSaletime',
               now:res.data.currentTime,
               time: startTime,

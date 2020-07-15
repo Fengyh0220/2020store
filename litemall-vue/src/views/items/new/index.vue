@@ -3,7 +3,7 @@
     <div class="banner">
       <div class="title">商品预售</div>
     <div class="activity">
-        距离活动结束还剩<span>{{listPreSaletime.d}}</span>:<span>{{listPreSaletime.h}}</span>:<span>{{listPreSaletime.m}}</span>
+        距离活动结束还剩<span>{{listPreSaletime.d}}</span>:<span>{{listPreSaletime.h}}</span>:<span>{{listPreSaletime.m}}</span>:<span>{{listPreSaletime.s}}</span>
     </div>
     </div>
     <van-list v-model="loading"
@@ -46,6 +46,7 @@ export default {
         d:'00',
         h:'00',
         m:'00',
+        s:'00',
       },
     };
   },

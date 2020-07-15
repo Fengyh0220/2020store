@@ -58,11 +58,11 @@
                     @click="deleteOrder(orderInfo.id)"
                     style=" float:right"
                     type="danger">删除订单</van-button> -->
-        <van-button size="small"
+        <!-- <van-button size="small"
                     v-if="handleOption.confirm"
                     @click="confirmOrder(orderInfo.id)"
                     style=" float:right"
-                    type="danger">确认收货</van-button>
+                    type="danger">确认收货</van-button> -->
         <!-- <van-button size="small"
                     v-if="handleOption.refund"
                     @click="refundOrder(orderInfo.id)"

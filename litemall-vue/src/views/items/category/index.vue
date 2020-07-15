@@ -21,6 +21,7 @@
                     :thumb="item.picUrl"
                     :price="item.retailPrice"
                     :origin-price="item.counterPrice"
+                    :thumb-link="goDetail(item.id)"
                     @click="itemClick(item.id)" />
         </van-list>
 
@@ -61,6 +62,9 @@ export default {
   },
 
   methods: {
+    goDetail(id) {
+      return `#/items/detail/${id}/3`;
+    },
     handleTabClick(index) {
       this.categoryId = this.navList[index].id;
       this.$router.replace({

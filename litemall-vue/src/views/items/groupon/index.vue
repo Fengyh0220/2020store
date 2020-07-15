@@ -3,7 +3,7 @@
     <div class="banner">
       <div class="title">限时抢购列表</div>
       <div class="activity">
-        距离活动结束还剩<span>{{listTimeLimittime.d}}</span>:<span>{{listTimeLimittime.h}}</span>:<span>{{listTimeLimittime.m}}</span>
+        距离活动结束还剩<span>{{listTimeLimittime.d}}</span>:<span>{{listTimeLimittime.h}}</span>:<span>{{listTimeLimittime.m}}</span>:<span>{{listTimeLimittime.s}}</span>
       </div>
     </div>
 
@@ -58,6 +58,7 @@ export default {
         d:'00',
         h:'00',
         m:'00',
+        s:'00',
       }
     };
   },

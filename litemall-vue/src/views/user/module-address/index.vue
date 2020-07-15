@@ -1,12 +1,19 @@
 <template>
   <div>
-    <van-address-list v-model="chosenAddressId" :list="addressList" @add="onAdd" @edit="onEdit" @select="onSelect"/>
+    <!-- <van-address-list
+  v-model="chosenAddressId"
+  :list="addressList"
+  default-tag-text="默认"
+  @add="onAdd"
+  @edit="onEdit"
+/> -->
+    <van-address-list v-model="chosenAddressId" :list="addressList" @add="onAdd" default-tag-text="默认" @edit="onEdit" @select="onSelect"/>
   </div>
 </template>
 
 <script>
 import { addressList, addressDetail, addressSave, addressDelete } from '@/api/api';
-import { AddressList, NavBar } from 'vant';
+import { AddressList, NavBar ,Toast } from 'vant';
 import { setLocalStorage } from '@/utils/local-storage';
 
 export default {
@@ -52,7 +59,8 @@ export default {
 
   components: {
     [NavBar.name]: NavBar,
-    [AddressList.name]: AddressList 
+    [AddressList.name]: AddressList ,
+    [Toast.name]:Toast
   }
 };
 </script>
@@ -65,7 +73,9 @@ export default {
     margin-bottom: 0;
   }
 }
-
+.van-icon-edit{
+  background: url('~@/assets/images/iconaddress.png') no-repeat center center/100%;
+}
 .bottom_btn {
   position: fixed;
   bottom: 0;
