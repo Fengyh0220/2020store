@@ -5,14 +5,14 @@
     <div class="filter-container">
       <el-input v-model="listQuery.grouponRuleId" clearable class="filter-item" style="width: 200px;" placeholder="请输入限时活动订单ID" />
       <el-button v-permission="['GET /admin/groupon/listRecord']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button
+      <!-- <el-button
         :loading="downloadLoading"
         class="filter-item"
         type="primary"
         icon="el-icon-download"
         @click="handleDownload"
       >导出
-      </el-button>
+      </el-button> -->
     </div>
 
     <!-- 查询结果 -->
@@ -135,16 +135,16 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    },
-    handleDownload() {
-      this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['订单ID', '用户ID', '活动库存', '活动价格', '活动开始时间', '活动结束时间']
-          const filterVal = ['groupon.orderId', 'groupon.userId', 'subGroupons.length', 'rules.discount', 'rules.addTime', 'rules.expireTime']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
-          this.downloadLoading = false
-        })
     }
+    // handleDownload() {
+    //   this.downloadLoading = true
+    //     import('@/vendor/Export2Excel').then(excel => {
+    //       const tHeader = ['订单ID', '用户ID', '活动库存', '活动价格', '活动开始时间', '活动结束时间']
+    //       const filterVal = ['groupon.orderId', 'groupon.userId', 'subGroupons.length', 'rules.discount', 'rules.addTime', 'rules.expireTime']
+    //       excel.export_json_to_excel2(tHeader, this.list, filterVal, '限时活动订单')
+    //       this.downloadLoading = false
+    //     })
+    // }
   }
 }
 </script>

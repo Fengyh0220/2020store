@@ -1,4 +1,20 @@
 import request from '@/utils/request'
+// 抢购失败
+export function orderGrabbingCancel(data) {
+  return request({
+    url: '/order/orderGrabbingCancel',
+    method: 'get',
+    data
+  })
+}
+// 抢购成功
+export function orderGrabbingSuccess(data) {
+  return request({
+    url: '/order/orderGrabbingSuccess',
+    method: 'get',
+    data
+  })
+}
 
 export function listRecord() {
   return request({
@@ -51,19 +67,3 @@ export function editGroupon(data) {
   })
 }
 
-// 抢购失败
-export function orderGrabbingCancel(data) {
-  return request({
-    url: 'wx/order/orderGrabbingCancel',
-    method: 'post',
-    data
-  })
-}
-// 抢购成功
-export function orderGrabbingSuccess(data) {
-  return request({
-    url: 'wx/order/orderGrabbingSuccess',
-    method: 'post',
-    data
-  })
-}
