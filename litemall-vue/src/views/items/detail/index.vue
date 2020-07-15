@@ -172,31 +172,33 @@ export default {
         this.goods = res.data.data;
         this.skuAdapter();
         this.activityId == 2 && localStorage.setItem('grouponRulesId',this.goods.groupon[0].id);
-        //限时
-      if(this.activityId == 1){
-        let expireTime = this.goods.groupon[0].expireTime;
-         countdown({
-              data: this,
-              type: 3,
-              name: 'listTimeLimittime',
-              now:this.goods.currentTime,
-              time: expireTime,
-        });
-      }else{ //预售
-       let startTime = this.goods.groupon[0].startTime;
-          countdown({
-              data: this,
-              type: 3,
-              name: 'listPreSaletime',
-              now:this.goods.currentTime,
-              time: startTime,
-              callback: (data) => {
-                if(data.timestamp <= 0){
-                  this.btnStatus = true;
-                }
-              }
-         });
-      }
+         if(this.goods.groupon.length > 0){
+              //限时
+            if(this.activityId == 1){
+              let expireTime = this.goods.groupon[0].expireTime;
+                countdown({
+                      data: this,
+                      type: 3,
+                      name: 'listTimeLimittime',
+                      now:this.goods.currentTime,
+                      time: expireTime,
+                });
+            }else{ //预售
+            let startTime = this.goods.groupon[0].startTime;
+                countdown({
+                    data: this,
+                    type: 3,
+                    name: 'listPreSaletime',
+                    now:this.goods.currentTime,
+                    time: startTime,
+                    callback: (data) => {
+                      if(data.timestamp <= 0){
+                        this.btnStatus = true;
+                      }
+                    }
+              });
+            }
+         }
         });
       }
       // cartGoodsCount().then(res => {
