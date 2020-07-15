@@ -32,7 +32,8 @@
       </el-table-column>
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button v-permission="['POST /admin/groupon/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">审核</el-button>
+          <el-button v-if="scope.row.turn_state == 0" v-permission="['POST /admin/groupon/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">审核</el-button>
+          <el-button v-else v-permission="['POST /admin/groupon/update']" type="primary" size="mini" style="background-color: #999;">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
