@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getUserInfo ,selectByUserIdList} from '@/api/bank';
+import { getUserInfo ,selectByUserIdListVo} from '@/api/bank';
 import {
   Card,
 } from 'vant';
@@ -52,10 +52,10 @@ export default {
       })
     },
     getData(){
-      let params = {
-        userId:this.userData.id
-      }
-      selectByUserIdList(params).then(res => {
+      // let params = {
+      //   userId:this.userData.id
+      // }
+      selectByUserIdListVo().then(res => {
       if(res.data.errno === 0){
          this.goodslist = res.data.data;
         }else{

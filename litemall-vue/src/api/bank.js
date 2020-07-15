@@ -24,6 +24,13 @@ export function addTurnRecord(data) {
     })
 }
 // 我的商品列表
+export function selectByUserIdListVo() {
+  return request({
+    url: 'wx/second/selectByUserIdListVo',
+    method: 'post'
+  })
+}
+// 二手商品
 export function selectByUserIdList(data) {
   return request({
     url: 'wx/second/selectByUserIdList',
