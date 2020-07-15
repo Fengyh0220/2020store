@@ -19,7 +19,7 @@
     <van-swipe-item v-for="(item, i) in NoticeList"
                       :key="i">
         <img v-lazy="item.user_head_img" v-if="item.user_head_img"/>
-    {{userData.nick_name}}:{{item.content}}</van-swipe-item>
+    {{item.nick_name}}:{{item.content}}</van-swipe-item>
   </van-swipe>
 </van-notice-bar>
 <!-- <ul class="pro-nav">
