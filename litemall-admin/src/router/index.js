@@ -614,29 +614,30 @@ export const asyncRoutes = [
         }
       }
     ]
-  }, {
-    path: '/used',
-    component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
-    name: 'userUsed',
-    meta: {
-      title: '二手市场',
-      icon: 'chart'
-    },
-    children: [
-      {
-        path: 'used',
-        component: () => import('@/views/used'),
-        name: 'used',
-        meta: {
-          perms: ['GET /admin/used/index'],
-          title: '商品列表',
-          noCache: true
-        }
-      }
-    ]
   },
+  // , {
+  //   path: '/used',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   alwaysShow: true,
+  //   name: 'userUsed',
+  //   meta: {
+  //     title: '二手市场',
+  //     icon: 'chart'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'used',
+  //       component: () => import('@/views/used'),
+  //       name: 'used',
+  //       meta: {
+  //         perms: ['GET /admin/used/index'],
+  //         title: '商品列表',
+  //         noCache: true
+  //       }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/profile',

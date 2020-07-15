@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function orderGrabbingCancel(data) {
   return request({
     url: '/order/orderGrabbingCancel',
-    method: 'get',
+    method: 'post',
     data
   })
 }
@@ -11,7 +11,7 @@ export function orderGrabbingCancel(data) {
 export function orderGrabbingSuccess(data) {
   return request({
     url: '/order/orderGrabbingSuccess',
-    method: 'get',
+    method: 'post',
     data
   })
 }

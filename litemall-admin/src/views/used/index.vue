@@ -40,8 +40,16 @@
       <el-table-column align="center" label="结束时间" prop="rules.expireTime" />
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row.groupon.orderId)">确认抢购</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row.groupon.orderId)">抢购失败</el-button>
+          <template v-if="scope.row.orderInfo.orderStatus == 201">
+            <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">抢购成功</el-button>
+            <el-button type="danger" size="mini" @click="handleDelete(scope.row)">抢购失败</el-button>
+          </template>
+          <template v-if="scope.row.orderInfo.orderStatus == 301">
+            <el-button type="primary" size="mini" style="background-color:#999;border:1px solid #999">抢购成功</el-button>
+          </template>
+          <template v-if="scope.row.orderInfo.orderStatus == 203">
+            <el-button type="danger" size="mini" style="background-color:#999;border:1px solid #999">抢购失败</el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -118,18 +126,22 @@ export default {
         this.listLoading = false
       })
     },
-    handleDelete(orderId) {
-      orderGrabbingCancel({ orderId: orderId }).then(res => {
+    handleDelete(data) {
+      const orderId = data.groupon.orderId
+      const userId = data.groupon.userId
+      orderGrabbingCancel({ orderId: orderId, userId: userId }).then(res => {
         this.$notify.success('订单状态更改成功')
       }).catch((error) => {
-        this.$notify.error(error.data.message)
+        this.$notify.error(error.data.errmsg)
       })
     },
-    handleUpdate(orderId) {
-      orderGrabbingSuccess({ orderId: orderId }).then(res => {
+    handleUpdate(data) {
+      const orderId = data.groupon.orderId
+      const userId = data.groupon.userId
+      orderGrabbingSuccess({ orderId: orderId, userId: userId }).then(res => {
         this.$notify.success('订单状态更改成功')
       }).catch((error) => {
-        this.$notify.error(error.data.message)
+        this.$notify.error(error.data.errmsg)
       })
     },
     handleFilter() {
