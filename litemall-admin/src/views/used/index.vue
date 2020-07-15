@@ -131,6 +131,7 @@ export default {
       const userId = data.groupon.userId
       orderGrabbingCancel({ orderId: orderId, userId: userId }).then(res => {
         this.$notify.success('订单状态更改成功')
+        this.getList()
       }).catch((error) => {
         this.$notify.error(error.data.errmsg)
       })
@@ -140,6 +141,7 @@ export default {
       const userId = data.groupon.userId
       orderGrabbingSuccess({ orderId: orderId, userId: userId }).then(res => {
         this.$notify.success('订单状态更改成功')
+        this.getList()
       }).catch((error) => {
         this.$notify.error(error.data.errmsg)
       })
