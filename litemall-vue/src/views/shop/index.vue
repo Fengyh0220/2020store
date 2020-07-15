@@ -136,9 +136,9 @@ export default {
   },
 
   created() {
+    this.getuserData();
     this.goodsData();
     this.selectNoticedata();
-    this.getuserData();
   },
 
   methods: {
@@ -169,8 +169,8 @@ export default {
       };
       addNoticeUrl(params).then(res => {
         if(res.data.errno == 0){
-          this.NoticeList = res.data.data;
           this.show = false;
+          this.selectNoticedata();
         }
       }).catch (() => {});
     },
