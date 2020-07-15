@@ -131,7 +131,7 @@ export default {
     },
     handleUpdate(row) {
       const data = {
-        userId: row.userId,
+        userId: row.user_id,
         id: row.id,
         state: row.turn_state
       }
