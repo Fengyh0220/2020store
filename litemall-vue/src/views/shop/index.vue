@@ -41,7 +41,7 @@
                       <p  class="name">{{itemgoods.goodsName}}</p>
                       <div  class="other-box">
                           <p  class="sale-price">
-                              ¥{{itemgoods.secondHandPrice}}
+                              ¥{{itemgoods.second_hand_price}}
                               <s >￥{{itemgoods.price}}</s>
                             </p>
                           <div class="sale-nums">

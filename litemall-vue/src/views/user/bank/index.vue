@@ -65,6 +65,7 @@ export default {
             message: '提交成功',
             duration: 1500
           });
+          this.$router.go(-1);
         }else{
           this.$toast({
             message: res.errmsg || '提交失败，请稍后再试',

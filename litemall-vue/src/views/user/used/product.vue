@@ -3,7 +3,7 @@
   <van-card v-for="(groupGood ,index) in goodslist"
   :key="index"
   :num="groupGood.number"
-  :price="groupGood.secondHandPrice + '.00'"
+  :price="groupGood.second_hand_price + '.00'"
   :title="groupGood.goodsName"
   :thumb="groupGood.picUrl"
   :thumb-link="goDetail(groupGood.id)"

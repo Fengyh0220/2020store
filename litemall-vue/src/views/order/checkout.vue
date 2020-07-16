@@ -95,7 +95,7 @@ export default {
       orderTotalPrice: 0, //订单总价
       actualPrice: 0, //实际需要支付的总价
       message: '',
-
+      grouponRulesId:0,
       isDisabled: false,
       showList: false,
       chosenCoupon: -1,
@@ -104,6 +104,8 @@ export default {
     };
   },
   created() {
+    this.grouponRulesId =  this.activityid == 1 ? localStorage.getItem('grouponRulesId') : 0;
+    console.log(this.grouponRulesId)
     this.init();
   },
 
@@ -114,7 +116,6 @@ export default {
         Toast.fail('请设置收货地址');
         return;
       }
-      let grouponRulesId = localStorage.getItem('grouponRulesId');
       this.isDisabled = true;
       let params ={
         addressId: AddressId,
@@ -122,7 +123,7 @@ export default {
         couponId: CouponId,
         userCouponId: UserCouponId,
         grouponLinkId: 0,
-        grouponRulesId: grouponRulesId,
+        grouponRulesId: this.grouponRulesId,
         message: this.message
       }
       orderSubmit(params).then(res => {
@@ -198,8 +199,7 @@ export default {
     },
     init() {
       const {AddressId, CartId, CouponId, UserCouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId', 'UserCouponId');
-
-      cartCheckout({cartId: CartId, addressId: AddressId, couponId: CouponId, userCouponId: UserCouponId, grouponRulesId: 0}).then(res => {
+      cartCheckout({cartId: CartId, addressId: AddressId, couponId: CouponId, userCouponId: UserCouponId,grouponRulesId:this.grouponRulesId}).then(res => {
           var data = res.data.data
 
           this.checkedGoodsList = data.checkedGoodsList;

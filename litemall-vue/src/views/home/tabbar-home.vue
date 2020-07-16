@@ -44,7 +44,7 @@
                 :origin-price="grouponGood.retailPrice"
                 :price="grouponGood.grouponPrice +'.00'"
                 :thumb="grouponGood.picUrl"
-                @native-click="goDetail(grouponGood.id)">
+                @click="goDetail(grouponGood.id)">
       </van-card>
       <div slot='header'>
         <van-cell-group>
@@ -67,7 +67,7 @@
                       <p  class="name">{{newGood.name}}</p>
                       <div  class="other-box">
                           <p  class="sale-price">
-                              ￥ {{newGood.retailPrice}}
+                              ￥ {{newGood.grouponPrice}}
                               <s >￥{{newGood.counterPrice}}</s>
                             </p>
                      </div>
@@ -94,7 +94,7 @@
                 :origin-price="groupGood.counterPrice"
                 :price="groupGood.retailPrice +''"
                 :thumb="groupGood.picUrl"
-                @native-click="goDetailurl(groupGood.id)">
+                @click="goDetailurl(groupGood.id)">
       </van-card>
       <div slot='header'>
         <van-cell-group>
@@ -155,10 +155,10 @@ export default {
   },
   methods: {
     goDetail(id) {
-      return `#/items/detail/${id}/1`;
+     this.$router.push(`/items/detail/${id}/1`);
     },
     goDetailurl(id) {
-      return `#/items/detail/${id}/3`;
+      this.$router.push(`/items/detail/${id}/3`);
     },
     getData(){
       //限时
