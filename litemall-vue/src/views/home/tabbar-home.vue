@@ -37,8 +37,7 @@
     </div>
     <!-- 限时抢购 团购 -->
     <van-panel v-if="shopInfos.grouponTimeLimitList && shopInfos.grouponTimeLimitList.length > 0">
-      <van-card :thumb-link="goDetail(grouponGood.id)"
-                v-for="(grouponGood ,index) in shopInfos.grouponTimeLimitList"
+      <van-card v-for="(grouponGood ,index) in shopInfos.grouponTimeLimitList"
                 :key="index"
                 :title="grouponGood.name"
                 :desc="grouponGood.brief"
@@ -88,8 +87,7 @@
     </van-panel>
 
     <van-panel>
-      <van-card :thumb-link="goDetailurl(groupGood.id)"
-                v-for="(groupGood ,index) in shopInfos.hotGoodsList"
+      <van-card v-for="(groupGood ,index) in shopInfos.hotGoodsList"
                 :key="index"
                 :title="groupGood.name"
                 :desc="groupGood.brief"

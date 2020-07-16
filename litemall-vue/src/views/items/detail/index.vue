@@ -173,7 +173,9 @@ export default {
         goodsDetail({ id: this.itemId }).then(res => {
         this.goods = res.data.data;
         this.skuAdapter();
-        this.activityId == 2 && localStorage.setItem('grouponRulesId',this.goods.groupon[0].id);
+        if(this.activityId == 1){
+          localStorage.setItem('grouponRulesId',this.goods.groupon[0].id);
+        } 
          if(this.goods.groupon.length > 0){
               //限时
             if(this.activityId == 1){

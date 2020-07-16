@@ -11,7 +11,7 @@
       <md-field
         v-model="account"
         icon="username"
-        placeholder="请输入测试账号"
+        placeholder=""
         right-icon="clear-full"
         name="user"
         data-vv-as="帐号"
@@ -21,7 +21,7 @@
       <md-field
         v-model="password"
         icon="lock"
-        placeholder="请输入测试密码"
+        placeholder=""
         :type="visiblePass ? 'text' : 'password'"
         :right-icon="visiblePass ? 'eye-open' : 'eye-close'"
         data-vv-as="密码"
