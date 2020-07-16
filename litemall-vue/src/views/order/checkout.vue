@@ -141,7 +141,7 @@ export default {
     payorder(orderId){
       let params = {
         orderId:orderId.orderId,
-        esGoodsId:this.activityid == 0 ? orderId.esGoodsId:''
+        esGoodsId:this.activityid == 0 ? orderId.esGoodsId : ''
       }
      balancePay(params).then(res => {
         if(res.data.errno == 0){
