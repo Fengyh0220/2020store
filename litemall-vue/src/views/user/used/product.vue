@@ -64,7 +64,7 @@ export default {
       let params = {
         id:item.id,
         state:'0',
-        secondHandPrice:item.price,
+        second_hand_price:item.price,
       }
       updateOrderGoodsState(params).then(res => {
       if(res.data.errno === 0){

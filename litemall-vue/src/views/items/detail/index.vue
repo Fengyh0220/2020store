@@ -8,7 +8,7 @@
     <van-cell-group class="item_cell_group" v-if="goods">
       <van-cell class="item_info">
         <div>
-          <span class="item_price">{{activityId == 0 ?(goods.litemallOrderGoods.secondHandPrice) : (goods.info.retailPrice)}}</span>
+          <span class="item_price">{{activityId == 0 ? goods.litemallOrderGoods.second_hand_price : goods.info.retailPrice}}</span>
           <span class="item_market_price">{{goods.info.counterPrice*100 | yuan}}</span>
         </div>
         <div class="item-title">
@@ -300,7 +300,7 @@ export default {
         params.goodsId=data.litemallOrderGoods.goodsId;
         params.number=data.litemallOrderGoods.number;
         params.productId=data.litemallOrderGoods.productId;
-        params.price= data.litemallOrderGoods.secondHandPrice;
+        params.price= data.litemallOrderGoods.second_hand_price;
       }
       cartFastAdd(params).then(res => {
         let cartId = res.data.data;

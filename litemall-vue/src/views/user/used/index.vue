@@ -5,7 +5,7 @@
   v-for="(item ,index) in goodslist"
   :key="index"
   :num="item.number"
-  :price="(item.state != 0 ? (item.secondHandPrice +'.00') : (item.price +'.00'))"
+  :price="(item.state != 0 ? (item.second_hand_price +'.00') : (item.price +'.00'))"
   :title="item.goodsName"
   :thumb="item.picUrl"
   :thumb-link="goDetail(item.id)"

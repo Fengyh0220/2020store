@@ -18,8 +18,12 @@
   >
     <van-swipe-item v-for="(item, i) in NoticeList"
                       :key="i">
-        <img v-lazy="item.user_head_img" v-if="item.user_head_img"/>
-    {{item.nick_name}}:{{item.content}}</van-swipe-item>
+                      <div class="item-list" v-for="(itemlist, z) in item"
+                      :key="z">
+                        <img v-lazy="itemlist.user_head_img" v-if="itemlist.user_head_img"/>
+                        {{itemlist.nick_name}}:{{itemlist.content}}
+                      </div>
+        </van-swipe-item>
   </van-swipe>
 </van-notice-bar>
 <!-- <ul class="pro-nav">
@@ -159,7 +163,11 @@ export default {
     },
     selectNoticedata(){
        selectNoticeList().then(res => {
-         this.NoticeList = res.data.data;
+       let list =  res.data.data;
+	     let size = 5;	
+        for(let i=0;i< list.length;i+=size){
+          this.NoticeList.push(list.slice(i,i+size));
+        }
       })
     },
     onsubmit(){
@@ -239,6 +247,9 @@ export default {
 
 
 <style lang="scss" scoped>
+.van-notice-bar{
+  height: 150px;
+}
 .van-swipe-item{
     color: #252525
 }
@@ -247,16 +258,28 @@ export default {
     height: 20px;
     border-radius: 20px;
     float: left;
-    margin: 10px 5px 10px 0; 
+    margin: 5px 5px 5px 0; 
 }
 // .van-notice-bar{
 //  border-top: 1px solid #f2f2f2;
 //  border-bottom: px solid #f2f2f2;
 // }
+/deep/.van-notice-bar__content{
+  width: 100% !important;
+}
 .notice-swipe {
-    height: 40px;
-    line-height: 40px;
-  }
+    height: 150px;
+    .van-swipe-item{
+      height: 150px;
+      .item-list{
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        float: left;
+        text-align: left;
+      }
+    }
+}
 .top-div{
     width: 100%;
     background: #fff;
