@@ -22,6 +22,7 @@ import { getUserInfo} from '@/api/bank';
 
 import {
   Card,
+  Panel,
 } from 'vant';
 export default {
   data() {
@@ -84,6 +85,7 @@ export default {
   },
   components: {
     [Card.name]: Card,
+    [Panel.name]:Panel,
   }
 };
 </script>

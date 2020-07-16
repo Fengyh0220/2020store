@@ -11,6 +11,7 @@
   :thumb-link="goDetail(item.id)"
 >
   <template #bottom>
+    <van-button  size="mini">退款</van-button>
     <van-button v-if="item.state == 0" size="mini" :to="tobuy(item.id)" @click="btn(item)"> 一键转卖</van-button>
     <van-button v-if="item.state == 1" class="gray" size="mini"> 转卖中</van-button>
     <van-button v-if="item.state == 2" class="gray" size="mini"> 已卖出</van-button>  
@@ -23,6 +24,7 @@
 import { getUserInfo ,selectByUserIdListVo} from '@/api/bank';
 import {
   Card,
+  Panel,
 } from 'vant';
 export default {
   data() {
@@ -69,6 +71,7 @@ export default {
   },
   components: {
     [Card.name]: Card,
+    [Panel.name]:Panel,
   }
 };
 </script>
@@ -92,8 +95,9 @@ export default {
   color: #fff;
   border-radius: 15px;
   font-size: 16px;
-  position: absolute;
-  right: 0;
-  top:25px;
+  // position: absolute;
+  // right: 0;
+  top: 25px;
+  float: right;
 }
 </style>

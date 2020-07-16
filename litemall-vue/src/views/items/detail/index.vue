@@ -50,6 +50,7 @@
       :quota ='1'
       :hide-quota-text ="true"
       :hide-selected-text = "false"
+      disabled
     />
     <van-popup v-model="propsPopup" position="bottom">
       <popup-props :propsStr="props_str"></popup-props>

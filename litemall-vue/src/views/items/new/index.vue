@@ -16,7 +16,7 @@
                 :desc="item.brief"
                 :title="item.name"
                 :thumb="item.picUrl"
-                :price="item.retailPrice"
+                :price="item.grouponPrice+'.00'"
                 :origin-price="item.counterPrice"
                 @click="itemClick(item.id)">
       </van-card>

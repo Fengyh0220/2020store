@@ -8,6 +8,7 @@
     <div class="right">
       <p>我的余额：￥{{userData.balance}}</p>
        <router-link class="btn"  to="/user/bank">充值</router-link>
+       <router-link class="btn"  to="/user/bank/money">提现</router-link>
     </div>
   </div>
 </template>
@@ -93,14 +94,15 @@ export default {
 .right{
   float: left;
   .btn{
-    width: 50%;
+    width: 45%;
     height: 20px;
     line-height: 20px;
     background: #fff;
-    display: block;
+    display: inline-block;
     border-radius: 20px;
     color: red;
     text-align: center;
+    margin-right: 5px;
   }
 }
 </style>
