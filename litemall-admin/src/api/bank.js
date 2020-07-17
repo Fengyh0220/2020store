@@ -75,11 +75,10 @@ export function updateBankInfo(data) {
   })
 }
 // 提现记录列表
-export function selectWithdrawalRecordList(data) {
+export function selectWithdrawalRecordList() {
   return request({
     url: '/turn/selectWithdrawalRecordList',
-    method: 'post',
-    data
+    method: 'post'
   })
 }
 // 提现记录审核
