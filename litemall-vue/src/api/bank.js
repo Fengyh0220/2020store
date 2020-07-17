@@ -46,4 +46,20 @@ export function balancePay(data) {
     data
   })
 }
+//用户绑定银行卡
+export function updateBankInfo(data) {
+  return request({
+    url: 'wx/user/updateBankInfo',
+    method: 'post',
+    data
+  })
+}
+//提现申请
+export function addWithdrawalRecord(data) {
+  return request({
+    url: 'wx/user/addWithdrawalRecord',
+    method: 'post',
+    data
+  })
+}
 export const REFUND_LIST = '';

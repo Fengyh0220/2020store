@@ -11,7 +11,7 @@
   :thumb-link="goDetail(item.id)"
 >
   <template #bottom>
-    <van-button  size="mini">退款</van-button>
+    <van-button  size="mini" @click="refundOrder(item.id)">退款</van-button>
     <van-button v-if="item.state == 0" size="mini" :to="tobuy(item.id)" @click="btn(item)"> 一键转卖</van-button>
     <van-button v-if="item.state == 1" class="gray" size="mini"> 转卖中</van-button>
     <van-button v-if="item.state == 2" class="gray" size="mini"> 已卖出</van-button>  
@@ -67,7 +67,18 @@ export default {
           });
         }
      })
-    }
+    },
+    refundOrder(id) {
+      this.$dialog
+        .confirm({ message: '确定要申请退款吗?' })
+        .then(() => {
+          orderRefund({ orderId: id }).then(() => {
+            this.init();
+            this.$toast('已申请订单退款');
+          });
+        })
+        .catch(() => {});
+    },
   },
   components: {
     [Card.name]: Card,

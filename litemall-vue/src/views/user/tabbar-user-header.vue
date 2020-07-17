@@ -48,6 +48,9 @@ export default {
       getUserInfo().then(res => {
       if(res.data.errno === 0){
         this.userData=res.data.data.userInfo;
+        if(this.userData.bank_card == ''){
+          localStorage.setItem('bank_card_status','');
+        }
       }
       })
     },
@@ -94,7 +97,7 @@ export default {
 .right{
   float: left;
   .btn{
-    width: 45%;
+    width: 40%;
     height: 20px;
     line-height: 20px;
     background: #fff;

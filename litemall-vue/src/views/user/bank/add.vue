@@ -1,70 +1,55 @@
 <template>
 <van-form>
 <van-cell-group>
-  <van-field v-model="name" label="持卡人姓名" placeholder="请输入持卡人姓名" />
+  <van-field v-model="full_name" label="持卡人姓名" placeholder="请输入持卡人姓名" />
 </van-cell-group>
 <van-cell-group>
-  <van-field v-model="card" label="银行名称" placeholder="请输入银行名称" />
+  <van-field v-model="bank_name" label="银行名称" placeholder="请输入银行名称" />
 </van-cell-group>
 <van-cell-group>
-  <van-field v-model="card" label="银行卡号" placeholder="请输入银行卡号" />
+  <van-field v-model="bank_card" label="银行卡号" placeholder="请输入银行卡号" />
 </van-cell-group>
   <div style="margin: 16px;">
     <van-button round block type="info" @click="submit">
-      确认提交
+      确认添加
     </van-button>
   </div>
 </van-form>
 </template>
 
 <script>
-import { selectBankList , addTurnRecord } from '@/api/bank';
+import { updateBankInfo } from '@/api/bank';
 import {
   Form,
-  Field,
-  Swipe, 
-  SwipeItem
+  Field
 } from 'vant';
 export default {
   data() {
     return {
-        price:'',
-        name:'',
-        cardlist:[],
-        active:0
+        full_name:'',
+        bank_name:'',
+        bank_card:''
     };
   },
   created() {
-    this.getdData();
   },
   methods: {
-    onChange(index) {
-      this.active = index;
-    },
-   getdData(){
-     selectBankList({state:'1'}).then(res => {
-        this.cardlist = res.data.data.bankList;
-     })
-   },
    submit(){
-     let item =this.cardlist[this.active]
      let params = {
-       turn_name:this.name,
-       turn_price:this.price,
-       turn_account:item.id_number,
-       turn_account_id:item.id,
-       turn_state:'0'
+       full_name:this.full_name,
+       bank_name:this.bank_name,
+       bank_card:this.bank_card,
      }
-     addTurnRecord(params).then(res => {
+     updateBankInfo(params).then(res => {
       if(res.data.errno === 0){
           this.$toast({
-            message: '提交成功',
+            message: '添加成功',
             duration: 1500
           });
           this.$router.go(-1);
         }else{
           this.$toast({
-            message: res.errmsg || '提交失败，请稍后再试',
+            message: res.errmsg || '添加失败，请稍后再试',
             duration: 1500
           });
         }
@@ -73,9 +58,7 @@ export default {
   },
   components: {
     [Form.name]: Form,
-    [Field.name]: Field,
-    [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem
+    [Field.name]: Field
   }
 };
 </script>
