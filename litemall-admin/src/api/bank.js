@@ -66,4 +66,27 @@ export function editGroupon(data) {
     data
   })
 }
-
+// 修改用户银行卡信息
+export function updateBankInfo(data) {
+  return request({
+    url: '/user/updateBankInfo',
+    method: 'post',
+    data
+  })
+}
+// 提现记录列表
+export function selectWithdrawalRecordList(data) {
+  return request({
+    url: '/turn/selectWithdrawalRecordList',
+    method: 'post',
+    data
+  })
+}
+// 提现记录审核
+export function upDateWithdrawalRecordState(data) {
+  return request({
+    url: '/turn/upDateWithdrawalRecordState',
+    method: 'post',
+    data
+  })
+}

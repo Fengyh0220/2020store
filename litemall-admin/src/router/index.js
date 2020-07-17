@@ -612,6 +612,14 @@ export const asyncRoutes = [
           title: '转账记录列表',
           noCache: true
         }
+      }, {
+        path: 'withdraw',
+        component: () => import('@/views/bank/withdraw'),
+        name: 'withdraw',
+        meta: {
+          title: '提现记录列表',
+          noCache: true
+        }
       }
     ]
   },
