@@ -3,7 +3,7 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <!-- <el-input v-model="listQuery.turn_name" clearable class="filter-item" style="width: 200px;" placeholder="请输入商品编号" /> -->
+      <!-- <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入商品编号" /> -->
       <!-- <el-button v-permission="['GET /admin/groupon/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button> -->
       <!-- <el-button v-permission="['POST /admin/groupon/create']" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button> -->
       <el-button
@@ -19,34 +19,34 @@
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" label="持卡人" prop="turn_name" />
+      <el-table-column align="center" label="持卡人姓名" prop="name" />
 
-      <el-table-column align="center" label="金额" prop="turn_price" />
+      <el-table-column align="center" label="提现金额" prop="price" />
 
-      <el-table-column align="center" label="银行卡" prop="turn_name" />
+      <el-table-column align="center" label="银行卡" prop="bank_name" />
 
-      <el-table-column align="center" label="银行卡号" prop="turn_account" />
+      <el-table-column align="center" label="银行卡号" prop="bank_number" />
 
-      <el-table-column align="center" label="审核状态" prop="turn_state">
+      <el-table-column align="center" label="审核状态" prop="state">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.turn_state === 0 ? 'success' : 'error' ">{{ scope.row.turn_state == 1 ? '审核成功': scope.row.turn_state==0 ? '待审核': '审核失败' }}</el-tag>
+          <el-tag :type="scope.row.state === 0 ? 'success' : 'error' ">{{ scope.row.state == 1 ? '审核成功': scope.row.state==0 ? '待审核': '审核失败' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.turn_state == 0" v-permission="['POST /admin/groupon/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">审核</el-button>
-          <el-button v-else v-permission="['POST /admin/groupon/update']" type="primary" size="mini" style="background-color: #999;">审核</el-button>
+          <el-button v-if="scope.row.state == 0" v-permission="['POST /admin/groupon/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">审核</el-button>
+          <el-button v-else v-permission="['POST /admin/groupon/update']" type="primary" size="mini" style="background-color: #999;border:1px solid #999">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 添加或修改对话框 -->
-    <el-dialog :title="textMap[dialogturn_state]" :visible.sync="dialogFormVisible">
+    <el-dialog title="提现审核" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
         :rules="rules"
         :model="dataForm"
-        turn_state-icon
+        state-icon
         label-position="left"
         label-width="120px"
         style="width: 400px; margin-left:50px;"
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { listGroupon, updateTurnRecord } from '@/api/bank'
+import { selectWithdrawalRecordList, upDateWithdrawalRecordState } from '@/api/bank'
 import BackToTop from '@/components/BackToTop'
 // import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -89,7 +89,10 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        turn_name: undefined,
+        name: '',
+        bank_number: '',
+        price: '',
+        bank_name: '',
         sort: 'add_time',
         order: 'desc'
       },
@@ -99,8 +102,8 @@ export default {
         state: undefined
       },
       dialogFormVisible: false,
-      dialogturn_state: '',
-      turn_stateMap: [
+      dialogstate: '',
+      stateMap: [
         '审核成功',
         '审核失败'
       ],
@@ -115,9 +118,10 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      listGroupon('').then(response => {
+      selectWithdrawalRecordList().then(response => {
         this.list = response.data.data
         this.listLoading = false
+        console.log(this.list)
       }).catch(() => {
         this.list = []
         // this.total = 0
@@ -130,9 +134,8 @@ export default {
     },
     handleUpdate(row) {
       const data = {
-        userId: row.user_id,
         id: row.id,
-        state: row.turn_state
+        state: row.state
       }
       this.dataForm = Object.assign({}, data)
       if (this.dataForm.state === '0') {
@@ -147,7 +150,7 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          updateTurnRecord(this.dataForm).then(() => {
+          upDateWithdrawalRecordState(this.dataForm).then(() => {
             for (const v of this.list) {
               if (v.id === this.dataForm.id) {
                 const index = this.list.indexOf(v)
@@ -173,9 +176,9 @@ export default {
     handleDownload() {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['姓名', '金额', '银行卡', '审核状态']
-          const filterVal = ['turn_name', 'turn_price', 'turn_account', 'turn_state']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '转账记录审核名单')
+          const tHeader = ['持卡人姓名', '提现金额', '银行卡', '审核状态', '银行卡号']
+          const filterVal = ['name', 'price', 'bank_name', 'state', 'bank_number']
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '提现记录审核名单')
           this.downloadLoading = false
         })
     }
