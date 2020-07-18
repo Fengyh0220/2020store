@@ -35,7 +35,9 @@
       <van-cell title="订单备注">
         <span>{{orderInfo.remark }}</span>
       </van-cell>
-
+       <van-cell title="订单状态">
+        <span class="red">{{orderInfo.orderStatusText}}</span>
+      </van-cell>
       <van-cell title="实付款：">
         <span class="red">{{orderInfo.actualPrice * 100 | yuan}}</span>
       </van-cell>
@@ -63,11 +65,10 @@
                     @click="confirmOrder(orderInfo.id)"
                     style=" float:right"
                     type="danger">确认收货</van-button> -->
-        <!-- <van-button size="small"
-                    v-if="handleOption.refund"
+        <van-button size="small" v-if="handleOption.refund"
                     @click="refundOrder(orderInfo.id)"
                     style=" float:right"
-                    type="danger">退款</van-button> -->
+                    type="danger">退款</van-button>
       </van-cell>
     </van-cell-group>
 
@@ -156,7 +157,9 @@ export default {
           orderRefund({ orderId: id }).then(() => {
             this.init();
             this.$toast('已申请订单退款');
-          });
+          }).catch((data) => {
+          this.$toast(data.data.errmsg);
+        });
         })
         .catch(() => {});
     },

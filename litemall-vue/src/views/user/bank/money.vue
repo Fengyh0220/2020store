@@ -1,5 +1,5 @@
 <template>
-<van-form v-if="!bank_card_status">
+<van-form v-if="!bankCardStatus">
 <van-cell-group>
   <van-field v-model="full_name" label="持卡人姓名" placeholder="请输入持卡人姓名" />
 </van-cell-group>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { addWithdrawalRecord } from '@/api/bank';
+import { addWithdrawalRecord ,updateBankInfo} from '@/api/bank';
 import {
   Form,
   Field
@@ -37,7 +37,10 @@ export default {
   data() {
     return {
         price:'',
-        bankCardStatus:false,
+        full_name:'',
+        bank_name:'',
+        bank_card:'',
+        bankCardStatus:true,
     };
   },
   created() {
@@ -73,19 +76,14 @@ export default {
    },
    submit(){
      let params = {
-       turn_price:this.price
+       price:this.price
      }
      addWithdrawalRecord(params).then(res => {
-      if(res.data.errno === 0){
-          this.$toast('提交成功');
+          this.$toast('提现成功');
           this.$router.go(-1);
-        }else{
-          this.$toast({
-            message: res.errmsg || '提交失败，请稍后再试',
-            duration: 1500
-          });
-        }
-     })
+     }).catch((data) => {
+       this.$toast(data.data.errmsg || '提现失败，请稍后再试');
+     });
    }
   },
   components: {

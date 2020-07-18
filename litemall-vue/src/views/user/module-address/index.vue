@@ -19,7 +19,7 @@ import { setLocalStorage } from '@/utils/local-storage';
 export default {
   data() {
     return {
-      chosenAddressId: -1,
+      chosenAddressId: '1',
       addressList: []
     };
   },
@@ -50,7 +50,8 @@ export default {
             id: item.id,
             name: item.name,
             tel: item.tel,
-            address: item.province + item.city + item.county + " " + item.addressDetail
+            address: item.province + item.city + item.county + " " + item.addressDetail,
+            isDefault:item.isDefault
           })
         }
       })

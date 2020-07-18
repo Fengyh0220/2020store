@@ -50,6 +50,8 @@ export default {
         this.userData=res.data.data.userInfo;
         if(this.userData.bank_card == ''){
           localStorage.setItem('bank_card_status','');
+        }else{
+          localStorage.setItem('bank_card_status',this.userData.bank_card);
         }
       }
       })
