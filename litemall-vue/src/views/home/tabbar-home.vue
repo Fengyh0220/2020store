@@ -18,7 +18,7 @@
         <van-icon name="bag"/>
         <span>二手市场</span>
       </router-link>
-      <a class="item" href="https://uapi.pop800.com/web800/c.do?l=cn&type=0&n=832081&w=0&c=00dde6f8f9880c86" target="_blank">
+      <a class="item" @click="kefu()">
         <van-icon name="kefu"/>
         <span>联系我们</span>
       </a>
@@ -30,7 +30,7 @@
         <van-icon name="clock"/>
         <span>限时抢购</span>
       </router-link>
-      <router-link class="item" to="/user">
+      <router-link class="item" to='/user'>
         <van-icon name="wode"/>
         <span>个人中心</span>
       </router-link>
@@ -154,6 +154,12 @@ export default {
     this.getData();
   },
   methods: {
+    kefu(){
+      let url = this.shopInfos.kefu.litemall_mall_kefu_url;
+      // console.log(url)
+      // this.$router.push(url);
+      window.location.href=url
+    },
     goDetail(id) {
      this.$router.push(`/items/detail/${id}/1`);
     },
