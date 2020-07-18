@@ -6,7 +6,7 @@ export default [
     path: '/shop',
     name: 'shop',
     meta: {
-      keepAlive: true,
+      // keepAlive: true,
       login: true,
       showHeader:false,
     //   title:"二手市场"

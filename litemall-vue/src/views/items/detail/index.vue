@@ -16,7 +16,7 @@
         </div>
         <div class="item_intro">{{goods.info.brief}}</div>
         <div class="used-div" v-if="activityId == 0">
-          <img v-lazy="goods.litemallOrderGoods.userHeadImg" alt="">
+          <img v-lazy="goods.litemallOrderGoods.user_head_img" alt="">
           <p>{{goods.litemallOrderGoods.userId}}</p>
         </div>
         <div class="activity-time" v-if="activityId == 1">

@@ -62,4 +62,18 @@ export function addWithdrawalRecord(data) {
     data
   })
 }
+//充值记录
+export function selectByUserIdTurnRecord() {
+  return request({
+    url: 'wx/user/selectByUserIdTurnRecord',
+    method: 'post'
+  })
+}
+//提现记录
+export function selectByUserIdWithdrawalRecord() {
+  return request({
+    url: 'wx/user/selectByUserIdWithdrawalRecord',
+    method: 'post'
+  })
+}
 export const REFUND_LIST = '';

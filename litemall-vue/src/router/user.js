@@ -22,6 +22,7 @@ const Userproduct = () => import('@/views/user/used/product');
 const Userbank = () => import('@/views/user/bank/index');
 const Userbankmoney = () => import('@/views/user/bank/money');
 const Userbankadd = () => import('@/views/user/bank/add');
+const Userbankpricelist = () => import('@/views/user/bank/pricelist');
 
 const Tabbar = () => import('@/components/Tabbar/');
 
@@ -76,6 +77,14 @@ export default [
     path: '/user/bank/add',
     name: 'user-bank',
     component: Userbankadd
+  },
+  {
+    path: '/user/bank/pricelist',
+    name: 'user-bank-pricelist',
+    meta: {
+      login: true
+    },
+    component: Userbankpricelist
   },
   {
     path: '/user/used',

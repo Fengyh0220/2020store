@@ -146,7 +146,7 @@ export default {
      balancePay(params).then(res => {
         if(res.data.errno == 0){
            this.$toast('余额支付成功');
-           this.$router.go(-1);
+           this.$router.push('/user/used');
         }
      }).catch((e) => {
        this.$toast(e.data.errmsg || '余额支付失败，请重新支付');

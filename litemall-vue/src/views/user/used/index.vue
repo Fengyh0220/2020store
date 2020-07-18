@@ -11,7 +11,7 @@
   :thumb-link="goDetail(item.id)"
 >
   <template #bottom>
-    <van-button  size="mini" @click="toOrderDetail(item.id)" v-if="item.orderState == 201">退款</van-button>
+    <van-button  size="mini" @click="toOrderDetail(item.id)" v-if="item.orderState == 201 && item.state == 0">退款</van-button>
     <van-button v-if="item.state == 0" size="mini" :to="tobuy(item.id)" @click="btn(item)"> 一键转卖</van-button>
     <van-button v-if="item.state == 1" class="gray" size="mini"> 转卖中</van-button>
     <van-button v-if="item.state == 2" class="gray" size="mini"> 已卖出</van-button>  

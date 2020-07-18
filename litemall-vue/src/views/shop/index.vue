@@ -49,7 +49,7 @@
                               <s >￥{{itemgoods.price}}</s>
                             </p>
                           <div class="sale-nums">
-                              <img v-lazy="itemgoods.userHeadImg">
+                              <img v-lazy="itemgoods.user_head_img">
                               <span>{{itemgoods.userId}}</span>
                               </div>
                      </div>
