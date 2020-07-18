@@ -79,7 +79,7 @@ export default {
        price:this.price
      }
      addWithdrawalRecord(params).then(res => {
-          this.$toast('提现成功');
+          this.$toast('提现申请已提交，请等待后台审核');
           this.$router.go(-1);
      }).catch((data) => {
        this.$toast(data.data.errmsg || '提现失败，请稍后再试');

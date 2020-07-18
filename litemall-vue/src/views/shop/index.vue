@@ -50,7 +50,7 @@
                             </p>
                           <div class="sale-nums">
                               <img v-lazy="itemgoods.user_head_img">
-                              <span>{{itemgoods.userId}}</span>
+                              <span>{{itemgoods.nickNmae}}</span>
                               </div>
                      </div>
                 </div>

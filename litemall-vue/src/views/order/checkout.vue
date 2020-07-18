@@ -124,7 +124,8 @@ export default {
         userCouponId: UserCouponId,
         grouponLinkId: 0,
         grouponRulesId: this.grouponRulesId,
-        message: this.message
+        message: this.message,
+        sp_type:this.activityid
       }
       orderSubmit(params).then(res => {
         // 下单成功，重置下单参数。

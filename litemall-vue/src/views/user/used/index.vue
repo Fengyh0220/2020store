@@ -8,7 +8,7 @@
   :price="(item.state != 0 ? (item.second_hand_price +'.00') : (item.price +'.00'))"
   :title="item.goodsName"
   :thumb="item.picUrl"
-  :thumb-link="goDetail(item.id)"
+  :thumb-link="goDetail(item)"
 >
   <template #bottom>
     <van-button  size="mini" @click="toOrderDetail(item.id)" v-if="item.orderState == 201 && item.state == 0">退款</van-button>
@@ -42,8 +42,8 @@ export default {
         query: { orderId: id }
       });
     },
-   goDetail(id) {
-      return `#/items/detail/${id}/0`;
+   goDetail(item) {
+      return `#/items/detail/${item.goodsId}/${item.sp_type}`;
     },
     tobuy(id) {
       return `/user/price/${id}`;

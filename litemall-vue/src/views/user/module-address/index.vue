@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       chosenAddressId: '1',
-      addressList: []
+      addressList: [],
     };
   },
 

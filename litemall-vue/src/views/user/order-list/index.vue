@@ -30,10 +30,10 @@
 
             <div slot="footer"
                  class="footer_btn">
-              <van-button size="small"
+              <!-- <van-button size="small"
                           v-if="el.handleOption.pay"
                           type="danger"
-                          @click.stop="toPay(el.id)">去支付</van-button>
+                          @click.stop="toPay(el.id)">去支付</van-button> -->
               <!-- <van-button size="small"
                           v-if="el.handleOption.confirm"
                           type="danger"
@@ -139,9 +139,9 @@ export default {
         .catch(() => {});
     },
     commentOrder(id) {},
-    toPay(id) {
-      this.$router.push({ name: 'payment', params: { orderId: id } });
-    },
+    // toPay(id) {
+    //   this.$router.push({ name: 'payment', params: { orderId: id } });
+    // },
     handleTabClick() {
       this.page = 0;
       this.orderList = [];

@@ -8,7 +8,8 @@
     <van-cell-group class="item_cell_group" v-if="goods">
       <van-cell class="item_info">
         <div>
-          <span class="item_price">{{activityId == 0 ? goods.litemallOrderGoods.second_hand_price : goods.info.retailPrice}}</span>
+          
+          <span class="item_price">{{activityId == 0 ? goods.litemallOrderGoods&&goods.litemallOrderGoods.second_hand_price : goods.info.retailPrice}}</span>
           <span class="item_market_price">{{goods.info.counterPrice*100 | yuan}}</span>
         </div>
         <div class="item-title">
@@ -16,8 +17,8 @@
         </div>
         <div class="item_intro">{{goods.info.brief}}</div>
         <div class="used-div" v-if="activityId == 0">
-          <img v-lazy="goods.litemallOrderGoods.user_head_img" alt="">
-          <p>{{goods.litemallOrderGoods.userId}}</p>
+          <img v-lazy="goods.litemallOrderGoods&&goods.litemallOrderGoods.user_head_img" alt="">
+          <p>{{goods.litemallOrderGoods&&goods.litemallOrderGoods.nickNmae}}</p>
         </div>
         <div class="activity-time" v-if="activityId == 1">
           距离活动结束<span>{{listTimeLimittime.d}}:{{listTimeLimittime.h}}:{{listTimeLimittime.m}}:{{listTimeLimittime.s}}</span>
@@ -69,7 +70,7 @@
       <!-- <van-goods-action-icon @click="toCart" icon="cart-o" :info="(cartInfo > 0) ? cartInfo : ''"/> -->
       <!-- <van-goods-action-icon @click="addCollect" icon="star-o" :style="(goods.userHasCollect !== 0) ? 'color: #f7b444;':''"/> -->
       <!-- <van-goods-action-button type="warning" @click="skuClick" text="加入购物车"/> -->
-      <van-goods-action-button v-if="!btnStatus && activityId == 2" class="gray" text="立即购买"/>
+      <van-goods-action-button v-if="(!btnStatus && activityId == 2) || goods.isSelfShop == 1" class="gray" text="立即购买"/>
       <van-goods-action-button v-else-if="activityId == 0" type="danger" @click="buyGoods(goods)" text="立即购买"/>
       <van-goods-action-button  v-else type="danger" @click="skuClick" text="立即购买"/>
     </van-goods-action>
@@ -301,7 +302,7 @@ export default {
         params.goodsId=data.litemallOrderGoods.goodsId;
         params.number=data.litemallOrderGoods.number;
         params.productId=data.litemallOrderGoods.productId;
-        params.price= data.litemallOrderGoods.second_hand_price;
+        // params.price = data.litemallOrderGoods.second_hand_price;
       }
       cartFastAdd(params).then(res => {
         let cartId = res.data.data;

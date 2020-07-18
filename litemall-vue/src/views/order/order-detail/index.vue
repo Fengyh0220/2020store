@@ -49,12 +49,12 @@
                     style=" float:right"
                     round
                     type="danger">取消订单</van-button> -->
-        <van-button size="small"
+        <!-- <van-button size="small"
                     v-if="handleOption.pay"
                     @click="payOrder(orderInfo.id)"
                     style=" float:right"
                     round
-                    type="danger">去支付</van-button>
+                    type="danger">去支付</van-button> -->
         <!-- <van-button size="small"
                     v-if="handleOption.delete"
                     @click="deleteOrder(orderInfo.id)"
