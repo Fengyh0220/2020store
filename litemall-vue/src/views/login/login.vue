@@ -95,6 +95,7 @@ export default {
         });
 
         this.routerRedirect();
+        setLocalStorage({AddressId: '', CartId: '', CouponId: '', UserCouponId: ''});
       }).catch(error => {
         Toast.fail(error.data.errmsg);
       });

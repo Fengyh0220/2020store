@@ -43,7 +43,11 @@ export default {
       });
     },
    goDetail(item) {
+     if(item.sp_type == '0'){
       return `#/items/detail/${item.id}/${item.sp_type}`;
+     }else{
+       return `#/items/detail/${item.goodsId}/${item.sp_type}`;
+     }
     },
     tobuy(id) {
       return `/user/price/${id}`;

@@ -37,11 +37,11 @@ export default {
   },
   methods: {
    submit(){
-     console.log(this.itemId);
      let params = {
         id:this.itemId,
         state:'1',
         second_hand_price:this.price,
+        sp_type:'0',
       }
       updateOrderGoodsState(params).then(res => {
       if(res.data.errno === 0){

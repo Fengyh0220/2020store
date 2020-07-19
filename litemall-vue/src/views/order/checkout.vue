@@ -100,17 +100,18 @@ export default {
       showList: false,
       chosenCoupon: -1,
       coupons: [],
-      disabledCoupons: [] 
+      disabledCoupons: [] ,
+      payStatus:false
     };
   },
   created() {
     this.grouponRulesId =  this.activityid == 1 ? localStorage.getItem('grouponRulesId') : 0;
-    console.log(this.grouponRulesId)
     this.init();
   },
 
   methods: {
     onSubmit() {     
+      if (!this.payStatus) return;
       const {AddressId, CartId, CouponId, UserCouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId', 'UserCouponId');
       if (AddressId == 0) {
         Toast.fail('请设置收货地址');
@@ -201,8 +202,7 @@ export default {
     init() {
       const {AddressId, CartId, CouponId, UserCouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId', 'UserCouponId');
       cartCheckout({cartId: CartId, addressId: AddressId, couponId: CouponId, userCouponId: UserCouponId,grouponRulesId:this.grouponRulesId}).then(res => {
-          var data = res.data.data
-
+          var data = res.data.data;
           this.checkedGoodsList = data.checkedGoodsList;
           this.checkedAddress= data.checkedAddress;
           this.availableCouponLength= data.availableCouponLength;
@@ -212,7 +212,7 @@ export default {
           this.freightPrice= data.freightPrice;
           this.goodsTotalPrice= data.goodsTotalPrice;
           this.orderTotalPrice= data.orderTotalPrice;
-
+          this.payStatus = true;
           setLocalStorage({AddressId: data.addressId, CartId: data.cartId, CouponId: data.couponId, UserCouponId: data.userCouponId});
       });
 
