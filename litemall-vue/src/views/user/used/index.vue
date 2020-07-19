@@ -43,7 +43,7 @@ export default {
       });
     },
    goDetail(item) {
-      return `#/items/detail/${item.goodsId}/${item.sp_type}`;
+      return `#/items/detail/${item.id}/${item.sp_type}`;
     },
     tobuy(id) {
       return `/user/price/${id}`;

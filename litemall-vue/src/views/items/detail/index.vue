@@ -302,7 +302,7 @@ export default {
         params.goodsId=data.litemallOrderGoods.goodsId;
         params.number=data.litemallOrderGoods.number;
         params.productId=data.litemallOrderGoods.productId;
-        // params.price = data.litemallOrderGoods.second_hand_price;
+        params.price = data.litemallOrderGoods.second_hand_price;
       }
       cartFastAdd(params).then(res => {
         let cartId = res.data.data;
