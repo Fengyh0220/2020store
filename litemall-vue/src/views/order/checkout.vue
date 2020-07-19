@@ -112,6 +112,7 @@ export default {
   methods: {
     onSubmit() {     
       if (!this.payStatus) return;
+      this.payStatus = false;
       const {AddressId, CartId, CouponId, UserCouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId', 'UserCouponId');
       if (AddressId == 0) {
         Toast.fail('请设置收货地址');
