@@ -5,7 +5,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = '888商城后台管理' // page title
+const name = '亚马逊亚洲商城后台管理' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
